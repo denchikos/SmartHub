@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block product_detail %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приклад сторінки</title>
+    <style>
+        /* Основні стилі для блоків з зображенням */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .goods-tile_inner {
+            width: 252.8px;
+            height: 430.72px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+/* display: flex; justify-content: center; align-items: center; */
+        .goods-tile_inner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Медіа-запити для адаптивного дизайну */
+        @media (max-width: 600px) {
+            .goods-tile_inner {
+                width: 150px;
+                height: 200px;
+            }
+        }
+
+        .locations {
+            background: #fff;
+            color: #000;
+        }
+
+        svg {
+            vertical-align: middle;
+            fill: #0073db;
+        }
+
+        input {
+            background-color: #fff;
+            box-sizing: border-box;
+            padding-left: 12px;
+            padding-right: 12px
+        }
+
+        input,input[_size_small] {
+            height: 32px;
+        }
+
+        @media (min-width: 768px)
+            input, textarea {
+            font-size: 14px;
+        }
+
+        input,textarea {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border .2s ease-in-out
+        }
+
+        *,:after,:before {
+            box-sizing: border-box;
+        }
+
+
+    </style>
+</head>
+<body style>
+<div class="wrapper central-wrapper">
+    <div style="central-wrapper">
+        <div class="layout">
+            <ul class="bread">
+                <li class="breadcrumbs__item breadcrumbs__item--home">
+                    <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="/">
+                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
+                            <use href="#icon-home"></use>
+                        </svg>
+                        <span class="breadcrumbs__item--home--title">На головну</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--last">
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки та комп'ютери</span>
+                        <span class="breadcrumbs__separator">/</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки</span>
+                    </a>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки ACER</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="product-navbar" style="top: 72px; --topPosition: 72px;">
+            <div class="product-navbar__tabs--margin-small">
+                <div class="tabs">
+                    <div class="layout">
+                        <ul class="tabs__list">
+                            <li class="tabs__item">
+                                <a class="tabs__link tabs__link--active" href="">Усе про товар</a>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Характеристики</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Відгуки</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Питання</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Купують разом</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="#scrollArea" class="layout">
+                    <div class="product-about">
+                        <div class="product-about__left">
+                            <div class="product-about__sticky" style="top: 129px; --topPosition: 129px;">
+                                <app-slider class="main-slider">
+                                    <div class="simple-slider">
+                                        <div class="simple-slider__holder carousel">
+                                            <ul class="simple-slider__list" style="transform: translate3d(-479px, 0px, 0px); transition-duration: 0ms; gap: 0px;">
+                                                {% for i in data_db %}
+                                                <li class="simple-slider__item" data-place="mock" style="width: 479px;">
+                                                    <div class="main-slider__wrap main-slider__wrap2">
+                                                        <div class="main-slider__item main-slider__wrap1">
+                                                            <img class="picture-container__picture" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4 ГБ - зображення 17" src="{{ i.image_path }}">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                            <button type="button" class="simple-slider__control simple-slider__control--prev">
+                                                <svg simple-slider__control width="24" height="24" aria-hidden="true">
+                                                    <use simple-slider__control href="#left-arrow"></use>
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="simple-slider__control simple-slider__control--next">
+                                                <svg simple-slider__control width="24" height="24" aria-hidden="true">
+                                                    <use simple-slider__control href="#right-arrow"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </app-slider>
+                                <app-slider class="main-slider preview-slider">
+                                    <div  class="simple-slider">
+                                        <div class="simple-slider__holder">
+                                            <div style="display: block;">
+                                                <div class="scrollbar__layout_1">
+                                                    <div class="scrollbar__inner" style="height: calc(100% + 18px);">
+                                                        <div class="scrollbar__content">
+                                                            <ul class="simple-slider__list" style="gap: 0px;">
+                                                                {% for i in data_db %}
+                                                                <li class="simple-slider__item" style="width: 59.875px;">
+                                                                    <button type="button" class="thumbnail-button thumbnail-button--active">
+                                                                        <img class="thumbnail-button__picture" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black + фірмовий рюкзак / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ / - зображення 1" src="{{ i.image_path }}">
+                                                                    </button>
+                                                                </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </app-slider>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<svg style="display: none;">
+    <symbol id="left-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="right-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M9 6L15 12L9 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+</svg>
+
+</svg>
+{% endblock %}

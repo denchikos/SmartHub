@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block notebooks %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приклад сторінки</title>
+    <style>
+        /* Основні стилі для блоків з зображенням */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .goods-tile_inner {
+            width: 252.8px;
+            height: 430.72px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+/* display: flex; justify-content: center; align-items: center; */
+        .goods-tile_inner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Медіа-запити для адаптивного дизайну */
+        @media (max-width: 600px) {
+            .goods-tile_inner {
+                width: 150px;
+                height: 200px;
+            }
+        }
+
+        .locations {
+            background: #fff;
+            color: #000;
+        }
+
+        svg {
+            vertical-align: middle;
+            fill: #0073db;
+        }
+
+        input {
+            background-color: #fff;
+            box-sizing: border-box;
+            padding-left: 12px;
+            padding-right: 12px
+        }
+
+        input,input[_size_small] {
+            height: 32px;
+        }
+
+        @media (min-width: 768px)
+            input, textarea {
+            font-size: 14px;
+        }
+
+        input,textarea {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border .2s ease-in-out
+        }
+
+        *,:after,:before {
+            box-sizing: border-box;
+        }
+
+
+    </style>
+</head>
+<div1 class="central-wrapper">
+    <main style="order: 2;">
+        <div class="layout">
+            <ul class="bread">
+                <li class="breadcrumbs__item breadcrumbs__item--home">
+                    <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="{% url 'home' %}">
+                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
+                            <use href="#icon-home"></use>
+                        </svg>
+                        <span class="breadcrumbs__item--home--title">На головну</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--last">
+                    <a class="breadcrumbs__link" href="{% url 'home' %}">
+                        <span>Ноутбуки та комп'ютери</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="{% url 'home' %}">
+                        <span>Ноутбуки</span>
+                    </a>
+                </li>
+            </ul>
+            <div>
+                <h1 class="catalog-heading">Ноутбуки</h1>
+            </div>
+        </div>
+        <ul>
+            <div>
+                <div class="layout animation" style="top: 72px;">
+                    <div class="catalog-settings">
+                        <div class="catalog-settings__sorting">
+                            <select class="select-css">
+                                <option disabled hidden>За рейтингом</option>
+                                <option value="1: cheap" class="ng-star-inserted">Від дешевих до дорогих</option>
+                                <option value="2: expensive" class="ng-star-inserted">Від дорогих до дешевих</option>
+                                <option value="3: novelty" class="ng-star-inserted">Новинки</option>
+                                <option value="4: rank" class="ng-star-inserted">За рейтингом</option>
+                            </select>
+                        </div>
+                        <div class="catalog-settings__view">
+                            <div1 class="catalog-view__switch">
+                                <button class="catalog-view__button catalog-view__button_state_active catalog-view__button_first-child" title="Крупна плитка" aria-label="Крупна плитка">
+                                    <svg width="24" height="24" aria-hidden="true">
+                                        <use href="#icon-view-more"></use>
+                                    </svg>
+                                </button>
+                                <button class="catalog-view__button catalog-view__button_first-child" title="Мала плитка" aria-label="Мала плитка">
+                                    <svg width="24" height="24" aria-hidden="true">
+                                        <use href="#icon-view-more"></use>
+                                    </svg>
+                                </button>
+                            </div1>
+                        </div>
+                    </div>
+                </div>
+                <div class="layout layout_with_sidebar">
+                    <section class="content_type_catalog">
+                        <ul class="catalog-grid">
+                            {% for i in items %}
+                            <li class="goods-tile">
+                                <div class="container goods-tile_inner img">
+                                    <div class="goods-tile__content">
+                                        <a class="image-with-text goods-tile__picture" href="{% url 'product_detail' id=i.id %}" title="{{ i.name }}">
+                                            <img  loading="lazy" src="{{ i.images }}" class="title_catsan" >{{ i.name }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="goods-tile__price price--red"> {{ i.price }} </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                    <aside class="sidebar">
+                        <div>
+                            <div class="sidebar-block" data-filter-name="producer">
+                                <button type="button" class="sidebar-block__toggle">
+                                    <span class="sidebar-block__toggle-title">
+                                        Продавець
+                                        <span class="sidebar-block__toggle-quantit"> 2 </span>
+                                    </span>
+                                    <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                    </svg>
+                                </button>
+                                <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                    <div class="scrollbar__layout">
+                                        <div class="scrollbar__layouter">
+                                            <div class="scrollbar__inner" style="width: 251px;">
+                                                <div style="width: 233px;">
+                                                    <div1>
+                                                        <ul class="checkbox-filter">
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="SmartHub +" href="{% url 'home' %}">
+                                                                    SmartHub +&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (2934) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="Інші продавці" href="{% url 'home' %}">
+                                                                    Інші продавці&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (122188) </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="checkbox-filter"></ul>
+                                                    </div1>
+                                                </div>
+                                            </div>
+                                            <div class="scrollbar__holder" style="right: -8px;">
+                                                <div class="scrollbar__path">
+                                                    <div class="scrollbar__slider" style="height: 71px; transform: translateY(0px);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sidebar-block" data-filter-name="producer">
+                                <button type="button" class="sidebar-block__toggle">
+                                    <span class="sidebar-block__toggle-title">
+                                        " Бренд "
+                                        <span class="sidebar-block__toggle-quantity"> 172 </span>
+                                    </span>
+                                    <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                    </svg>
+                                </button>
+                                <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                    <div>
+                                        <div class="sidebar-search">
+                                            <input type="search" name="searchline" class="sidebar-search__input" placeholder="Пошук">
+                                        </div>
+                                        <div class="sidebar-alphabet">
+                                              <button type="button" class="button button_type_link sidebar-alphabet__toggle">
+                                                    <span class="link-dotted"> Алфавітний вказівник </span>
+                                              </button>
+                                        </div>
+                                    </div>
+                                    <div style="height: 420px;">
+                                        <div class="scrollbar__layout">
+                                            <div class="scrollbar__inner" style="width: 251px;">
+                                                <div style="width: 233px;">
+                                                    <div>
+                                                        <ul class="checkbox-filter">
+                                                            <li class="checkbox-filter__item">
+                                                                <a class="checkbox-filter__link" data-id="ASUS" href="{% url 'notebooks' %}?producer=asus">
+                                                                    ASUS&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (20207) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="checkbox-filter__item ng-star-inserted">
+                                                                <a class="checkbox-filter__link" data-id="ACER" href="{% url 'notebooks' %}?producer=acer">
+                                                                    ACER&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (20207) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="checkbox-filter__item">
+                                                                <a class="checkbox-filter__link" data-id="LENOVO" href="{% url 'notebooks' %}?producer=lenovo">
+                                                                    LENOVO&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (20207) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="checkbox-filter__item">
+                                                                <a class="checkbox-filter__link" data-id="APPLE" href="{% url 'notebooks' %}?producer=apple">
+                                                                    APPLE&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (20207) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="checkbox-filter__item">
+                                                                <a class="checkbox-filter__link" data-id="HP" href="{% url 'notebooks' %}?producer=hp">
+                                                                    HP&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (20207) </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="scrollbar__holder" style="right: 0px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-block" data-filter-name="price">
+                                        <button type="button" class="sidebar-block__toggle">
+                                            <span class="sidebar-block__toggle-title">
+                                                Цiна
+                                            </span>
+                                            <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                            </svg>
+                                        </button>
+                                        <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                            <div class="scrollbar__layout">
+                                                <div class="scrollbar__inner" style="width: 251px;">
+                                                    <div style="width: 233px;">
+                                                        <form novalidate class="slider-filter__form">
+                                                            <div class="slider-filter__inner">
+                                                                <input type="text" formcontrolname="min" class="slider-filter__input" maxlength="20">
+                                                                <span aria-hidden="true" class="slider-filter__divider"> — </span>
+                                                                <input type="text" formcontrolname="max" class="slider-filter__input" maxlength="20">
+                                                                <button type="submit" class="button button_color_gray button_size_small slider-filter__button"> Ok </button>
+                                                            </div>
+                                                            <div class="rz-slider-wrapper">
+                                                                <div class="rz-slider">
+                                                                   <div class="rz-slider__range-center">
+                                                                       <div class="rz-slider__range-space" style="margin-left: 0%; width: 100%;"></div>
+                                                                   </div>
+                                                                    <button type="button" class="rz-slider__range-button rz-slider__range-button_type_left" style="left: 0%;"></button>
+                                                                    <button type="button" class="rz-slider__range-button rz-slider__range-button_type_left" style="left: 100%;"></button>
+
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="scrollbar__holder" style="right: -8px;">
+                                                    <div class="scrollbar__path">
+                                                        <div class="scrollbar__slider" style="height: 20px; transform: translateY(0px);"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-block sidebar-block_state_collapsed" data-filter-name="processor">
+                                        <button type="button" class="sidebar-block__toggle">
+                                            <span class="sidebar-block__toggle-title">
+                                                Процесор
+                                                <span class="sidebar-block__toggle-quantity"> 18 </span>
+                                            </span>
+                                            <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                            </svg>
+                                        </button>
+                                        <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                            <div class="scrollbar__layout">
+                                                <div class="scrollbar__inner" style="width: 251px;">
+                                                    <div style="width: 233px;">
+                                                        <ul class="checkbox-filter">
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="Intel Core i3" href="{% url 'home' %}">
+                                                                    Intel Core i3&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="Intel Core i5" href="{% url 'home' %}">
+                                                                    Intel Core i5&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="Intel Core i7" href="{% url 'home' %}">
+                                                                    Intel Core i7&nbsp;
+                                                                    <span class="sidebar-block__quantity ng-star-inserted"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="Intel Core i9" href="{% url 'home' %}">
+                                                                    Intel Core i9&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 3" href="{% url 'home' %}">
+                                                                    AMD Ryzen 3&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 5" href="{% url 'home' %}">
+                                                                    AMD Ryzen 5&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 7" href="{% url 'home' %}">
+                                                                    AMD Ryzen 7&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 9" href="{% url 'home' %}">
+                                                                    AMD Ryzen 8&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="M1" href="{% url 'home' %}">
+                                                                    M1&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="M2" href="{% url 'home' %}">
+                                                                    M2
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="M3" href="{% url 'home' %}">
+                                                                    M13
+                                                                    <span class="sidebar-block__quantity"> (21172) </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="checkbox-filter">…</ul>
+                                                    </div>
+                                                </div>
+                                                <div class="scrollbar__holder" style="right: -8px;">
+                                                    <div class="scrollbar__path">
+                                                        <div class="scrollbar__slider" style="height: 643px; transform: translateY(0px);"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </ul>
+    </main>
+    <hr>
+    <svg style="display: none;">
+        <symbol id="icon-view-less" width="24px" height="24px" viewBox="0 0 24 24">
+            <rect width="24" height="24" fill="#0098db"/>
+            <circle cx="6" cy="6" r="1.5" fill="white"/>
+            <circle cx="12" cy="6" r="1.5" fill="white"/>
+            <circle cx="18" cy="6" r="1.5" fill="white"/>
+            <circle cx="6" cy="12" r="1.5" fill="white"/>
+            <circle cx="12" cy="12" r="1.5" fill="white"/>
+            <circle cx="18" cy="12" r="1.5" fill="white"/>
+            <circle cx="6" cy="18" r="1.5" fill="white"/>
+            <circle cx="12" cy="18" r="1.5" fill="white"/>
+            <circle cx="18" cy="18" r="1.5" fill="white"/>
+        </symbol>
+        <symbol id="id_kestrel" fill='%23797878' viewBox='0 0 13 7'>
+            <path fill-rule='evenodd' clip-rule='evenodd' d='M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z'/>
+        </symbol>
+        <symbol id="icon-view-more" width="24px" height="24px" viewBox="0 0 24 24">
+            <rect width="24" height="24" fill="white"/>
+            <circle cx="6" cy="6" r="1.5" fill="#0098db"/>
+            <circle cx="12" cy="6" r="1.5" fill="#0098db"/>
+            <circle cx="18" cy="6" r="1.5" fill="#0098db"/>
+            <circle cx="6" cy="12" r="1.5" fill="#0098db"/>
+            <circle cx="12" cy="12" r="1.5" fill="#0098db"/>
+            <circle cx="18" cy="12" r="1.5" fill="#0098db"/>
+            <circle cx="6" cy="18" r="1.5" fill="#0098db"/>
+            <circle cx="12" cy="18" r="1.5" fill="#0098db"/>
+            <circle cx="18" cy="18" r="1.5" fill="#0098db"/>
+        </symbol>
+    </svg>
+{% endblock %}
+</div1>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block computers %}
+<nav>
+    <ul>
+        <li>
+            <div class="portal-grid portal-grid_type_1_6">
+                <a class="image-with-text" href="{% url 'notebooks' %}" title="Ноутбуки">
+        <img alt="Ноутбуки" src="{% static 'Home_page/images/base_images/noutbuki.png' %}" class="title_catsan" >Ноутбки</a>
+        <a class="image-with-text" href="{% url 'computers' %}" title="Компютери">
+            <img alt="Компютери" src="{% static 'Home_page/images/base_images/kompyutery.png' %}" class="title_catsan">Компютери</a>
+        <a class="image-with-text" href="{% url 'computers' %}" title="Монітори">
+            <img alt="Монітори" src="{% static 'Home_page/images/base_images/monitory.png' %}" class="title_catsan">Монітори</a>
+        <a class="image-with-text" href="{% url 'computers' %}" title="Планшети">
+            <img alt="Планшети" src="{% static 'Home_page/images/base_images/planshety.png' %}" class="title_catsan">Планшети</a>
+            </div>
+        </li>
+    </ul>
+    <hr>
+</nav>
+{% endblock %}
