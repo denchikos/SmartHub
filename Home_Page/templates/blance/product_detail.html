@@ -80,7 +80,15 @@
             box-sizing: border-box;
         }
 
+        .h2-1 {
+            font-size: 18px;
+        }
 
+        @media (min-width: 1024px) {
+        .h2 {
+            font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body style>
@@ -205,8 +213,32 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <button type="button" class="simple-slider__control simple-slider__control--prev visible-hidden" disabled>
+                                            <svg width="24" height="24" aria-hidden="true">
+                                                <use href="#left-arrow"></use>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="simple-slider__control simple-slider__control--next" disabled>
+                                            <svg width="24" height="24" aria-hidden="true">
+                                                <use href="#right-arrow"></use>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </app-slider>
+                                <div class="mobile">
+                                    <div class="wrap">
+                                        <div class="inner">
+                                            <div class="title" style="max-height: 90px; overflow: hidden;">
+                                                <p class="h2-1 bold" style>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="rating text-base">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
