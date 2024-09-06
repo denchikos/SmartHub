@@ -36,6 +36,12 @@ data_computers = [
     {"id": 4, 'title': 'планшети', 'url_name': 'computers'},
 ]
 
+char_icons = [
+    {'id': 1, "images": 'Home_page/images/187290917.jpg'},
+    {'id': 2, "images": 'Home_page/images/187290045.png'},
+    {'id': 3, "images": 'Home_page/images/187290960.png'},
+    {'id': 4, "images": 'Home_page/images/187290970.png'},
+    ]
 
 def Home_page(request):
     data_db = Notebooks.objects.all()
@@ -94,11 +100,13 @@ def notebooks(request):
 
 
 def product_detail(request, id):
+
     data_db = Laptop_images.objects.all()
     product = get_object_or_404(Notebooks, id=id)
     data = {
         "title": "SmartHub",
-        "menu": "menu"
+        "menu": "menu",
+        "char_icons": char_icons,
     }
     return render(request, 'blance/product_detail.html', {'product': product, 'data': data, 'data_db': data_db})
 
