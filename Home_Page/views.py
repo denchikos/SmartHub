@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
-from .models import Notebooks, NotebooksBrand, Laptop_images
+from .models import Notebooks, NotebooksBrand, Laptop_images, Icons
 from django.views.generic import DetailView
 
 asorti = [{'id': 1, "title": 'Ноутбуки та компютери', 'url_name': 'computers',
@@ -36,12 +36,9 @@ data_computers = [
     {"id": 4, 'title': 'планшети', 'url_name': 'computers'},
 ]
 
-char_icons = [
-    {'id': 1, "images": 'Home_page/images/187290917.jpg'},
-    {'id': 2, "images": 'Home_page/images/187290045.png'},
-    {'id': 3, "images": 'Home_page/images/187290960.png'},
-    {'id': 4, "images": 'Home_page/images/187290970.png'},
-    ]
+
+
+
 
 def Home_page(request):
     data_db = Notebooks.objects.all()
@@ -100,15 +97,14 @@ def notebooks(request):
 
 
 def product_detail(request, id):
-
+    db = Icons.objects.all()
     data_db = Laptop_images.objects.all()
-    product = get_object_or_404(Notebooks, id=id)
+    product = get_object_or_404(Notebooks, id=id),
     data = {
         "title": "SmartHub",
         "menu": "menu",
-        "char_icons": char_icons,
     }
-    return render(request, 'blance/product_detail.html', {'product': product, 'data': data, 'data_db': data_db})
+    return render(request, 'blance/product_detail.html', {'product': product, 'data': data, 'data_db': data_db, "db": db})
 
 
 class NewsDetailView(DetailView):

@@ -254,9 +254,11 @@
                                 </p>
                                 <div class="product-about__pictogram-list">
                                     <ul class="product-pictogram__list">
+                                        {% for i in db %}
                                         <li class="product-pictogram__item">
-                                            <img  loading="lazy" class="product-pictogram__icon" alt="AMD Ryzen 5" title="AMD Ryzen 5" src="Home_page/images/187290970.png"> #тут потрібноскачати зображення і вказати шлях до нього
+                                            <img  loading="lazy" class="product-pictogram__icon" alt="AMD Ryzen 5" title="AMD Ryzen 5" src="{{ i.image_path }}"> #тут потрібноскачати зображення і вказати шлях до нього
                                         </li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>

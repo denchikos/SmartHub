@@ -46,3 +46,8 @@ class NotebooksBrand(models.Model):
     name = models.CharField(max_length=20)
     url_name = models.URLField()
 
+class Icons(models.Model):
+    image_path = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.image_path}"
