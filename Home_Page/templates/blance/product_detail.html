@@ -89,6 +89,7 @@
             font-size: 24px;
             }
         }
+
     </style>
 </head>
 <body style>
@@ -256,10 +257,26 @@
                                     <ul class="product-pictogram__list">
                                         {% for i in db %}
                                         <li class="product-pictogram__item">
-                                            <img  loading="lazy" class="product-pictogram__icon" alt="AMD Ryzen 5" title="AMD Ryzen 5" src="{{ i.image_path }}"> #тут потрібноскачати зображення і вказати шлях до нього
+                                            <img  loading="lazy" class="product-pictogram__icon" alt="AMD Ryzen 5" title="AMD Ryzen 5" src="{{ i.image_path }}">
                                         </li>
                                         {% endfor %}
                                     </ul>
+                                </div>
+                                <div class="lazy-load-container">
+                                    <button class="text-base mt-4 button button--link"> Детальніше про товар </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-about__right">
+                            <div class="product-about__right-inner">
+                                <div class="desktop">
+                                    <div class="wrap">
+                                        <div class="inner">
+                                            <div class="title closed" style="max-height: 90px; overflow: hidden;">
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
