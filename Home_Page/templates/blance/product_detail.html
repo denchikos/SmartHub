@@ -80,16 +80,45 @@
             box-sizing: border-box;
         }
 
-        .h2-1 {
-            font-size: 14px;
+        .label:before {
+            position: absolute;
+            left: 0;
+            bottom: 4px;
+            display: none;
+            width: 100%;
+            border-bottom: 1px dotted #d2d2d2;
+            content: " "; /* Тут можна вказати текст або залишити пробіл */
         }
 
-        @media (min-width: 1024px) {
-        .h2-1 {
-            font-size: 24px;
+        @media (min-width: 768px) {
+            .label:before {
+                display: block;
             }
         }
 
+        .sub-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        section {
+            display: block;
+        }
+
+        *, dl div1 span {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .label1 {
+            position: relative;
+            display: inline-block;
+            padding-right: 16px;
+            background-color: #fff;
+        }
     </style>
 </head>
 <body style>
@@ -272,12 +301,67 @@
                                 <div class="desktop">
                                     <div class="wrap">
                                         <div class="inner">
-                                            <div class="title closed" style="max-height: 90px; overflow: hidden;">
-
-                                            </div>
+                                            <h1 class="h2-1 bold">
+                                                Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black/ 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ.
+                                            </h1>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="mt-6">
+                                <h2 class="h2-1 mb-4">Характеристики</h2>
+                                <section>
+                                    <dl>
+                                        <div1 class="item">
+                                            <dt class="label">
+                                                <span class="label1">Діагональ екрану</span>
+                                            </dt>
+                                            <dd class="value">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <p>15.6"</p>
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                        </div1>
+                                        <div1 class="item">
+                                            <dt class="label">
+                                                <span class="label1">Частота оновлення екрану</span>
+                                            </dt>
+                                            <dd class="value">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <p>144 Гц</p>
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                        </div1>
+                                        <div1 class="item">
+                                            <dt class="label">
+                                                <span class="label1">Тип екрану</span>
+                                            </dt>
+                                            <dd class="value">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <p>IPS</p>
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                        </div1>
+                                        <div1 class="item">
+                                            <dt class="label">
+                                                <span class="label1">Роздільна здатність</span>
+                                            </dt>
+                                            <dd class="value">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <p>1920x1080</p>
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                        </div1>
+                                    </dl>
+                                </section>
                             </div>
                         </div>
                     </div>
