@@ -2303,3 +2303,19 @@ main-slider__item_add {
     box-sizing: border-box;
 }
 
+.d-block {
+    display: block;
+}
+
+.text-xl {
+    font-size: 16px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.product-tabs__content {
+    width: 100%;
+}
+

@@ -99,12 +99,16 @@ def notebooks(request):
 def product_detail(request, id):
     db = Icons.objects.all()
     data_db = Laptop_images.objects.all()
-    product = get_object_or_404(Notebooks, id=id),
+    product = get_object_or_404(Notebooks, id=id)
     data = {
         "title": "SmartHub",
         "menu": "menu",
     }
     return render(request, 'blance/product_detail.html', {'product': product, 'data': data, 'data_db': data_db, "db": db})
+
+
+def characteristics(request):
+    return render(request, 'blance/characteristics.html')
 
 
 class NewsDetailView(DetailView):

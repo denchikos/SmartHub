@@ -87,7 +87,7 @@
             display: none;
             width: 100%;
             border-bottom: 1px dotted #d2d2d2;
-            content: " "; /* Тут можна вказати текст або залишити пробіл */
+            content: " ";
         }
 
         @media (min-width: 768px) {
@@ -118,6 +118,12 @@
             display: inline-block;
             padding-right: 16px;
             background-color: #fff;
+        }
+
+        a1 {
+            color: #3e77aa;
+            cursor: pointer;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -291,9 +297,6 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
-                                <div class="lazy-load-container">
-                                    <button class="text-base mt-4 button button--link"> Детальніше про товар </button>
-                                </div>
                             </div>
                         </div>
                         <div class="product-about__right">
@@ -309,7 +312,7 @@
                                 </div>
                             </div>
                             <div class="mt-6">
-                                <h2 class="h2-1 mb-4">Характеристики</h2>
+                                <h2 class="h2-1 mb-4">Основні характеристики</h2>
                                 <section>
                                     <dl>
                                         <div1 class="item">
@@ -362,6 +365,7 @@
                                         </div1>
                                     </dl>
                                 </section>
+                                <a class="d-block text-xl mt-4" href="{% url 'characteristics' %}"> Дивитися всі характеристики&nbsp;→ </a>
                             </div>
                         </div>
                     </div>
@@ -378,7 +382,5 @@
     <symbol id="right-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M9 6L15 12L9 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
-</svg>
-
 </svg>
 {% endblock %}

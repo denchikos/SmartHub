@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block characteristics %}
+<head>
+    <style>
+        .label span {
+            position: relative;
+            display: inline-block;
+            padding-right: 16px;
+            background-color: #fff;
+        }
+
+        .label1, .value1 {
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        h1 {
+            line-height: 1.25;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+
+        section1 {
+            display: block;
+        }
+
+        dl {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .label {
+            position: relative;
+            align-self: flex-start;
+            width: 40%;
+        }
+    </style>
+</head>
+<div class="wrapper central-wrapper">
+    <div class="central-wrapper">
+        <div class="layout">
+            <ul class="bread">
+                <li class="breadcrumbs__item breadcrumbs__item--home">
+                    <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="/">
+                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
+                            <use href="#icon-home"></use>
+                        </svg>
+                        <span class="breadcrumbs__item--home--title">На головну</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--last">
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки та комп'ютери</span>
+                        <span class="breadcrumbs__separator">/</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки</span>
+                    </a>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки ACER</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="product-navbar" style="top: 72px; --topPosition: 72px;">
+            <div class="product-navbar__tabs--margin-small">
+                <div class="tabs">
+                    <div class="layout">
+                        <ul class="tabs__list">
+                            <li class="tabs__item">
+                                <a class="tabs__link tabs__link--active" href="">Усе про товар</a>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Характеристики</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Відгуки</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Питання</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Купують разом</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout">
+            <div1 class="wrap" style="color: #221f1f;">
+                <div1 class="inner">
+                    <div1 class="title closed" style="max-height: 90px; overflow: hidden;">
+                        <h1 class="h2-1 bold" style>
+                            Характеристики Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black / 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ
+                        </h1>
+                    </div1>
+                </div1>
+            </div1>
+            <div1 class="d-flex mt-4">
+                <main class="product-tabs__content">
+                    <section1>
+                        <dl>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Серія</span>
+                                </dt>
+                            </div1>
+                        </dl>
+                    </section1>
+                    <section1>…</section1>
+                    <section1>…</section1>
+                    <section1>…</section1>
+                    <section1>…</section1>
+                    <section1>…</section1>
+                    <section1>…</section1>
+                    <section1>…</section1>
+                    <section1>…</section1>
+                </main>
+                <aside class="product-tabs__sidebar">…</aside>
+            </div1>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
