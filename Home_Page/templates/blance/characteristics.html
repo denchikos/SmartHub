@@ -4,6 +4,15 @@
 {% block characteristics %}
 <head>
     <style>
+        div1 {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+        }
+
         .label span {
             position: relative;
             display: inline-block;
@@ -35,10 +44,31 @@
             vertical-align: baseline;
         }
 
-        .label {
-            position: relative;
-            align-self: flex-start;
-            width: 40%;
+        .sub-list li {
+            margin-bottom: 8px;
+        }
+
+        .sub-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .label, .value {
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .group + .group {
+            margin-top: 24px;
+        }
+
+        span, li,ul {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
         }
     </style>
 </head>
@@ -123,25 +153,461 @@
             </div1>
             <div1 class="d-flex mt-4">
                 <main class="product-tabs__content">
-                    <section1>
+                    <section1 class="group" style="color: #000;">
                         <dl>
                             <div1 class="item">
                                 <dt class="label">
                                     <span>Серія</span>
                                 </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a style="cursor: pointer;">TUF Gaming</a>
+                                        </li>
+                                    </ul>
+                                </dd>
                             </div1>
                         </dl>
                     </section1>
-                    <section1>…</section1>
-                    <section1>…</section1>
-                    <section1>…</section1>
-                    <section1>…</section1>
-                    <section1>…</section1>
-                    <section1>…</section1>
-                    <section1>…</section1>
-                    <section1>…</section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Екран</h3>
+                        <dl class="list ">
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Діагональ екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>15.6"</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Частота оновлення екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>144 Гц</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Тип екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>IPS</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Роздільна здатність</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>1920х1080</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Покриття екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>Матове</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Вбудована камера</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>720P HD</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Процесор</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Процесор</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>Шестиядерний AMD Ryzen 5 7535HS (3.3 - 4.55 ГГц)</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Операційна система</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>Без ОС</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Покоління процесора AMD</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>Zen 3+</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Оперативна пам'ять</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Обсяг оперативної пам'яті</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>16 ГБ</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Тип оперативної пам'яті</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>DDR5</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Можливість апгрейду</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>2 слоти оперативної пам'яті</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Характеристики оперативної пам'яті</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>DDR5-5600 SO-DIMM (макс. 32 ГБ)</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Накопичувачі даних</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Обсяг SSD</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>1 ТБ</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Кількість слотів M.2</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>2</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Стандарт інтерфейсу SSD M.2</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>PCI Express 4.0 x4</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Тип накопичувача</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>SSD</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Відеокарта</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Виробник відеокарти</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                          <span>Nvidia</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Дискретна відеокарта</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>GeForce RTX 3050</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Обсяг пам'яті відеокарти</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>4 ГБ</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Тип відеокарти</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>Інтегрована</span>
+                                        </li>
+                                        <li>
+                                            <span>Дискретна</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Інтегрована відеокарта</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>Radeon Graphics</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Корпус</h3>
+                        <div class="item">
+                            <dt class="label">
+                                 <span>Ємність акумулятора, Вт год</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>48</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Вага, кг</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>2.3</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Колір</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>Чорний</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Звукова система</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>
+                                            Програмне забезпечення DTS
+                                            <br>
+                                            Усунення шумів за допомогою ШІ
+                                            <br>
+                                            Сертифікація Hi-Res
+                                            <br>
+                                            Вбудований масив мікрофонів
+                                            <br>
+                                            2 динаміки
+                                        </span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Маніпулятори</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>Тачпад</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Характеристики батареї</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>Літій-іонна, 3-коміркова, 48 Вт*год</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Габарити (Ш х Г х В)</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>359 x 256 x 24.5 мм</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Підключення</h3>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Мережеві адаптери</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        Gigabit Ethernet
+                                        <br>
+                                        "Wi-Fi 6 802.11ax (Dual band) 2*2"
+                                        <br>
+                                        "Bluetooth 5.3"
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Роз'єми та порти введення-виведення</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>
+                                            3 x USB 3.2 Gen 1 Type-A / 1 x USB 3.2 Gen 2 Type-C (підтримка DisplayPort) / HDMI 2.1 / комбінований аудіороз'єм для навушників/мікрофона
+                                        </span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                    </section1>
                 </main>
-                <aside class="product-tabs__sidebar">…</aside>
+                <aside class="product-tabs__sidebar">
+                    <div1 class="product-carriage">
+                        <div1 class="product-carriage__goods product-carriage_display-flex-md">
+                            <figure class="product-carriage__goods-picture">
+                                <img loading="lazy" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4 ГБ" src="">
+                            </figure>
+                            <div class="product-carriage__goods-title">
+
+                            </div>
+
+                        </div1>
+                        <div class="product-carriage__buy">
+
+                        </div>
+                    </div1>
+                </aside>
             </div1>
         </div>
     </div>
