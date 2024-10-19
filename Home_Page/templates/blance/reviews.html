@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block reviews %}
+<head>
+    <style>
+        div2 {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .label span {
+            position: relative;
+            display: inline-block;
+            padding-right: 16px;
+            background-color: #fff;
+        }
+
+        .label1, .value1 {
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        h1 {
+            line-height: 1.25;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+
+        section1 {
+            display: block;
+        }
+
+        dl {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .sub-list li {
+            margin-bottom: 8px;
+        }
+
+        .sub-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .label, .value {
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .group + .group {
+            margin-top: 24px;
+        }
+
+        span, li, ul, img, p, time {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        figure {
+            display: block;
+        }
+
+        .header-layout {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+            height: 72px;
+        }
+
+        .tabs__list {
+            display: flex;
+            flex-direction: row;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        body {
+            padding-top: 60px;
+        }
+
+        @media (min-width: 1024px) {
+            .title {
+                --toggleMaxHeight: 76px;
+            }
+        }
+
+        .attachments-preview__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 4px;
+            vertical-align: middle;
+        }
+
+        .button--medium, .button_size_medium {
+            font-size: 16px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .button--navy, .button_color_navy {
+            background-color: #3e77aa;
+            color: #fff;
+        }
+
+        .button--link, .button_type_link {
+            background: none;
+            border: none;
+            color: #3e77aa;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .button--small, .button_size_small {
+            font-size: 14px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .button--with-icon, .button_with_icon {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .vote-buttons-comments__vote {
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        .select-css {
+            align-items: center;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg%20fill%3D%27%2523797878%27%20viewBox%3D%270%200%2013%207%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Cpath%20fill-rule%3D%27evenodd%27%20clip-rule%3D%27evenodd%27%20d%3D%27M6.5%207a.956.956%200%200%201-.657-.256l-5.57-5.25a.839.839%200%200%201%200-1.237.968.968%200%200%201%201.312%200L6.5%204.888%2011.415.257a.968.968%200%200%201%201.313%200%20.839.839%200%200%201%200%201.237l-5.572%205.25A.956.956%200%200%201%206.5%207Z%27/%3E%3C/svg%3E");
+            background-position: right 12px center;
+            background-repeat: no-repeat, repeat;
+            background-size: 14px 9px;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            box-sizing: border-box;
+            color: #221f1f;
+            cursor: pointer;
+            display: inline-flex;
+            font-size: 14px;
+            height: 32px;
+            margin: 0;
+            max-width: 100%;
+            overflow: hidden;
+            padding-left: 12px;
+            padding-right: 40px;
+            text-align: left;
+            width: 30%;
+        }
+
+        .vote-buttons-comments__vote svg {
+            margin-right: 4px;
+        }
+
+        .button_with_icon svg {
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .button svg {
+            transition-duration: .2s;
+            transition-property: fill;
+            transition-timing-function: ease-in-out;
+        }
+
+        .vote-buttons-comments__vote {
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        .me-3 {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<div class="wrapper central-wrapper">
+    <div class="central-wrapper">
+        <div class="layout">
+            <ul class="bread">
+                <li class="breadcrumbs__item breadcrumbs__item--home">
+                    <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="/">
+                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
+                            <use href="#icon-home"></use>
+                        </svg>
+                        <span class="breadcrumbs__item--home--title">На головну</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--last">
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки та комп'ютери</span>
+                        <span class="breadcrumbs__separator">/</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки</span>
+                    </a>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки ASUS</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="product-navbar" style="top: 72px; --topPosition: 72px;">
+            <div class="product-navbar__tabs--margin-small">
+                <div class="tabs">
+                    <div class="layout">
+                        <ul class="tabs__list">
+                            <li class="tabs__item">
+                                <a class="tabs__link"  href="{% url 'product_detail' models.id %}">Усе про товар</a>
+                            </li>
+                            <li class="tabs__item tabs__link">
+                                <a class="tabs__link" href="">Характеристики</a>
+                            </li>
+                            <li class="tabs__item tabs__link">
+                                <a class="tabs__link tabs__link--active" href="">Відгуки</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="">Питання</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout">
+            <div2 class="wrap">
+                <div2  class="inner">
+                    <div2 class="title closed" style="max-height: 76px; overflow: hidden;">
+                        <h1 class="title__font">
+                            Відгуки покупців про Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4ГБ
+                        </h1>
+                    </div2>
+                </div2>
+                <div2 class="rating text-base">
+                    <div size="85" class="me-1" style="width: 85px; display: inline-block; font: inherit;">
+                        <div2 class="stars__container">
+                            <div2 class="stars__rating" style="width: calc(90.1538% - 2px);"></div2>
+                            <div2 class="stars__bg"></div2>
+                            <svg viewBox="0 0 66 14" class="stars__svg">
+                                <defs>
+                                    <symbol id="star" viewBox="0 0 24 24">
+                                      <path d="M12 .587l3.668 7.431L23.327 9.87l-5.327 5.195 1.257 7.323L12 18.879l-6.257 3.509 1.257-7.323-5.327-5.195 7.659-1.852L12 .587z"/>
+                                    </symbol>
+                                </defs>
+                                <use xlink:href="#star" x="0" y="-1" width="20" height="15" fill="gold"/>
+                                <use xlink:href="#star" x="13" y="-1" width="20" height="15" fill="gold"/>
+                                <use xlink:href="#star" x="26" y="-1" width="20" height="15" fill="gold"/>
+                                <use xlink:href="#star" x="39" y="-1" width="20" height="15" fill="gold"/>
+                                <use xlink:href="#star" x="52" y="-1" width="20" height="15" fill="gold">
+                            </svg>
+                        </div2>
+                    </div>
+                    <p> 1 відгуки </p>>
+                </div2>
+            </div2>
+            <div2 class="d-flex mt-4">
+                <main style="width: 100%;">
+                    <section class="mb-4">
+                        <div2>
+                            <div style="display: flex; flex-direction: column; width: 100%; overflow: hidden;">
+                                <section class="gallery">
+                                    <h4 class="gallery__heading">Фотографії та відео покупців</h4>
+                                    <div class="gallery__body">
+                                        <div2 class="attachments-preview__body">
+                                            <ul class="attachments-preview__list">
+                                                <li class="attachments-preview__item">
+                                                    <button type="button" class="attachments-preview__button">
+                                                        <img loading="lazy" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4 ГБ" src="{% static 'Home_page/images/Ноутбук ASUS TUF Gaming A15 (2023)/2389791.jpg' %}">
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div2>
+                                    </div>
+                                </section>
+                            </div>
+                        </div2>
+                        <section class="product-comments__cta">
+                            <div2>
+                                <div2 class="product-comments__cta-heading">Залиште свій відгук про цей товар</div2>
+                                <div2 class="product-comments__cta-bonuses">
+                                    <div style="display: none;"></div>
+                                </div2>
+                            </div2>
+                            <button type="button" class="button button--medium button--gray comment-button"> Написати відгук </button>
+                        </section>
+                        <section class="comments-filters">
+                            <button class="button button--medium button--navy button--with-icon comments-filters__filters button_with_icon button_size_medium button_color_navy">
+                                <span>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                                        <path d="M3 6h18v2H3zm4 5h10v2H7zm2 5h6v2H9z"/>
+                                    </svg>
+                                </span>
+                                Фільтри
+                            </button>
+                            <label class="visible-hidden" for="01"> Сортування </label>
+                            <select class="select-css" style="height: 40px;" id="02">
+                                <option value="date" style="font-weight: 400;">За датою</option>
+                                <option value="helpful" style="font-weight: 400;">Найкорисніші</option>
+                                <option value="with_attachments" style="font-weight: 400;">З фото і відео</option>
+                            </select>
+                        </section>
+                        <ul class="product-comments__list">
+                            <li class="product-comments__list-item">
+                                <div style="font: inherit;">
+                                    <div2 class="mb-4">
+                                        <div2 class="gallery">
+                                            <div>
+                                                <div2 class="reply-header__header">
+                                                    <div2 class="reply-header__author">
+                                                        <div2>
+                                                            <div2 style="padding-left: 16px;"> Ольга</div2>
+                                                        </div2>
+                                                        <time class="reply-header__date" style="padding-right: 16px;"> 29 вересня 2024 </time>
+                                                    </div2>
+                                                </div2>
+                                            </div>
+                                            <div2 class="comment__vars">
+                                                <span> Відгук від покупця. </span>
+                                            </div2>
+                                            <div2 class="comment__body">
+                                                <div style="word-break: break-word;">
+                                                    <div style=" word-break: break-word; display: inline-block; width: 80px;">
+                                                        <div2 class="stars__container" style="word-break: break-word;">
+                                                            <div class="stars__rating" style="word-break: break-word; width: calc(100% - 2px);"></div>
+                                                            <div class="stars__bg" style="word-break: break-word;"></div>
+                                                            <svg viewBox="0 0 66 14" class="stars__svg" style="word-break: break-word;">
+                                                                <defs>
+                                                                    <symbol id="star" viewBox="0 0 24 24">
+                                                                      <path d="M12 .587l3.668 7.431L23.327 9.87l-5.327 5.195 1.257 7.323L12 18.879l-6.257 3.509 1.257-7.323-5.327-5.195 7.659-1.852L12 .587z"/>
+                                                                    </symbol>
+                                                                </defs>
+                                                                <use xlink:href="#star" x="0" y="-1" width="20" height="15" fill="gold"/>
+                                                                <use xlink:href="#star" x="13" y="-1" width="20" height="15" fill="gold"/>
+                                                                <use xlink:href="#star" x="26" y="-1" width="20" height="15" fill="gold"/>
+                                                                <use xlink:href="#star" x="39" y="-1" width="20" height="15" fill="gold"/>
+                                                                <use xlink:href="#star" x="52" y="-1" width="20" height="15" fill="gold">
+                                                            </svg>
+                                                        </div2>
+                                                    </div>
+                                                </div>
+                                                <p style="font-size: 14px;">
+                                                    Ноутбук супер. Тримає чоловіка вдома, поки ми з дитиною у довгій відпустці. Він задоволений, рекомендує.
+                                                    <br>
+                                                    Коли купували, в черзі всі чоловіки і касир довго обговорювали нашу покупку і раділи як за себе
+                                                </p>
+                                            </div2>
+                                            <div2 class="comment__footer">
+                                                <button type="button" class="button button--small button--link button--with-icon comment__reply">
+                                                    <svg width="24" height="24" aria-hidden="true">
+                                                        <use href="#icon-return"></use>
+                                                    </svg>
+                                                    Відповісти
+                                                </button>
+                                                <div2 class="comment__votes me-3">
+                                                    <div2 class="vote-buttons-comments">
+                                                        <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote" aria-label="Корисний відгук">
+                                                            <svg width="24" height="24" aria-hidden="true">
+                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
+                                                            </svg>
+                                                            <span class="vote-buttons-comments__counter">6</span>
+                                                        </button>
+                                                        <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote vote-buttons-comments__vote--dislike" aria-label="Некорисний відгук">
+                                                            <svg width="24" height="24" aria-hidden="true">
+                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
+                                                            </svg>
+                                                            <span class="vote-buttons-comments__counter">0</span>
+                                                        </button>
+
+                                                    </div2>
+                                                </div2>
+                                                <div class="comment__actions">
+                                                    <button type="button" class="button button--white button--small menu-toggle-btn" aria-expanded="false" aria-haspopup="true">
+                                                        <svg width="24" height="24" aria-hidden="true" pointer-events="none" class="icon">
+                                                            <use href="#icon-vertical-dots"></use>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div2>
+                                        </div2>
+                                    </div2>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                </main>
+            </div2>
+        </div>
+{% endblock %}
+<svg fill='%23797878' viewBox='0 0 13 7' id="down-arrow">
+  <path fill-rule='evenodd' clip-rule='evenodd' d='M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z'/>
+</svg>

@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
-from .models import Notebooks, NotebooksBrand, Laptop_images, Icons
+from .models import Notebooks, NotebooksBrand, Laptop_images, Icons, Laptop, Comments
 from django.views.generic import DetailView
 
 asorti = [{'id': 1, "title": 'Ноутбуки та компютери', 'url_name': 'computers',
@@ -35,7 +35,6 @@ data_computers = [
     {"id": 3, 'title': 'Монітори', 'url_name': 'computers'},
     {"id": 4, 'title': 'планшети', 'url_name': 'computers'},
 ]
-
 
 
 
@@ -107,11 +106,18 @@ def product_detail(request, id):
     return render(request, 'blance/product_detail.html', {'product': product, 'data': data, 'data_db': data_db, "db": db})
 
 
-def characteristics(request):
-    return render(request, 'blance/characteristics.html')
+def characteristics(request, laptop_id):
+    items = Notebooks.objects.all()
+    models = get_object_or_404(Laptop, id=laptop_id)
+    return render(request, 'blance/characteristics.html', {'models': models, "items": items})
 
 
 class NewsDetailView(DetailView):
     model = NotebooksBrand
     template_name = 'ProductNotebooks.html'
     context_object_name = 'producer'
+
+
+def reviews(request, comments_id):
+    models = get_object_or_404(Comments, id=comments_id)
+    return render(request, 'blance/reviews.html', {'models': models})

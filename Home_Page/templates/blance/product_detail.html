@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Приклад сторінки</title>
+    <title></title>
     <style>
         /* Основні стилі для блоків з зображенням */
         ul {
@@ -125,6 +125,12 @@
             cursor: pointer;
             text-decoration: none;
         }
+
+        .breadcrumbs__item {
+            position: relative;
+            margin-top: 80px;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body style>
@@ -163,7 +169,7 @@
                     </svg>
                     <span class="breadcrumbs__separator-last">/</span>
                     <a class="breadcrumbs__link" href="/">
-                        <span>Ноутбуки ACER</span>
+                        <span>Ноутбуки ASUS</span>
                     </a>
                 </li>
             </ul>
@@ -177,19 +183,14 @@
                                 <a class="tabs__link tabs__link--active" href="">Усе про товар</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="">Характеристики</a>
-                                <span class="tabs__link-text"> 1 </span>
+                                <a class="tabs__link" href="{% url 'characteristics' laptop_id=product.id %}">Характеристики</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="">Відгуки</a>
+                                <a class="tabs__link" href="{% url 'reviews' comments_id=product.id %}">Відгуки</a>
                                 <span class="tabs__link-text"> 1 </span>
                             </li>
                             <li class="tabs__item">
                                 <a class="tabs__link" href="">Питання</a>
-                                <span class="tabs__link-text"> 1 </span>
-                            </li>
-                            <li class="tabs__item">
-                                <a class="tabs__link" href="">Купують разом</a>
                                 <span class="tabs__link-text"> 1 </span>
                             </li>
                         </ul>
@@ -365,7 +366,7 @@
                                         </div1>
                                     </dl>
                                 </section>
-                                <a class="d-block text-xl mt-4" href="{% url 'characteristics' %}"> Дивитися всі характеристики&nbsp;→ </a>
+                                <a class="d-block text-xl mt-4" href="{% url 'characteristics' laptop_id=product.id %}"> Дивитися всі характеристики&nbsp;→ </a>
                             </div>
                         </div>
                     </div>
