@@ -2798,13 +2798,21 @@ main-slider__item_add {
 }
 
 .comment__inner {
-    margin-bottom: 24px;
     border: 1px solid #e9e9e9;
     border-radius: 8px;
+    padding-top: 12px;
+}
+
+@media (min-width: 768px) {
+    .comment__inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 }
 
 .reply-header__header {
-    padding: 8px;
+    margin-top: 8px;
 }
 
 .reply-header__author {

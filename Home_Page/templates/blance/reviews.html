@@ -199,6 +199,8 @@
         .me-3 {
             margin-right: 8px;
         }
+
+}
     </style>
 </head>
 <div class="wrapper central-wrapper">
@@ -342,88 +344,93 @@
                                 <option value="with_attachments" style="font-weight: 400;">З фото і відео</option>
                             </select>
                         </section>
-                        <ul class="product-comments__list">
-                            <li class="product-comments__list-item">
-                                <div style="font: inherit;">
-                                    <div2 class="mb-4">
-                                        <div2 class="gallery">
-                                            <div>
-                                                <div2 class="reply-header__header">
-                                                    <div2 class="reply-header__author">
-                                                        <div2>
-                                                            <div2 style="padding-left: 16px;"> Ольга</div2>
-                                                        </div2>
-                                                        <time class="reply-header__date" style="padding-right: 16px;"> 29 вересня 2024 </time>
-                                                    </div2>
-                                                </div2>
-                                            </div>
-                                            <div2 class="comment__vars">
-                                                <span> Відгук від покупця. </span>
-                                            </div2>
-                                            <div2 class="comment__body">
-                                                <div style="word-break: break-word;">
-                                                    <div style=" word-break: break-word; display: inline-block; width: 80px;">
-                                                        <div2 class="stars__container" style="word-break: break-word;">
-                                                            <div class="stars__rating" style="word-break: break-word; width: calc(100% - 2px);"></div>
-                                                            <div class="stars__bg" style="word-break: break-word;"></div>
-                                                            <svg viewBox="0 0 66 14" class="stars__svg" style="word-break: break-word;">
-                                                                <defs>
-                                                                    <symbol id="star" viewBox="0 0 24 24">
-                                                                      <path d="M12 .587l3.668 7.431L23.327 9.87l-5.327 5.195 1.257 7.323L12 18.879l-6.257 3.509 1.257-7.323-5.327-5.195 7.659-1.852L12 .587z"/>
-                                                                    </symbol>
-                                                                </defs>
-                                                                <use xlink:href="#star" x="0" y="-1" width="20" height="15" fill="gold"/>
-                                                                <use xlink:href="#star" x="13" y="-1" width="20" height="15" fill="gold"/>
-                                                                <use xlink:href="#star" x="26" y="-1" width="20" height="15" fill="gold"/>
-                                                                <use xlink:href="#star" x="39" y="-1" width="20" height="15" fill="gold"/>
-                                                                <use xlink:href="#star" x="52" y="-1" width="20" height="15" fill="gold">
-                                                            </svg>
+                        <div style="font: inherit;">
+                            <ul class="product-comments__list" style="list-style: none;">
+                                <li class="product-comments__list-item">
+                                    <div style="font: inherit;">
+                                        <div2 class="mb-4">
+                                            <div2 class="comment__inner">
+                                                <div>
+                                                    <div class="reply-header__header">
+                                                        <div2 class="reply-header__author">
+                                                            <div2>
+                                                                <div2 style="padding-left: 16px;"> Ольга</div2>
+                                                            </div2>
+                                                            <time class="reply-header__date" style="padding-right: 16px;"> 29 вересня 2024 </time>
                                                         </div2>
                                                     </div>
                                                 </div>
-                                                <p style="font-size: 14px;">
-                                                    Ноутбук супер. Тримає чоловіка вдома, поки ми з дитиною у довгій відпустці. Він задоволений, рекомендує.
-                                                    <br>
-                                                    Коли купували, в черзі всі чоловіки і касир довго обговорювали нашу покупку і раділи як за себе
-                                                </p>
-                                            </div2>
-                                            <div2 class="comment__footer">
-                                                <button type="button" class="button button--small button--link button--with-icon comment__reply">
-                                                    <svg width="24" height="24" aria-hidden="true">
-                                                        <use href="#icon-return"></use>
-                                                    </svg>
-                                                    Відповісти
-                                                </button>
-                                                <div2 class="comment__votes me-3">
-                                                    <div2 class="vote-buttons-comments">
-                                                        <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote" aria-label="Корисний відгук">
-                                                            <svg width="24" height="24" aria-hidden="true">
-                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
-                                                            </svg>
-                                                            <span class="vote-buttons-comments__counter">6</span>
-                                                        </button>
-                                                        <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote vote-buttons-comments__vote--dislike" aria-label="Некорисний відгук">
-                                                            <svg width="24" height="24" aria-hidden="true">
-                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
-                                                            </svg>
-                                                            <span class="vote-buttons-comments__counter">0</span>
-                                                        </button>
-
-                                                    </div2>
+                                                <div2 class="comment__vars" style="display: block;">
+                                                    <span> Відгук від покупця. </span>
                                                 </div2>
-                                                <div class="comment__actions">
-                                                    <button type="button" class="button button--white button--small menu-toggle-btn" aria-expanded="false" aria-haspopup="true">
-                                                        <svg width="24" height="24" aria-hidden="true" pointer-events="none" class="icon">
-                                                            <use href="#icon-vertical-dots"></use>
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                                                <div2 class="comment__body">
+                                                    <div style="word-break: break-word;">
+                                                        <div style=" word-break: break-word; display: inline-block; width: 80px;">
+                                                            <div2 class="stars__container" style="word-break: break-word;">
+                                                                <div class="stars__rating" style="word-break: break-word; width: calc(100% - 2px);"></div>
+                                                                <div class="stars__bg" style="word-break: break-word;"></div>
+                                                                <svg viewBox="0 0 76 14" class="stars__svg" style="word-break: break-word;">
+                                                                    <defs>
+                                                                        <symbol id="star" viewBox="0 0 24 24">
+                                                                          <path d="M12 .587l3.668 7.431L23.327 9.87l-5.327 5.195 1.257 7.323L12 18.879l-6.257 3.509 1.257-7.323-5.327-5.195 7.659-1.852L12 .587z"/>
+                                                                        </symbol>
+                                                                    </defs>
+                                                                    <use xlink:href="#star" x="0" y="-1" width="20" height="15" fill="gold"/>
+                                                                    <use xlink:href="#star" x="13" y="-1" width="20" height="15" fill="gold"/>
+                                                                    <use xlink:href="#star" x="26" y="-1" width="20" height="15" fill="gold"/>
+                                                                    <use xlink:href="#star" x="39" y="-1" width="20" height="15" fill="gold"/>
+                                                                    <use xlink:href="#star" x="52" y="-1" width="20" height="15" fill="gold">
+                                                                </svg>
+                                                            </div2>
+                                                        </div>
+                                                    </div>
+                                                    <p style="font-size: 14px;">
+                                                        Ноутбук супер. Тримає чоловіка вдома, поки ми з дитиною у довгій відпустці. Він задоволений, рекомендує.
+                                                        <br>
+                                                        Коли купували, в черзі всі чоловіки і касир довго обговорювали нашу покупку і раділи як за себе
+                                                    </p>
+                                                </div2>
+                                                <div2 class="comment__footer">
+                                                    <div style="font: inherit;">
+                                                        <button type="button" class="button button--small button--link button--with-icon comment__reply">
+                                                            <svg width="24" height="24" aria-hidden="true">
+                                                                <use href="#icon-return"></use>
+                                                            </svg>
+                                                            Відповісти
+                                                        </button>
+                                                    </div>
+                                                    <div2 class="comment__votes me-3">
+                                                        <div2 class="vote-buttons-comments">
+                                                            <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote" aria-label="Корисний відгук">
+                                                                <svg width="24" height="24" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
+                                                                </svg>
+                                                                <span class="vote-buttons-comments__counter">6</span>
+                                                            </button>
+                                                            <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote vote-buttons-comments__vote--dislike" aria-label="Некорисний відгук">
+                                                                <svg width="24" height="24" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
+                                                                </svg>
+                                                                <span class="vote-buttons-comments__counter">0</span>
+                                                            </button>
+                                                        </div2>
+                                                    </div2>
+                                                    <div class="comment__actions">
+                                                        <div style="position: relative; display: block; width: 40px; height: 40px;">
+                                                            <button type="button" class="button button--white button--small menu-toggle-btn" aria-expanded="false" aria-haspopup="true" style="height: 100%;">
+                                                                <svg width="24" height="24" aria-hidden="true" pointer-events="none" class="icon">
+                                                                    <use href="#icon-vertical-dots"></use>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div2>
                                             </div2>
                                         </div2>
-                                    </div2>
-                                </div>
-                            </li>
-                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </section>
                 </main>
             </div2>
