@@ -169,7 +169,7 @@
                     </svg>
                     <span class="breadcrumbs__separator-last">/</span>
                     <a class="breadcrumbs__link" href="/">
-                        <span>Ноутбуки ASUS</span>
+                        <span>Ноутбуки {{ product.notebooksbrand_id.name }}</span>
                     </a>
                 </li>
             </ul>
@@ -189,10 +189,6 @@
                                 <a class="tabs__link" href="{% url 'reviews' comments_id=product.id %}">Відгуки</a>
                                 <span class="tabs__link-text"> 1 </span>
                             </li>
-                            <li class="tabs__item">
-                                <a class="tabs__link" href="">Питання</a>
-                                <span class="tabs__link-text"> 1 </span>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -210,7 +206,7 @@
                                                 <li class="simple-slider__item" data-place="mock" style="width: 479px;">
                                                     <div class="main-slider__wrap main-slider__wrap2">
                                                         <div class="main-slider__item main-slider__wrap1">
-                                                            <img class="picture-container__picture" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4 ГБ - зображення 17" src="{{ i.image_path }}">
+                                                            <img class="picture-container__picture" alt="{{ models_laptop.name }} / {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }} " src="{{ i.image_path }}">
                                                         </div>
                                                     </div>
                                                 </li>
@@ -240,7 +236,7 @@
                                                                 {% for i in data_db %}
                                                                 <li class="simple-slider__item" style="width: 59.875px;">
                                                                     <button type="button" class="thumbnail-button thumbnail-button--active">
-                                                                        <img class="thumbnail-button__picture" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black + фірмовий рюкзак / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ / - зображення 1" src="{{ i.image_path }}">
+                                                                        <img class="thumbnail-button__picture" alt="{{ models_laptop.name }} / {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }}" src="{{ i.image_path }}">
                                                                     </button>
                                                                 </li>
                                                                 {% endfor %}
@@ -267,7 +263,9 @@
                                         <div class="inner">
                                             <div class="title" style="max-height: 90px; overflow: hidden;">
                                                 <p class="h2-1 bold" style>
-                                                    Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black + фірмовий рюкзак / 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ /
+                                                    {% if models_laptop %}
+                                                    {{ models_laptop.name }} {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }}
+                                                    {% endif %}
                                                 </p>
                                             </div>
                                         </div>
@@ -287,7 +285,9 @@
                                     </div>
                                 </div>
                                 <p class="mt-4" style="font-size: 14px;">
-                                    Екран 15.6" IPS (1920x1080) Full HD 144 Гц, матовий / AMD Ryzen 5 7535HS (3.3 - 4.55 ГГц) / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ / без ОД / Wi-Fi / Bluetooth / веб-камера / без ОС / 2.3 кг / чорний / рюкзак
+                                    {% if models_laptop %}
+                                        Екран {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }} / {{ models_laptop.weight }} / {{ models_laptop.color }}
+                                    {% endif %}
                                 </p>
                                 <div class="product-about__pictogram-list">
                                     <ul class="product-pictogram__list">
@@ -306,7 +306,9 @@
                                     <div class="wrap">
                                         <div class="inner">
                                             <h1 class="h2-1 bold">
-                                                Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black/ 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ.
+                                                {% if models_laptop %}
+                                                    {{ models_laptop.name }} / {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }}
+                                                {% endif %}
                                             </h1>
                                         </div>
                                     </div>
@@ -323,7 +325,7 @@
                                             <dd class="value">
                                                 <ul class="sub-list">
                                                     <li>
-                                                        <p>15.6"</p>
+                                                        <p>{{ models_laptop.screen_size }}"</p>
                                                     </li>
                                                 </ul>
                                             </dd>
@@ -335,7 +337,7 @@
                                             <dd class="value">
                                                 <ul class="sub-list">
                                                     <li>
-                                                        <p>144 Гц</p>
+                                                        <p>{{ models_laptop.screen_refresh_rate }}</p>
                                                     </li>
                                                 </ul>
                                             </dd>
@@ -347,7 +349,7 @@
                                             <dd class="value">
                                                 <ul class="sub-list">
                                                     <li>
-                                                        <p>IPS</p>
+                                                        <p>{{ models_laptop.screen_type }}</p>
                                                     </li>
                                                 </ul>
                                             </dd>
@@ -359,7 +361,7 @@
                                             <dd class="value">
                                                 <ul class="sub-list">
                                                     <li>
-                                                        <p>1920x1080</p>
+                                                        <p>{{ models_laptop.screen_resolution }}</p>
                                                     </li>
                                                 </ul>
                                             </dd>

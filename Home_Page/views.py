@@ -96,20 +96,21 @@ def notebooks(request):
 
 
 def product_detail(request, id):
-    db = Icons.objects.all()
-    data_db = Laptop_images.objects.all()
+    data_db = Laptop_images.objects.filter(images_id=id)
     product = get_object_or_404(Notebooks, id=id)
+    models_laptop = get_object_or_404(Laptop, id=id)
     data = {
         "title": "SmartHub",
         "menu": "menu",
     }
-    return render(request, 'blance/product_detail.html', {'product': product, 'data': data, 'data_db': data_db, "db": db})
+    return render(request, 'blance/product_detail.html', {'product': product, 'data': data, 'data_db': data_db, "models_laptop": models_laptop})
 
 
 def characteristics(request, laptop_id):
-    items = Notebooks.objects.all()
+    #items = Notebooks.objects.all()
+    product = get_object_or_404(Notebooks, id=laptop_id)
     models = get_object_or_404(Laptop, id=laptop_id)
-    return render(request, 'blance/characteristics.html', {'models': models, "items": items})
+    return render(request, 'blance/characteristics.html', {'models': models, "product": product})
 
 
 class NewsDetailView(DetailView):
@@ -119,5 +120,6 @@ class NewsDetailView(DetailView):
 
 
 def reviews(request, comments_id):
+    models_laptop = get_object_or_404(Laptop, id=comments_id)
     models = get_object_or_404(Comments, id=comments_id)
-    return render(request, 'blance/reviews.html', {'models': models})
+    return render(request, 'blance/reviews.html', {'models': models, 'models_laptop': models_laptop})

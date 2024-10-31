@@ -27,6 +27,11 @@ class SmartHun(models.Model):
         return self.name
 
 
+class NotebooksBrand(models.Model):
+    name = models.CharField(max_length=20)
+    url_name = models.URLField()
+
+
 class Notebooks(models.Model):
     name = models.CharField(max_length=50)
     content = models.TextField(null=True)
@@ -34,17 +39,11 @@ class Notebooks(models.Model):
     price = models.TextField(blank=True, null=True)
     url_name = models.URLField()
     images = models.ImageField(null=True, max_length=200)
-    Notebooks_brand = models.ManyToManyField('NotebooksBrand', blank=True)
-    
+    notebooksbrand_id = models.ForeignKey(NotebooksBrand, related_name='notebooksbrand_id',  on_delete=models.CASCADE)
     
 class Laptop_images(models.Model):
     images_id = models.ForeignKey(Notebooks, related_name='images_id', on_delete=models.CASCADE)
     image_path = models.CharField(max_length=255)
-
-
-class NotebooksBrand(models.Model):
-    name = models.CharField(max_length=20)
-    url_name = models.URLField()
 
 class Icons(models.Model):
     image_path = models.CharField(max_length=255)
@@ -54,6 +53,7 @@ class Icons(models.Model):
 
 
 class Laptop(models.Model):
+    notebooks_id = models.ForeignKey(Notebooks, related_name='notebooks_id', on_delete=models.CASCADE, default="1")
     name = models.CharField(max_length=100, verbose_name="Назва")
 
     # Основні характеристики

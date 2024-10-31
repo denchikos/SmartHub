@@ -4,6 +4,15 @@
 {% block reviews %}
 <head>
     <style>
+        div1 {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+        }
+
         div2 {
             margin: 0;
             padding: 0;
@@ -252,14 +261,10 @@
                                 <a class="tabs__link"  href="{% url 'product_detail' models.id %}">Усе про товар</a>
                             </li>
                             <li class="tabs__item tabs__link">
-                                <a class="tabs__link" href="">Характеристики</a>
+                                <a class="tabs__link" href="{% url 'characteristics' models.id %}">Характеристики</a>
                             </li>
                             <li class="tabs__item tabs__link">
                                 <a class="tabs__link tabs__link--active" href="">Відгуки</a>
-                                <span class="tabs__link-text"> 1 </span>
-                            </li>
-                            <li class="tabs__item">
-                                <a class="tabs__link" href="">Питання</a>
                                 <span class="tabs__link-text"> 1 </span>
                             </li>
                         </ul>
@@ -272,7 +277,7 @@
                 <div2  class="inner">
                     <div2 class="title closed" style="max-height: 76px; overflow: hidden;">
                         <h1 class="title__font">
-                            Відгуки покупців про Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4ГБ
+                            Відгуки покупців про {{ models_laptop.name }} / {{ models_laptop.screen_size }}" {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }}
                         </h1>
                     </div2>
                 </div2>
@@ -298,14 +303,14 @@
                     <p> 1 відгуки </p>>
                 </div2>
             </div2>
-            <div2 class="d-flex mt-4">
-                <main style="width: 100%;">
+            <div1 class="d-flex mt-4">
+                <main class="product-tabs__content" style="width: 100%;">
                     <section class="mb-4">
                         <div2>
                             <div style="display: flex; flex-direction: column; width: 100%; overflow: hidden;">
                                 <section class="gallery">
                                     <h4 class="gallery__heading">Фотографії та відео покупців</h4>
-                                    <div class="gallery__body">
+                                    <div1 class="gallery__body">
                                         <div2 class="attachments-preview__body">
                                             <ul class="attachments-preview__list">
                                                 <li class="attachments-preview__item">
@@ -315,7 +320,7 @@
                                                 </li>
                                             </ul>
                                         </div2>
-                                    </div>
+                                    </div1>
                                 </section>
                             </div>
                         </div2>
@@ -393,8 +398,8 @@
                                                 <div2 class="comment__footer">
                                                     <div style="font: inherit;">
                                                         <button type="button" class="button button--small button--link button--with-icon comment__reply">
-                                                            <svg width="24" height="24" aria-hidden="true">
-                                                                <use href="#icon-return"></use>
+                                                            <svg viewBox="0 0 24 24" width="24" height="24">
+                                                              <path d="M10 19V14H5L12 7L19 14H14V19H10Z" fill="#3e77aa"/>
                                                             </svg>
                                                             Відповісти
                                                         </button>
@@ -402,24 +407,20 @@
                                                     <div2 class="comment__votes me-3">
                                                         <div2 class="vote-buttons-comments">
                                                             <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote" aria-label="Корисний відгук">
-                                                                <svg width="24" height="24" aria-hidden="true">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
-                                                                </svg>
-                                                                <span class="vote-buttons-comments__counter">6</span>
+                                                                <span class="vote-buttons-comments__counter"><!--тут має бути лічильник лайків та його значок--></span>
                                                             </button>
                                                             <button class="button button_size_medium button_type_link button_with_icon vote-buttons-comments__vote vote-buttons-comments__vote--dislike" aria-label="Некорисний відгук">
-                                                                <svg width="24" height="24" aria-hidden="true">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-thumb-up"></use>
-                                                                </svg>
-                                                                <span class="vote-buttons-comments__counter">0</span>
+                                                                <span class="vote-buttons-comments__counter"><!--тут має бути лічильник дизлайків та його значок--></span>
                                                             </button>
                                                         </div2>
                                                     </div2>
                                                     <div class="comment__actions">
                                                         <div style="position: relative; display: block; width: 40px; height: 40px;">
                                                             <button type="button" class="button button--white button--small menu-toggle-btn" aria-expanded="false" aria-haspopup="true" style="height: 100%;">
-                                                                <svg width="24" height="24" aria-hidden="true" pointer-events="none" class="icon">
-                                                                    <use href="#icon-vertical-dots"></use>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3e77aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                  <circle cx="12" cy="5" r="1"></circle>
+                                                                  <circle cx="12" cy="12" r="1"></circle>
+                                                                  <circle cx="12" cy="19" r="1"></circle>
                                                                 </svg>
                                                             </button>
                                                         </div>
@@ -433,9 +434,53 @@
                         </div>
                     </section>
                 </main>
-            </div2>
+                <aside class="product-tabs__sidebar" style="display: block;">
+                    <div1 class="product-carriage">
+                        <div1 class="product-carriage__goods product-carriage_display-flex-md">
+                            <figure class="product-carriage__goods-picture">
+                                <img loading="lazy" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4 ГБ" src="{% static 'Home_page/images/Ноутбук ASUS TUF Gaming A15 (2023)/2389791.jpg' %}"></img>
+                            </figure>
+                            <div class="product-carriage__goods-title">
+                                Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black / 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ /
+                            </div>
+                        </div1>
+                        <div1 class="product-carriage__buy">
+                            <div1 class="product-carriage__buy-top" style="font-size: 100%;">
+                                <div1 class="product-price__block">
+                                    <p class="product-price__small">
+                                       39&nbsp;499
+                                        <span class="currency">₴</span>
+                                    </p>
+                                    <p class="product-carriage__price product-carriage__price_color-red">
+                                        33&nbsp;999
+                                        <span class="currency">₴</span>
+                                    </p>
+                                </div1>
+                                <div1 class="product-carriage__buttons">
+                                    <div class="wishlist-wrapper">
+                                        <button type="button" class="wishlist-button js-wish-button" aria-label="Перемістити в список бажань">
+                                           <svg width="24" height="24" aria-hidden="true">
+                                                <use href="#heart"></use>
+                                           </svg>
+                                        </button>
+                                    </div>
+                                </div1>
+                                <div class="product-carriage__buy-button">
+                                    <div class="mode-slim toOrde">
+                                        <button type="button" class="buy-button button button--with-icon button--green button--medium buy-button--tile" aria-label="Купити">
+                                            <span class="buy-button__label"> Купити </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div1>
+                        </div1>
+                    </div1>
+                </aside>
+            </div1>
         </div>
-{% endblock %}
-<svg fill='%23797878' viewBox='0 0 13 7' id="down-arrow">
-  <path fill-rule='evenodd' clip-rule='evenodd' d='M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z'/>
+<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="heart" viewBox="0 0 24 24">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+  </symbol>
 </svg>
+{% endblock %}
