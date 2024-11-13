@@ -85,7 +85,7 @@ def Profile(request):
 def notebooks(request):
     producer = request.GET.get('producer')
     if producer:
-        items = Notebooks.objects.filter(Notebooks_brand__name__iexact=producer)
+        items = Notebooks.objects.filter(notebooksbrand_id__name__iexact=producer)
     else:
         items = Notebooks.objects.all()
     data_db = Notebooks.objects.all()
@@ -96,9 +96,9 @@ def notebooks(request):
 
 
 def product_detail(request, id):
-    data_db = Laptop_images.objects.filter(images_id=id)
+    data_db = Laptop_images.objects.filter(images_id=id).order_by('id')
     product = get_object_or_404(Notebooks, id=id)
-    models_laptop = get_object_or_404(Laptop, id=id)
+    models_laptop = Laptop.objects.get(notebooks_id=product)
     data = {
         "title": "SmartHub",
         "menu": "menu",

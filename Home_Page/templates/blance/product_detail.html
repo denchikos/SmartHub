@@ -197,19 +197,19 @@
                 <div id="#scrollArea" class="layout">
                     <div class="product-about">
                         <div class="product-about__left">
-                            <div class="product-about__sticky" style="top: 129px; --topPosition: 129px;">
-                                <app-slider class="main-slider">
+                            <div class="product-about__sticky" style="top: 113px; --topPosition: 113px;">
+                                <app-slider class="main-slider" >
                                     <div class="simple-slider">
                                         <div class="simple-slider__holder carousel">
-                                            <ul class="simple-slider__list" style="transform: translate3d(-479px, 0px, 0px); transition-duration: 0ms; gap: 0px;">
+                                            <ul class="simple-slider__list" style="transform: translate3d( 480px, 0px, 0px); transition-duration: 0ms; gap: 0px;">
                                                 {% for i in data_db %}
-                                                <li class="simple-slider__item" data-place="mock" style="width: 479px;">
-                                                    <div class="main-slider__wrap main-slider__wrap2">
-                                                        <div class="main-slider__item main-slider__wrap1">
-                                                            <img class="picture-container__picture" alt="{{ models_laptop.name }} / {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }} " src="{{ i.image_path }}">
+                                                    <li class="simple-slider__item" data-place="mock" style="width: 480px;">
+                                                        <div class="main-slider__wrap main-slider__wrap2">
+                                                            <div class="main-slider__item main-slider__wrap1">
+                                                                <img class="picture-container__picture" alt="{{ models_laptop.name }} / {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }} " src="{{ i.image_path }}">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
                                                 {% endfor %}
                                             </ul>
                                             <button type="button" class="simple-slider__control simple-slider__control--prev">
@@ -246,7 +246,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="simple-slider__control simple-slider__control--prev visible-hidden" disabled>
+                                        <button type="button" class="simple-slider__control simple-slider__control--prev" disabled>
                                             <svg width="24" height="24" aria-hidden="true">
                                                 <use href="#left-arrow"></use>
                                             </svg>
@@ -377,6 +377,24 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const prevButton = document.querySelector('.simple-slider__control--prev');
+    const nextButton = document.querySelector('.simple-slider__control--next');
+    const sliderList = document.querySelector('.simple-slider__list');
+    let currentIndex = 0;
+
+    prevButton.addEventListener('click', function () {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : sliderList.children.length - 1;
+        sliderList.style.transform = `translate3d(-${currentIndex * 480}px, 0, 0)`;
+    });
+
+    nextButton.addEventListener('click', function () {
+        currentIndex = (currentIndex < sliderList.children.length - 1) ? currentIndex + 1 : 0;
+        sliderList.style.transform = `translate3d(-${currentIndex * 480}px, 0, 0)`;
+    });
+});
+</script>
 </body>
 <svg style="display: none;">
     <symbol id="left-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
