@@ -169,7 +169,7 @@
                     </svg>
                     <span class="breadcrumbs__separator-last">/</span>
                     <a class="breadcrumbs__link" href="/">
-                        <span>Ноутбуки {{ product.notebooksbrand_id.name }}</span>
+                        <span>Ноутбуки {{ product.noteb_id.name }}</span>
                     </a>
                 </li>
             </ul>
@@ -246,16 +246,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="simple-slider__control simple-slider__control--prev" disabled>
-                                            <svg width="24" height="24" aria-hidden="true">
-                                                <use href="#left-arrow"></use>
-                                            </svg>
-                                        </button>
-                                        <button type="button" class="simple-slider__control simple-slider__control--next" disabled>
-                                            <svg width="24" height="24" aria-hidden="true">
-                                                <use href="#right-arrow"></use>
-                                            </svg>
-                                        </button>
                                     </div>
                                 </app-slider>
                                 <div class="mobile">
@@ -394,6 +384,14 @@
         sliderList.style.transform = `translate3d(-${currentIndex * 480}px, 0, 0)`;
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sliderList = document.querySelector(".simple-slider__list");
+    if (sliderList) {
+        sliderList.style.transform = "translate3d(0px, 0px, 0px)";
+    }
+});
+
 </script>
 </body>
 <svg style="display: none;">

@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
 from .models import Notebooks, NotebooksBrand, Laptop_images, Icons, Laptop, Comments
 from django.views.generic import DetailView
+from django.db.models import Count, Q
 
 asorti = [{'id': 1, "title": 'Ноутбуки та компютери', 'url_name': 'computers',
            "images": 'Home_page/images/base_images/d1.jfif'},
@@ -84,15 +85,44 @@ def Profile(request):
 
 def notebooks(request):
     producer = request.GET.get('producer')
+    min_price = request.GET.get('min')
+    max_price = request.GET.get('max')
+
+    items = Notebooks.objects.all()
+
     if producer:
-        items = Notebooks.objects.filter(notebooksbrand_id__name__iexact=producer)
-    else:
-        items = Notebooks.objects.all()
-    data_db = Notebooks.objects.all()
-    data = {"title": "SmartHub",
-            "menu": menu,
-            }
-    return render(request, 'blance/Notebooks.html', {'data_db': data_db, 'data': data, 'items': items})
+        brands = producer.split(',')
+        items = items.filter(noteb_id__name__in=brands)
+
+    if producer:
+        brands = producer.split(',')
+        items = items.filter(noteb_id__name__in=brands)
+
+    if min_price:
+        try:
+            items = items.filter(price__gte=int(min_price))
+        except ValueError:
+            pass
+    if max_price:
+        try:
+            items = items.filter(price__lte=int(max_price))
+        except ValueError:
+            pass
+    NotebooksBrand_count = NotebooksBrand.objects.count()
+    brands_count = (
+        Notebooks.objects.values('noteb_id__name').annotate(count=Count('id')).order_by('noteb_id__name'))
+    notebooks_count = items.count()
+
+    data = {"title": "SmartHub", "menu": menu}
+
+    return render(request, 'blance/Notebooks.html', {
+        'data': data,
+        'items': items,
+        'notebooks_count': notebooks_count,
+        'NotebooksBrand_count': NotebooksBrand_count,
+        'brands_count': brands_count,
+        'current_producers': producer.split(',') if producer else [],
+    })
 
 
 def product_detail(request, id):

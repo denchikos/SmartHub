@@ -88,6 +88,16 @@
             margin-top: 80px;
             margin-bottom: 8px;
         }
+
+        section1 ul1 div2 {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
     </style>
 </head>
 <div1 class="central-wrapper">
@@ -124,9 +134,13 @@
             </div>
         </div>
         <ul>
-            <div>
+            <div2 class="catalog">
                 <div class="layout animation" style="top: 72px;">
-                    <div class="catalog-settings">
+                    <div1 class="catalog-settings">
+                        <div1 class="catalog-selection">
+                            <p class="catalog-selection__label"> Найдено {{ notebooks_count }} товарів </p>
+                            <ul class="catalog-selection__list"></ul>
+                        </div1>
                         <div class="catalog-settings__sorting">
                             <select class="select-css">
                                 <option disabled hidden>За рейтингом</option>
@@ -150,27 +164,29 @@
                                 </button>
                             </div1>
                         </div>
-                    </div>
+                    </div1>
                 </div>
-                <div class="layout layout_with_sidebar">
-                    <section class="content_type_catalog">
-                        <ul class="catalog-grid">
+                <div2 class="layout layout_with_sidebar">
+                    <section class="content_type_catalog" style="display: block; margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                        <ul class="catalog-grid" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
                             {% for i in items %}
-                            <li class="goods-tile">
-                                <div class="container goods-tile_inner img">
-                                    <div class="goods-tile__content">
-                                        <a class="image-with-text goods-tile__picture" href="{% url 'product_detail' id=i.id %}" title="{{ i.name }}">
-                                            <img  loading="lazy" src="{{ i.images }}" class="title_catsan" >{{ i.name }}
-                                        </a>
-                                    </div>
-                                </div>
+                            <li class="catalog-grid__cell">
+                                <div2 class="goods-tile" data-title="small">
+                                    <div2 class="goods-tile__inner" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                                        <div2 class="goods-tile__content">
+                                            <a class="image-with-text goods-tile__picture" href="{% url 'product_detail' id=i.id %}" title="{{ i.name }}" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                                                <img  loading="lazy" src="{{ i.images }}" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; width: 200px; height: 150px; object-fit: cover; display: block; margin: 0 auto;">{{ i.name }}
+                                            </a>
+                                        </div2>
+                                    </div2>
+                                </div2>
                                 <div class="goods-tile__price price--red"> {{ i.price }} </div>
                             </li>
                             {% endfor %}
                         </ul>
                     </section>
-                    <aside class="sidebar">
-                        <div>
+                    <aside class="sidebar1" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit;  vertical-align: baseline;">
+                        <div2 class="catalog--sticky" style="top: 145px; --topPosition: 145px;">
                             <div class="sidebar-block" data-filter-name="producer">
                                 <button type="button" class="sidebar-block__toggle">
                                     <span class="sidebar-block__toggle-title">
@@ -217,8 +233,8 @@
                             <div class="sidebar-block" data-filter-name="producer">
                                 <button type="button" class="sidebar-block__toggle">
                                     <span class="sidebar-block__toggle-title">
-                                        " Бренд "
-                                        <span class="sidebar-block__toggle-quantity"> 172 </span>
+                                        Бренд
+                                        <span class="sidebar-block__toggle-quantity"> {{ NotebooksBrand_count }} </span>
                                     </span>
                                     <svg width="16" height="16" class="sidebar-block__toggle-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
@@ -235,42 +251,32 @@
                                               </button>
                                         </div>
                                     </div>
-                                    <div style="height: 420px;">
+                                    <div style="height: 180px;">
                                         <div class="scrollbar__layout">
                                             <div class="scrollbar__inner" style="width: 251px;">
                                                 <div style="width: 233px;">
                                                     <div>
                                                         <ul class="checkbox-filter">
-                                                            <li class="checkbox-filter__item">
-                                                                <a class="checkbox-filter__link" data-id="ASUS" href="{% url 'notebooks' %}?producer=asus">
-                                                                    ASUS&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (20207) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="checkbox-filter__item">
-                                                                <a class="checkbox-filter__link" data-id="ACER" href="{% url 'notebooks' %}?producer=acer">
-                                                                    ACER&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (20207) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="checkbox-filter__item">
-                                                                <a class="checkbox-filter__link" data-id="LENOVO" href="{% url 'notebooks' %}?producer=lenovo">
-                                                                    LENOVO&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (20207) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="checkbox-filter__item">
-                                                                <a class="checkbox-filter__link" data-id="APPLE" href="{% url 'notebooks' %}?producer=apple">
-                                                                    APPLE&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (20207) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="checkbox-filter__item">
-                                                                <a class="checkbox-filter__link" data-id="HP" href="{% url 'notebooks' %}?producer=hp">
-                                                                    HP&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (20207) </span>
-                                                                </a>
-                                                            </li>
+                                                            {% for brand in brands_count %}
+                                                                {% if brand.noteb_id__name in current_producers %}
+                                                                    <!-- Якщо бренд вибрано, генеруємо URL для видалення його з фільтру -->
+                                                                    <li class="checkbox-filter__item" type="checkbox">
+                                                                        <a class="checkbox-filter__link"
+                                                                           href="{% url 'notebooks' %}?producer={% for producer in current_producers %}{% if producer != brand.noteb_id__name %}{{ producer }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
+                                                                            {{ brand.noteb_id__name }} ({{ brand.count }})
+                                                                            <span>(Видалити)</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <!-- Якщо бренд не вибрано, додаємо його до фільтру -->
+                                                                    <li class="checkbox-filter__item" type="checkbox">
+                                                                        <a class="checkbox-filter__link"
+                                                                           href="{% url 'notebooks' %}?producer={{ current_producers|join:',' }}{% if current_producers|length > 0 %},{% endif %}{{ brand.noteb_id__name }}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
+                                                                            {{ brand.noteb_id__name }} ({{ brand.count }})
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% endfor %}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -292,21 +298,12 @@
                                             <div class="scrollbar__layout">
                                                 <div class="scrollbar__inner" style="width: 251px;">
                                                     <div style="width: 233px;">
-                                                        <form novalidate class="slider-filter__form">
+                                                        <form method="get" class="slider-filter__form">
                                                             <div class="slider-filter__inner">
-                                                                <input type="text" formcontrolname="min" class="slider-filter__input" maxlength="20">
+                                                                <input type="text" name="min" value="{{ request.GET.min }}" class="slider-filter__input" maxlength="20" placeholder="Мін">
                                                                 <span aria-hidden="true" class="slider-filter__divider"> — </span>
-                                                                <input type="text" formcontrolname="max" class="slider-filter__input" maxlength="20">
+                                                                <input type="text" name="max" value="{{ request.GET.max }}" class="slider-filter__input" maxlength="20" placeholder="Макс">
                                                                 <button type="submit" class="button button_color_gray button_size_small slider-filter__button"> Ok </button>
-                                                            </div>
-                                                            <div class="rz-slider-wrapper">
-                                                                <div class="rz-slider">
-                                                                   <div class="rz-slider__range-center">
-                                                                       <div class="rz-slider__range-space" style="margin-left: 0%; width: 100%;"></div>
-                                                                   </div>
-                                                                    <button type="button" class="rz-slider__range-button rz-slider__range-button_type_left" style="left: 0%;"></button>
-                                                                    <button type="button" class="rz-slider__range-button rz-slider__range-button_type_left" style="left: 100%;"></button>
-                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -414,10 +411,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div2>
                     </aside>
-                </div>
-            </div>
+                </div2>
+            </div2>
         </ul>
     </main>
     <hr>

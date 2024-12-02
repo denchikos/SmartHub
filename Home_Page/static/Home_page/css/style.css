@@ -878,14 +878,6 @@ ul.lang-list li a:hover {color: #fdc073;}
 
 /* стилі для оформлення сайтбару */
 
-.sidebar {
-    display: block;
-    flex-shrink: 0;
-    width: 300px;
-    border-right: 1px solid #cbc3c3;
-    border-bottom: 1px solid #cbc3c3;
-}
-
 .sidebar_type_main {
     bottom: 0;
     position: -webkit-sticky;
@@ -1351,12 +1343,16 @@ button.button, input.button {
 .catalog-heading {
     font-size: 24px;
     line-height: normal;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 @media (min-width: 1024px) {
 .catalog-heading {
     font-size: 36px;
     line-height: 42px;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 }
 
@@ -1366,6 +1362,43 @@ animation {
     position: sticky;
     z-index: 5;
     transition: .22s ease-in-out;
+}
+
+.catalog-selection {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .catalog-selection {
+        display: flex;
+    }
+}
+
+.catalog-selection__label {
+    align-self: flex-end;
+    margin-right: 8px;
+    font-size: 14px;
+    line-height: 32px;
+    white-space: nowrap;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.catalog-grid__cell {
+    border-bottom: 1px solid #e9e9e9;
+    border-right: 1px solid #e9e9e9;
+    box-sizing: border-box;
+    position: relative;
+    width: 25%;
+}
+
+.catalog-selection__list {
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .catalog-settings {
@@ -1403,6 +1436,7 @@ animation {
     -moz-appearance: none;
     appearance: none;
     background-color: #fff;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 7'%3E%3Cpath fill='%23797878' d='M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z'/%3E%3C/svg%3E");
     background-position: right 12px center;
     background-repeat: no-repeat, repeat;
     background-size: 14px 9px;
@@ -1473,12 +1507,41 @@ animation {
     }
 }
 
+.catalog {
+    margin-bottom: 64px;
+}
+
 .sidebar {
     display: block;
     flex-shrink: 0;
     width: 300px;
     border-right: 1px solid #cbc3c3;
     border-bottom: 1px solid #cbc3c3;
+}
+
+.sidebar1 {
+    display: none;
+    flex-shrink: 0;
+    width: 250px;
+}
+
+@media (min-width: 1024px) {
+    .sidebar1 {
+        display: block;
+    }
+}
+
+.catalog--sticky {
+    position: -webkit-sticky;
+    position: -webkit-sticky;
+    position: sticky;
+    max-height: calc(100vh - var(--topPosition, 0) - 8px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-left: -100%;
+    padding-left: 100%;
+    background-color: #fff;
+    z-index: 1;
 }
 
 .sidebar-block {
@@ -1563,7 +1626,7 @@ animation {
 @media (min-width: 1024px) {
     .checkbox-filter__link {
         padding-right: 8px;
-        padding-left: 32px);
+        padding-left: 32px;
     }
 }
 
