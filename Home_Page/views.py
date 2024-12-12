@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
-from .models import Notebooks, NotebooksBrand, Laptop_images, Icons, Laptop, Comments
+from .models import Notebooks, NotebooksBrand, Laptop_images, Icons, Laptop, Comments, Laptop_processors
 from django.views.generic import DetailView
 from django.db.models import Count, Q
+from urllib.parse import unquote
 
 asorti = [{'id': 1, "title": 'Ноутбуки та компютери', 'url_name': 'computers',
            "images": 'Home_page/images/base_images/d1.jfif'},
@@ -84,20 +85,21 @@ def Profile(request):
 
 
 def notebooks(request):
-    producer = request.GET.get('producer')
-    min_price = request.GET.get('min')
-    max_price = request.GET.get('max')
+    # Отримання параметрів запиту
+    producer = request.GET.get('producer')  # Бренди
+    min_price = request.GET.get('min')  # Мінімальна ціна
+    max_price = request.GET.get('max')  # Максимальна ціна
+    processor = unquote(request.GET.get('processor', ''))  # Процесори
 
+    # Початковий набір даних
     items = Notebooks.objects.all()
 
-    if producer:
-        brands = producer.split(',')
-        items = items.filter(noteb_id__name__in=brands)
+    # Фільтрація за брендами
+    current_producers = producer.split(',') if producer else []
+    if current_producers:
+        items = items.filter(noteb_id__name__in=current_producers)
 
-    if producer:
-        brands = producer.split(',')
-        items = items.filter(noteb_id__name__in=brands)
-
+    # Фільтрація за ціною
     if min_price:
         try:
             items = items.filter(price__gte=int(min_price))
@@ -108,21 +110,33 @@ def notebooks(request):
             items = items.filter(price__lte=int(max_price))
         except ValueError:
             pass
+
+    # Фільтрація за процесорами
+    current_processors = processor.split(',') if processor else []
+    if current_processors:
+        items = items.filter(processor_id__processor__in=current_processors)
+
+    # Збір додаткової інформації для відображення
     NotebooksBrand_count = NotebooksBrand.objects.count()
-    brands_count = (
-        Notebooks.objects.values('noteb_id__name').annotate(count=Count('id')).order_by('noteb_id__name'))
+    brands_count = (Notebooks.objects.values('noteb_id__name').annotate(count=Count('id')).order_by('noteb_id__name'))
+    processor_count = (Notebooks.objects.values('processor_id__processor').annotate(count=Count('id')))
     notebooks_count = items.count()
 
+    # Підготовка контексту для шаблону
     data = {"title": "SmartHub", "menu": menu}
-
     return render(request, 'blance/Notebooks.html', {
         'data': data,
         'items': items,
         'notebooks_count': notebooks_count,
         'NotebooksBrand_count': NotebooksBrand_count,
         'brands_count': brands_count,
-        'current_producers': producer.split(',') if producer else [],
+        'processor_count': processor_count,
+        'current_producers': current_producers,
+        'current_processors': current_processors,
+        'min_price': min_price,
+        'max_price': max_price,
     })
+
 
 
 def product_detail(request, id):

@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 
+
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_published=SmartHun.Status.PUBLISHED)
@@ -35,7 +36,7 @@ class Notebooks(models.Model):
     images = models.ImageField(null=True, max_length=200)
     Notebooks_brand = models.ManyToManyField('NotebooksBrand', blank=True)
     noteb_id = models.ForeignKey('NotebooksBrand', related_name='notebooksbrand_id', on_delete=models.CASCADE)
-
+    processor_id = models.ForeignKey('Laptop_processors', on_delete=models.CASCADE)
 
 class NotebooksBrand(models.Model):
     name = models.CharField(max_length=20)
@@ -56,7 +57,6 @@ class Icons(models.Model):
 
 class Laptop(models.Model):
     notebooks_id = models.ForeignKey(Notebooks, related_name='notebooks_id', on_delete=models.CASCADE)
-    laptop_processor_id = models.ForeignKey('Laptop_processors', related_name='laptop_id', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name="Назва")
 
     # Основні характеристики
@@ -111,6 +111,9 @@ class Laptop(models.Model):
         return self.series
 
 
+class Laptop_processors(models.Model):
+    processor = models.CharField(max_length=100, verbose_name="Процесор")
+
 class Comments(models.Model):
     laptops_id = models.ForeignKey(Laptop, related_name='images_id', on_delete=models.CASCADE)
     full_name = models.CharField(max_length=50, verbose_name="ФІО")
@@ -118,5 +121,3 @@ class Comments(models.Model):
     reviews_users = models.CharField(verbose_name="Відгук користувача")
 
 
-class Laptop_processors(models.Model):
-    processor = models.CharField(max_length=100, verbose_name="Процесор")

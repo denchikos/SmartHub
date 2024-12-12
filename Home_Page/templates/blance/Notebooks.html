@@ -320,7 +320,7 @@
                                         <button type="button" class="sidebar-block__toggle">
                                             <span class="sidebar-block__toggle-title">
                                                 Процесор
-                                                <span class="sidebar-block__toggle-quantity"> 18 </span>
+                                                <span class="sidebar-block__toggle-quantity"> 11 </span>
                                             </span>
                                             <svg width="16" height="16" class="sidebar-block__toggle-icon">
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
@@ -330,75 +330,29 @@
                                             <div class="scrollbar__layout">
                                                 <div class="scrollbar__inner" style="width: 251px;">
                                                     <div style="width: 233px;">
+                                                        <!-- Фільтр по процесорам -->
                                                         <ul class="checkbox-filter">
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="Intel Core i3" href="{% url 'home' %}">
-                                                                    Intel Core i3&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="Intel Core i5" href="{% url 'home' %}">
-                                                                    Intel Core i5&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="Intel Core i7" href="{% url 'home' %}">
-                                                                    Intel Core i7&nbsp;
-                                                                    <span class="sidebar-block__quantity ng-star-inserted"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="Intel Core i9" href="{% url 'home' %}">
-                                                                    Intel Core i9&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 3" href="{% url 'home' %}">
-                                                                    AMD Ryzen 3&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 5" href="{% url 'home' %}">
-                                                                    AMD Ryzen 5&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 7" href="{% url 'home' %}">
-                                                                    AMD Ryzen 7&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="AMD Ryzen 9" href="{% url 'home' %}">
-                                                                    AMD Ryzen 8&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="M1" href="{% url 'home' %}">
-                                                                    M1&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="M2" href="{% url 'home' %}">
-                                                                    M2
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="checkbox-filter__link" data-id="M3" href="{% url 'home' %}">
-                                                                    M13
-                                                                    <span class="sidebar-block__quantity"> (21172) </span>
-                                                                </a>
-                                                            </li>
+                                                            {% for processor in processor_count %}
+                                                                {% if processor.processor_id__processor in current_processors %}
+                                                                    <!-- Якщо процесор вибрано, генеруємо URL для видалення його з фільтру -->
+                                                                    <li>
+                                                                        <a class="checkbox-filter__link"
+                                                                           href="{% url 'notebooks' %}?processor={% for proc in current_processors %}{% if proc != processor.processor_id__processor %}{{ proc }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
+                                                                            {{ processor.processor_id__processor }} ({{ processor.count }})
+                                                                            <span>(Видалити)</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <!-- Якщо процесор не вибрано, додаємо його до фільтру -->
+                                                                    <li>
+                                                                        <a class="checkbox-filter__link"
+                                                                           href="{% url 'notebooks' %}?processor={{ current_processors|join:',' }}{% if current_processors|length > 0 %},{% endif %}{{ processor.processor_id__processor }}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
+                                                                            {{ processor.processor_id__processor }} ({{ processor.count }})
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% endfor %}
                                                         </ul>
-                                                        <ul class="checkbox-filter">…</ul>
                                                     </div>
                                                 </div>
                                                 <div class="scrollbar__holder" style="right: -8px;">
