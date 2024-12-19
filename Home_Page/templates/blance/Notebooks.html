@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load url_utils %}
+
 
 {% block notebooks %}
 <head>
@@ -243,12 +245,10 @@
                                 <div class="sidebar-block__inner" style="overflow-x: hidden;">
                                     <div>
                                         <div class="sidebar-search">
-                                            <input type="search" name="searchline" class="sidebar-search__input" placeholder="Пошук">
-                                        </div>
-                                        <div class="sidebar-alphabet">
-                                              <button type="button" class="button button_type_link sidebar-alphabet__toggle">
-                                                    <span class="link-dotted"> Алфавітний вказівник </span>
-                                              </button>
+                                            <form method="get">
+                                                <input type="search" name="search" value="{{ request.GET.search }}" class="sidebar-search__input" placeholder="Пошук">
+                                                <button type="submit" class="sidebar-search__button" style="display: none;"></button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div style="height: 180px;">
@@ -258,24 +258,12 @@
                                                     <div>
                                                         <ul class="checkbox-filter">
                                                             {% for brand in brands_count %}
-                                                                {% if brand.noteb_id__name in current_producers %}
                                                                     <!-- Якщо бренд вибрано, генеруємо URL для видалення його з фільтру -->
                                                                     <li class="checkbox-filter__item" type="checkbox">
-                                                                        <a class="checkbox-filter__link"
-                                                                           href="{% url 'notebooks' %}?producer={% for producer in current_producers %}{% if producer != brand.noteb_id__name %}{{ producer }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
-                                                                            {{ brand.noteb_id__name }} ({{ brand.count }})
-                                                                            <span>(Видалити)</span>
+                                                                        <a class="checkbox-filter__link" href="?{% url_replace request 'producer' brand.noteb_id__name %}">
+                                                                           {{ brand.noteb_id__name }} ({{ brand.count }})
                                                                         </a>
                                                                     </li>
-                                                                {% else %}
-                                                                    <!-- Якщо бренд не вибрано, додаємо його до фільтру -->
-                                                                    <li class="checkbox-filter__item" type="checkbox">
-                                                                        <a class="checkbox-filter__link"
-                                                                           href="{% url 'notebooks' %}?producer={{ current_producers|join:',' }}{% if current_producers|length > 0 %},{% endif %}{{ brand.noteb_id__name }}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
-                                                                            {{ brand.noteb_id__name }} ({{ brand.count }})
-                                                                        </a>
-                                                                    </li>
-                                                                {% endif %}
                                                             {% endfor %}
                                                         </ul>
                                                     </div>
@@ -304,6 +292,11 @@
                                                                 <span aria-hidden="true" class="slider-filter__divider"> — </span>
                                                                 <input type="text" name="max" value="{{ request.GET.max }}" class="slider-filter__input" maxlength="20" placeholder="Макс">
                                                                 <button type="submit" class="button button_color_gray button_size_small slider-filter__button"> Ok </button>
+                                                                {% for key, value in request.GET.items %}
+                                                                    {% if key != 'min' and key != 'max' %}
+                                                                        <input type="hidden" name="{{ key }}" value="{{ value }}">
+                                                                    {% endif %}
+                                                                {% endfor %}
                                                             </div>
                                                         </form>
                                                     </div>
@@ -333,24 +326,11 @@
                                                         <!-- Фільтр по процесорам -->
                                                         <ul class="checkbox-filter">
                                                             {% for processor in processor_count %}
-                                                                {% if processor.processor_id__processor in current_processors %}
-                                                                    <!-- Якщо процесор вибрано, генеруємо URL для видалення його з фільтру -->
-                                                                    <li>
-                                                                        <a class="checkbox-filter__link"
-                                                                           href="{% url 'notebooks' %}?processor={% for proc in current_processors %}{% if proc != processor.processor_id__processor %}{{ proc }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
-                                                                            {{ processor.processor_id__processor }} ({{ processor.count }})
-                                                                            <span>(Видалити)</span>
-                                                                        </a>
-                                                                    </li>
-                                                                {% else %}
-                                                                    <!-- Якщо процесор не вибрано, додаємо його до фільтру -->
-                                                                    <li>
-                                                                        <a class="checkbox-filter__link"
-                                                                           href="{% url 'notebooks' %}?processor={{ current_processors|join:',' }}{% if current_processors|length > 0 %},{% endif %}{{ processor.processor_id__processor }}{% if request.GET.min %}&min={{ request.GET.min }}{% endif %}{% if request.GET.max %}&max={{ request.GET.max }}{% endif %}">
-                                                                            {{ processor.processor_id__processor }} ({{ processor.count }})
-                                                                        </a>
-                                                                    </li>
-                                                                {% endif %}
+                                                                <li>
+                                                                    <a class="checkbox-filter__link" href="?{% url_replace request 'processor' processor.processor_id__processor %}">
+                                                                        {{ processor.processor_id__processor }} ({{ processor.count }})
+                                                                    </a>
+                                                                </li>
                                                             {% endfor %}
                                                         </ul>
                                                     </div>

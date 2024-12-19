@@ -90,14 +90,23 @@ def notebooks(request):
     min_price = request.GET.get('min')  # Мінімальна ціна
     max_price = request.GET.get('max')  # Максимальна ціна
     processor = unquote(request.GET.get('processor', ''))  # Процесори
+    search_query = request.GET.get('search', '')
 
     # Початковий набір даних
     items = Notebooks.objects.all()
 
     # Фільтрація за брендами
+
     current_producers = producer.split(',') if producer else []
+    current_processors = processor.split(',') if processor else []
     if current_producers:
         items = items.filter(noteb_id__name__in=current_producers)
+
+    if search_query:
+        # Виконуємо фільтрацію
+        items = Notebooks.objects.filter(name__icontains=search_query)
+    else:
+        items = Notebooks.objects.all()
 
     # Фільтрація за ціною
     if min_price:
@@ -111,8 +120,6 @@ def notebooks(request):
         except ValueError:
             pass
 
-    # Фільтрація за процесорами
-    current_processors = processor.split(',') if processor else []
     if current_processors:
         items = items.filter(processor_id__processor__in=current_processors)
 
@@ -132,9 +139,10 @@ def notebooks(request):
         'brands_count': brands_count,
         'processor_count': processor_count,
         'current_producers': current_producers,
-        'current_processors': current_processors,
+        #'current_processors': current_processors,
         'min_price': min_price,
         'max_price': max_price,
+        'search_query': search_query
     })
 
 
