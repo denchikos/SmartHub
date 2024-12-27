@@ -1532,8 +1532,6 @@ animation {
 }
 
 .catalog--sticky {
-    position: -webkit-sticky;
-    position: -webkit-sticky;
     position: sticky;
     max-height: calc(100vh - var(--topPosition, 0) - 8px);
     overflow-y: auto;

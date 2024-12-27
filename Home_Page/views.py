@@ -90,23 +90,27 @@ def notebooks(request):
     min_price = request.GET.get('min')  # Мінімальна ціна
     max_price = request.GET.get('max')  # Максимальна ціна
     processor = unquote(request.GET.get('processor', ''))  # Процесори
-    search_query = request.GET.get('search', '')
+    search_query = request.GET.get('search', '')  # Пошук
+    sort_option = request.GET.get('sort')  # Сортування
 
-    # Початковий набір даних
+    # Отримання всіх записів
     items = Notebooks.objects.all()
 
     # Фільтрація за брендами
-
     current_producers = producer.split(',') if producer else []
-    current_processors = processor.split(',') if processor else []
+
+    # Якщо search_query є брендом, додаємо його до списку current_producers
+    if search_query:
+        brands = NotebooksBrand.objects.values_list('name', flat=True)  # Отримуємо список брендів із бази
+        if search_query in brands:
+            current_producers.append(search_query)
+
     if current_producers:
         items = items.filter(noteb_id__name__in=current_producers)
 
-    if search_query:
-        # Виконуємо фільтрацію
-        items = Notebooks.objects.filter(name__icontains=search_query)
-    else:
-        items = Notebooks.objects.all()
+    # Фільтрація за пошуком
+    if search_query and search_query not in current_producers:
+        items = items.filter(name__icontains=search_query)
 
     # Фільтрація за ціною
     if min_price:
@@ -120,8 +124,16 @@ def notebooks(request):
         except ValueError:
             pass
 
+    # Фільтрація за процесорами
+    current_processors = processor.split(',') if processor else []
     if current_processors:
         items = items.filter(processor_id__processor__in=current_processors)
+
+    # Сортування
+    if sort_option == 'price_asc':
+        items = items.order_by('price')  # Від дешевих до дорогих
+    elif sort_option == 'price_desc':
+        items = items.order_by('-price')  # Від дорогих до дешевих
 
     # Збір додаткової інформації для відображення
     NotebooksBrand_count = NotebooksBrand.objects.count()
@@ -139,11 +151,12 @@ def notebooks(request):
         'brands_count': brands_count,
         'processor_count': processor_count,
         'current_producers': current_producers,
-        #'current_processors': current_processors,
         'min_price': min_price,
         'max_price': max_price,
-        'search_query': search_query
+        'search_query': search_query,
     })
+
+
 
 
 
