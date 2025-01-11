@@ -13,16 +13,6 @@
             color: inherit;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
         .login-container {
             background-color: #2f5938;
             color: white;
@@ -105,58 +95,84 @@
             width: 205px;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
     </style>
 </head>
-<nav>
-    <div>
-        <div class="login-container">
-            <h1>
-                <a href="{% url 'home' %}" class="a1">
-                <img src="{% static 'Home_page/images/depositphotos_7.jpg' %}" class="icon-profile" alt="SmartHub">
-                SmartHub</a>
-            </h1>
-            <div class="template-page__form-content">
-                <form class="content">
-                    <div class="h3 m_b-15"> Вхід </div>
-                    <div class="login-form__field">
-                        <input type="text" placeholder="E-mail або номер мобільного телефону" value class="field m_b-5">
-                        <div class="text-gray text-sm"> Формат номера: 380xxxxxxxxx </div>
-                    </div>
-                    <div class="login-form__field">
-                        <input type="password" placeholder="Пароль" value class="field m_b-5">
-                    </div>
-                    <div class="login-form__btn-container login-form__field">
-                        <button type="submit" class="btn btn-graphite"> Увійти </button>
-                    </div>
-                    <div class="text-center">
-                        <a href="{% url 'home' %}" class="btn-graphite--2"> Забули пароль? </a>
-                    </div>
-                    <div class="social-login">
-                        <div data-title="Увійти за допомогою" class="social-login__delimiter"></div>
-                        <div class="social-login__buttons-container m_b-15">
-                            <button type="button" class="btn social-button--facebook social-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="social-button__icon svg-icon sprite-social">
-                                    <use href="/frontend/_nuxt/30adde8….svg#i-facebook" xlink:href="/frontend/_nuxt/30adde85955e4bfb1466e2687808919a.svg#i-facebook"></use>
-                                </svg>
-                                Facebook
-                            </button>
-                            <button id="googleLogin" type="button" class="btn btn--transparent social-button--google social-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="social-button__icon svg-icon sprite-social">
-                                    <use href="/frontend/_nuxt/30adde8….svg#i-google" xlink:href="/frontend/_nuxt/30adde85955e4bfb1466e2687808919a.svg#i-google"></use>
-                                </svg>
-                                Google
-                            </button>
-                        </div>
-                        <div>
-                            <a href="{% url 'home' %}" class="btn-graphite--2"> У вас ще немає облікового запису </a>
-                        </div>
-                    </div>
-                    <div class="agreement-text m_b-10">
-                        <h5> Входячи або реєструючись на SmartHub, &zwnj;ви погоджуєтесь з<span target="_blank" href="{% url 'home' %}"> Угодою користувача </span>та<span target="_blank" href="/ua/page/disposition/">Положення про обробку і захист персональних даних</span></h5>
-                    </div>
-                </form>
+<div class="login-container">
+    <h1>
+        <a href="{% url 'home' %}" class="a1">
+        <img src="{% static 'Home_page/images/depositphotos_7.jpg' %}" class="icon-profile" alt="SmartHub">
+        SmartHub</a>
+    </h1>
+    <div class="template-page__form-content">
+        <form class="content">
+            <div class="h3 m_b-15"> Вхід </div>
+            <div class="login-form__field">
+                <input type="text" placeholder="E-mail або номер мобільного телефону" value class="field m_b-5">
+                <div class="text-gray text-sm"> Формат номера: 380xxxxxxxxx </div>
             </div>
-        </div>
+            <div class="login-form__field">
+                <input type="password" placeholder="Пароль" value class="field m_b-5">
+            </div>
+            <div class="login-form__btn-container login-form__field">
+                <button type="submit" class="btn btn-graphite"> Увійти </button>
+            </div>
+            <div class="text-center">
+                <a href="{% url 'home' %}" class="btn-graphite--2"> Забули пароль? </a>
+            </div>
+            <div class="social-login">
+                <div data-title="Увійти за допомогою" class="social-login__delimiter"></div>
+                <div class="social-login__buttons-container m_b-15">
+                    <button type="button" class="btn social-button--facebook social-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="social-button__icon svg-icon sprite-social">
+                            <use href="/frontend/_nuxt/30adde8….svg#i-facebook" xlink:href="/frontend/_nuxt/30adde85955e4bfb1466e2687808919a.svg#i-facebook"></use>
+                        </svg>
+                        Facebook
+                    </button>
+                    <button id="googleLogin" type="button" class="btn btn--transparent social-button--google social-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="social-button__icon svg-icon sprite-social">
+                            <use href="/frontend/_nuxt/30adde8….svg#i-google" xlink:href="/frontend/_nuxt/30adde85955e4bfb1466e2687808919a.svg#i-google"></use>
+                        </svg>
+                        Google
+                    </button>
+                </div>
+                <div>
+                    <a href="{% url 'home' %}" class="btn-graphite--2"> У вас ще немає облікового запису </a>
+                </div>
+            </div>
+            <div class="agreement-text m_b-10">
+                <h5> Входячи або реєструючись на SmartHub, &zwnj;ви погоджуєтесь з<span target="_blank" href="{% url 'home' %}"> Угодою користувача </span>та<span target="_blank" href="/ua/page/disposition/">Положення про обробку і захист персональних даних</span></h5>
+            </div>
+        </form>
     </div>
-</nav>
+</div>
 {% endblock %}

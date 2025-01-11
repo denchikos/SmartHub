@@ -959,7 +959,7 @@ ul.lang-list li a:hover {color: #fdc073;}
     flex-direction: row;
     align-items: center;
     width: 100%;
-    background-color: #122538;
+    background-color: #333;
 }
 
 .search-form__inner {
@@ -2968,4 +2968,5 @@ main-slider__item_add {
     width: 0;
     min-width: 0;
 }
+
 

@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
 from .models import Notebooks, NotebooksBrand, Laptop_images, Icons, Laptop, Comments, Laptop_processors
 from django.views.generic import DetailView
 from django.db.models import Count, Q
 from urllib.parse import unquote
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
+
 
 asorti = [{'id': 1, "title": 'Ноутбуки та компютери', 'url_name': 'computers',
            "images": 'Home_page/images/base_images/d1.jfif'},
@@ -38,7 +41,19 @@ data_computers = [
     {"id": 4, 'title': 'планшети', 'url_name': 'computers'},
 ]
 
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return JsonResponse({"success": True})  # Успішний вхід
+        else:
+            return JsonResponse({"success": False, "errors": form.errors})  # Помилки валідації
 
+    # Якщо GET-запит, повертаємо HTML із формою входу (наприклад, для модального вікна)
+    if request.method == "GET":
+        return render(request, "base.html", {"form": AuthenticationForm()})
 
 
 def Home_page(request):

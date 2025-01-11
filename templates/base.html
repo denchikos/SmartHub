@@ -58,115 +58,273 @@
         z-index: 1000;
     }
 
+    header.navbar {
+        display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 40px;
+        background-color: #333;
+    }
+
+    header .logo {
+        font-size: 44px;
+        font-weight: bold;
+        color: #32cd32;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    header .logo a {
+        font-size: 34px;
+        font-weight: bold;
+        color: #32cd32;
+        white-space: nowrap
+    }
+
+    header .menu a, header .profile a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 16px;
+    }
+
+    .logo {
+	    background: url('../images/logo.png') no-repeat 10px 5px;
+	    width: 250px;
+	    height: 60px;
+    }
+
+
+
+    .search input {
+        flex: 1;
+        height: 100%;
+        padding: 10px 15px;
+        border-right: none;
+        border-radius: 20px 0 0 20px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .search-button {
+        padding: 10px 20px;
+        border-left: none;
+        background-color: #28a745;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 0 20px 20px 0;
+    }
+
+    .search-button:hover {
+        background-color: #218838;
+    }
+
+    header .logo {
+        font-size: 44px;
+        font-weight: bold;
+        color: #32cd32;
+    }
+
+    header .menu a, header .profile a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 16px;
+    }
+
+    header .menu a:hover, header .profile a:hover {
+        color: #32cd32;
+    }
+
+    .hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px 20px;
+        background: linear-gradient(0deg, #32cd32, #1b1b1b);
+    }
+
+    .hero-content {
+        max-width: 50%;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .hero button {
+        background-color: #000000;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .hero img {
+        border-radius: 10px;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 40px;
+        background-color: #2a2a2a;
+    }
+
+    .product-card {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .product-card img {
+        width: 100px;
+        height: 100px
+    }
+
+    .product-card h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .product-card p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .product-card button {
+        background-color: #32cd32;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #111;
+        color: #888;
+    }
+
+    .modal {
+        display: none; /* Приховано за замовчуванням */
+        position: fixed;
+        z-index: 1000;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #0f3c0f; /* Темно-зелений колір */
+        color: #ffffff; /* Білий текст */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        max-width: 90%;
+    }
+
+    /* Заголовок модального вікна */
+    .modal h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #bdf0bd; /* Світло-зелений */
+        text-align: center;
+    }
+
+    /* Закрити вікно (іконка) */
+    .modal .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #ffffff;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    /* Стиль кнопки */
+    .modal button {
+        display: block;
+        width: 100%;
+        background-color: #26a626; /* Яскраво-зелений */
+        color: #ffffff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal button:hover {
+        background-color: #1d8b1d; /* Темніший зелений при наведенні */
+    }
+
 </style>
-<div>
-    <div class="app-header" style="top: 0px; --topposition: 0px; --topPosition: 0px;">
-        <div class="header--thin header--thin1">
-            <div class="preloader" hidden></div>
-            <header class="header1">
-                <div1 class="layout layout_header">
-                    <div1 class="header-layout">
-                        <h1><a class="header__logo location" href="{% url 'home' %}"><img src="{% static 'Home_page/images/base_images/depositphotos_7.jpg' %}" class="icon-home">SmartHub</a></h1>
-                        <h1>
-                            <a href="{% url 'profile' %}">
-                                <button class="button button--medium button--with-icon menu__toggle" aria-label="Каталог">
-                                    Каталог
-                                </button>
-                            </a>
-                        </h1>
-                        <h1>
-                            <div class="header-search">
-                                <div class="header-search-1">
-                                    <form novalidate action class="search-form ng-pristine ng-valid ng-touched">
-                                        <div class="search-form__inner">
-                                            <div class="search-form__input-wrapper">
-                                                <button type="button" class="search-form__back" aria-label="Відмінити пошук">
-                                                    <svg width="16" height="16">
-                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use>
-                                                    </svg>
-                                                </button>
-                                                <input  type="text" autocomplete="off" name="search" formcontrolname="text" class="search-form__input ng-pristine ng-valid ng-touched" placeholder="Я шукаю..." value>
-                                                <button type="button" class="search-form__clear" style="display: none;" aria-label="Очистити пошук">
-                                                    <svg width="16" height="16">
-                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close-modal"></use>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div class="search-suggest" style="display: none;">
-                                                <ul></ul>
-                                            </div>
-                                        </div>
-                                        <button class="button button_color_green button_size_medium search-form__submit"> Знайти </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </h1>
-                        <h1>
-                            <div class="header-bottom-compare relative-position cursor-pointer header-bottom-controls__item">
-                                <div data-qty="0" class>
-                                    <a href="{% url 'profile' %}">
-                                        <svg width="30" height="30">
-                                            <use href="#icon-menu"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </h1>
-                        <h1>
-                            <div class="header-bottom-compare relative-position cursor-pointer header-bottom-controls__item">
-                                <div data-qty="0" class>
-                                    <a href="{% url 'profile' %}">
-                                        <svg width="30" height="30">
-                                            <use href="#icon-bell"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </h1>
-                        <h1>
-                            <div class="header-bottom-compare relative-position cursor-pointer header-bottom-controls__item">
-                                <div data-qty="0" class>
-                                    <a href="{% url 'profile' %}">
-                                        <svg width="30" height="30">
-                                            <use href="#icon-scales"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </h1>
-                        <h1>
-                            <div class="header-bottom-compare relative-position cursor-pointer header-bottom-controls__item">
-                                <div data-qty="0" class>
-                                    <a href="{% url 'profile' %}">
-                                        <svg width="30" height="30">
-                                            <use href="#icon-heart"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </h1>
-                        <h1>
-                            <div class="header-bottom-compare relative-position cursor-pointer header-bottom-controls__item">
-                                <div data-qty="0" class>
-                                    <a href="{% url 'profile' %}">
-                                        <svg width="30" height="30">
-                                            <use href="#icon-cart"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </h1>
-                        <ul class="header-actions">
-                            <li class="profil-btn">
-                                <h3><a class="location" href="{% url 'profile' %}">Профіль</a></h3>
-                            </li>
-                        </ul>
-                    </div1>
-                </div1>
-            </header>
+<header class="navbar">
+    <div class="logo"><a href="{% url 'home' %}">SMART HUB</a></div>
+    <h1>
+        <div class="header-search">
+            <div class="header-search-1">
+                <form novalidate action class="search-form ng-pristine ng-valid ng-touched">
+                    <div class="search-form__inner">
+                        <div class="search-form__input-wrapper search input">
+                            <button type="button" class="search-form__back" aria-label="Відмінити пошук">
+                                <svg width="16" height="16">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use>
+                                </svg>
+                            </button>
+                            <input  type="text" autocomplete="off" name="search" formcontrolname="text" placeholder="Я шукаю..." value>
+                            <button type="button" class="search-form__clear" style="display: none;" aria-label="Очистити пошук">
+                                <svg width="16" height="16">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close-modal"></use>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="search-suggest" style="display: none;">
+                            <ul></ul>
+                        </div>
+                    </div>
+                    <button class="search-button button button_color_green button_size_medium search-form__submit"> Знайти </button>
+                </form>
+            </div>
         </div>
+    </h1>
+    <nav class="menu">
+        <a href="{% url 'home' %}">Каталог</a>
+        <a href="{% url 'home' %}">Список бажань</a>
+        <a href="{% url 'home' %}">Закази</a>
+        <a href="{% url 'home' %}">Comparison</a>
+    </nav>
+    <div class="profile">
+        <a href="#">Профіль</a>
     </div>
-</div>
+</header>
 <svg style="display: none;">
     <symbol id="icon-menu" viewBox="0 0 24 24">
     <rect x="1" y="1" width="22" height="22" rx="4" ry="4" stroke="white" fill="none"/>
@@ -199,23 +357,74 @@
 </svg>
 <body>
 {% block content %} {% endblock %}
-</body>
-<body>
 {% block notebooks %} {% endblock %}
-</body>
-<body>
 {% block profile %} {% endblock %}
-</body>
-<body>
 {% block computers %} {% endblock %}
-</body>
-<body>
 {% block product_detail %} {% endblock %}
-</body>
-<body>
 {% block characteristics %} {% endblock %}
-</body>
-<body>
 {% block reviews %} {% endblock %}
+<div id="loginModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Вхід</h2>
+        <form id="loginForm">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Ім'я користувача" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <button type="submit">Увійти</button>
+        </form>
+        <div id="loginErrors" style="color: red;"></div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const loginButton = document.querySelector(".profile a"); // Кнопка для відкриття
+        const modal = document.getElementById("loginModal"); // Модальне вікно
+        const closeModal = modal.querySelector(".close"); // Кнопка закриття
+
+        // Відкриття модального вікна
+        loginButton.addEventListener("click", function (event) {
+            event.preventDefault(); // Відключити перехід за посиланням
+            modal.style.display = "block"; // Відображення вікна
+        });
+
+        // Закриття модального вікна
+        closeModal.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        // Закриття при кліці поза модальним вікном
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // AJAX-вхід
+        const loginForm = document.getElementById("loginForm");
+        loginForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const formData = new FormData(loginForm);
+
+            try {
+                const response = await fetch("{% url 'login_view' %}", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert("Успішний вхід!");
+                    modal.style.display = "none"; // Закриття вікна
+                    window.location.reload(); // Перезавантаження сторінки
+                } else {
+                    document.getElementById("loginErrors").innerHTML = Object.values(data.errors).join("<br>");
+                }
+            } catch (error) {
+                console.error("Помилка:", error);
+            }
+        });
+    });
+</script>
 </body>
 </html>

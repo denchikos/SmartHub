@@ -1,161 +1,180 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
 <style>
-    ul {
-    list-style-type: none;
-    padding-left: 0;
-    }
-
-    li {
-    list-style-type: none;
-    }
-
-    .catalog-grid-1 {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    }
-
-    .catalog-grid-2 {
-        display: flex;
-        flex-direction: row-reverse;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-    }
-
-    .main-goods__cell {
-    width: 25%;
-    }
-
-    .goods-tile_inner {
-            width: 252.8px;
-            height: 508.72px;
-            overflow: hidden;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-    .goods-tile_inner img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    /* Медіа-запити для адаптивного дизайну */
-    @media (max-width: 600px) {
-        .goods-tile_inner {
-            width: 150px;
-            height: 200px;
-        }
-    }
-
-    .layout_with_sidebar {
-        display: flex;
-        flex-direction: row-reverse;
-    }
-
-
-
-
-    .content_type_main {
-        border-left: 1px solid #e9e9e9;
-        box-sizing: border-box;
-        padding-left: 40px;
-        padding-top: 40px;
-        width: calc(100% - 300px);
-    }
-
-    .main-goods {
-        margin-bottom: 64px;
-    }
-
-    .title {
-        position: relative;
-        height: 100%;
-        padding: 16px;
-    }
-
-    .goods-tile_inner-index {
-        width: 200px;
-        height: 250.72px;
-        overflow: hidden;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .tile__picture-img {
-        max-width: 300px;
-        height: 125px;
-        vertical-align: middle;
-    }
-
-    .tile__title {
-        display: block;
-        height: 40px;
-        margin-bottom: calc(var(4px)* 2);
-        overflow: hidden;
-        font-size: 14px;
-        color: #333;
-    }
-
-    .index-home {
-        width: 100%;
-        height: auto;
-    }
-
-    .locations {
-        background: #fff;
-        color: #000;
-    }
-
+    /* Base Styles */
     body {
-        padding-top: 60px;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #1b1b1b;
+        color: white;
+    }
+
+    .search input {
+        flex: 1;
+        height: 100%;
+        padding: 10px 15px;
+        border-right: none;
+        border-radius: 20px 0 0 20px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+    }
+
+    header .logo {
+        font-size: 44px;
+        font-weight: bold;
+        color: #32cd32;
+    }
+
+    header .menu a, header .profile a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 16px;
+    }
+
+    header .menu a:hover, header .profile a:hover {
+        color: #32cd32;
+    }
+
+    .hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px 20px;
+        background: linear-gradient(0deg, #32cd32, #1b1b1b);
+    }
+
+    .hero-content {
+        max-width: 50%;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .hero button {
+        background-color: #000000;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .hero img {
+        border-radius: 10px;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 40px;
+        background-color: #2a2a2a;
+    }
+
+    .product-card {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .product-card img {
+        width: 100px;
+        height: 100px
+    }
+
+    .product-card h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .product-card p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .product-card button {
+        background-color: #32cd32;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #111;
+        color: #888;
     }
 </style>
 <body>
-<nav>
-    <div class="catalog-grid-2">
-        <div class="layout_with_sidebar layout">
-            <main class="content content_type_main">
-                <section class="main-goods">
-                    <h2>Рекомендації</h2>
-                    <ul class="catalog-grid-1">
-                    {% for i in data_db|slice:":4" %}
-                    <li class="goods-tile main-goods__cell">
-                        <div class="container goods-tile_inner-index img">
-                            <div class="title">
-                                <a class="image-with-text" href="{{ i.url_name }}" title="{{ i.name }}">
-                                    <img  loading="lazy" src="{{ i.images }}" class="index-home tile__picture-img">
-                                </a>
-                                <a class="tile__title">{{ i.name }}</a>
-                            </div>
-                        </div>
-                        <div class="goods-tile__price price--red"> {{ i.price }} </div>
-                    </li>
-                    {% endfor %}
-                    </ul>
-                </section>
-            </main>
-            <aside class="sidebar sidebar_type_main">
-                <div class="menu-wrapper menu-wrapper_state_static ng-star-inserted" style="display: block;">
-                    <ul class="locations menu-categories">
-                        {% for i in data.data_index %}
-                    <li class="menu-categories__item">
-                        <a href="{% url i.url_name %}" class="local menu-categories__link"><img src="{% static i.images %}"  class="icon-home">{{ i.title }}</a>
-                    </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </aside>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Рекомендації</h1>
+            <p>Відкрийте для себе найкращі технології для ваших потреб.</p>
+            <button id="exploreButton">Дослідіть продукти ⬇️</button>
         </div>
-    </div>
- </nav>
-</body>
-{% endblock %}
+        <img src="{% static 'Home_page/images/base_images/macbook_Grean.jpg' %}" alt="Laptops and gadgets">
+    </section>
 
+    <section class="product-grid" id="productSection">
+        <div class="product-card">
+            <img src="{% static 'Home_page/images/base_images/macbook_gray.jpg' %}" alt="Laptop">
+            <h3>Ноутбуки</h3>
+            <p>Високопродуктивні ноутбуки для щоденних завдань.</p>
+            <a href="{% url 'notebooks' %}">
+                <button>Explore</button>
+            </a>
+        </div>
+        <div class="product-card">
+            <img src="{% static 'Home_page/images/base_images/pc_gaming.jpg' %}" alt="Laptop">
+            <h3>Системні Блоки</h3>
+            <p>Потужні робочі блоки.</p>
+            <button>Explore</button>
+        </div>
+        <div class="product-card">
+            <img src="{% static 'Home_page/images/base_images/Iphone.jpg' %}" alt="Smartphone">
+            <h3>Смартфони</h3>
+            <p>Всі зручності в руках.</p>
+            <button>Explore</button>
+        </div>
+        <div class="product-card">
+            <img src="{% static 'Home_page/images/base_images/gaming.jpg' %}" alt="Accessories">
+            <h3>Ігрові Аксесуари</h3>
+            <p>Зробіть свій ігровий досвід яскравішим.</p>
+            <button>Explore</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SmartHub. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
+<script>
+  document.getElementById('exploreButton').addEventListener('click', function() {
+    const section = document.getElementById('productSection');
+    section.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+{% endblock %}
