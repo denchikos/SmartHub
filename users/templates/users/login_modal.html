@@ -1,0 +1,315 @@
+<!-- users/templates/users/login_modal.html -->
+{% block register %}
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Авторизація</h2>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+        </div>
+
+        <!-- Форма входу через телефон -->
+        <form id="login-form" method="POST" action="{% url 'users:login' %}" class="modal-form active-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" placeholder="Введіть номер телефону" required>
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <label for="password">Пароль</label>
+            <input type="password" id="password" placeholder="Введіть пароль" required>
+            <button type="submit" class="modal-btn">Продовжити</button>
+            <div class="divider">
+                <span class="divider__text">або</span>
+            </div>
+            <div class="login-options">
+                <button type="button" style="width:100%; text-decoration: none;" class="button1 button--medium button--gray button--with-icon">
+                    <svg width="24" height="24">
+                        <use href="#google-icon"></use>
+                    </svg>
+                    Google
+                </button>
+                <button type="button" style="width:100%; text-decoration: none;" class="button1 button--medium button--gray button--with-icon">
+                    <svg width="24" height="24">
+                        <use href="#facebook-icon"></use>
+                    </svg>
+                    Facebook
+                </button>
+            </div>
+            <button type="button" style="width:100%;" id="switchToEmail" class="button1 button--medium button--link link-button">
+                Авторизуватися через пошту
+            </button>
+            <button style="width:100%;" class="button1 button--medium button--link link-button" onclick="switchToRegisterForm();">Реєстрація</button>
+        </form>
+
+        {% if form.errors %}
+            <p style="color: red;">Неправильний логін або пароль</p>
+        {% endif %}
+
+        <!-- Форма входу через пошту -->
+        <form method="POST" action="{% url 'users:login' %}" id="emailForm" class="modal-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label for="email">Ел. пошта</label>
+            <input type="email" id="email" placeholder="Введіть пошту" required>
+            <input type="hidden" name="next" value="{{ next }}"/>
+            {{ form.as_p }}
+            <label for="password">Пароль</label>
+            <input type="password" id="password" placeholder="Введіть пароль" required>
+            <button type="submit" class="modal-btn">Продовжити</button>
+            <div class="divider">
+                <span class="divider__text">або</span>
+            </div>
+            <div class="login-options">
+                <button type="button" style="width:100%; text-decoration: none;" class="button1 button--medium button--gray button--with-icon">
+                    <svg width="24" height="24">
+                        <use href="#google-icon"></use>
+                    </svg>
+                    Google
+                </button>
+                <button type="button" style="width:100%; text-decoration: none;" class="button1 button--medium button--gray button--with-icon">
+                    <svg width="24" height="24">
+                        <use href="#facebook-icon"></use>
+                    </svg>
+                    Facebook
+                </button>
+            </div>
+            <button type="button" style="width:100%;" id="switchToPhone" class="button1 button--medium button--link link-button">
+                Авторизуватися через телефон
+            </button>
+            <button style="width:100%;" class="button1 button--medium button--link link-button" onclick="switchToRegisterForm();">Реєстрація</button>
+        </form>
+
+        {% if form.errors %}
+            <p style="color: red;">Неправильний логін або пароль</p>
+        {% endif %}
+
+        <!-- Форма реєстрації через телефон -->
+        <form id="phoneRegisterForm" class="modal-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label for="phoneRegister">Телефон</label>
+            <input type="text" id="phoneRegister" placeholder="Введіть номер телефону" required>
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <label for="phonePassword">Пароль</label>
+            <input type="password" id="phonePassword" placeholder="Введіть пароль" required>
+            <button type="submit" class="modal-btn">Зареєструватися</button>
+            <button type="button" style="width:100%;" id="switchToEmailRegister" class="button1 button--medium button--link link-button-register">
+                Зареєструватися через пошту
+            </button>
+            <button style="width:100%;" class="button1 button--medium button--link link-button"
+                onclick="switchToLoginForm();">
+                Авторизуватися
+            </button>
+        </form>
+
+        <!-- Форма реєстрації через пошту -->
+        <form id="emailRegisterForm" class="modal-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label for="emailRegister">Ел. пошта</label>
+            <input type="email" id="emailRegister" placeholder="Введіть пошту" required>
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <label for="emailPassword">Пароль</label>
+            <input type="password" id="emailPassword" placeholder="Введіть пароль" required>
+            <button type="submit" class="modal-btn">Зареєструватися</button>
+            <button type="button" style="width:100%;" id="switchToPhoneRegister" class="button1 button--medium button--link link-button-register">
+                Зареєструватися через телефон
+            </button>
+            <button style="width:100%;" class="button1 button--medium button--link link-button"
+                onclick="switchToLoginForm();">
+                Авторизуватися
+            </button>
+        </form>
+    </div>
+</div>
+<script>
+    // Функції для відкриття/закриття модального вікна
+    function openModal() {
+        const modal = document.getElementById("modal");
+        modal.classList.add("show"); // Відкриваємо модальне вікно
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.classList.remove("show"); // Закриваємо модальне вікно
+    }
+
+    // Закриття при кліку поза модальним вікном
+    window.onclick = function (event) {
+        const modal = document.getElementById("modal");
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+
+    // Функція перемикання на реєстраційні форми
+    function switchToRegisterForm() {
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("phoneRegisterForm");
+        const modalTitle = document.querySelector(".modal-header h2"); // Отримуємо заголовок
+
+        if (loginForm && registerForm && modalTitle) {
+            loginForm.classList.remove("active-form");
+            registerForm.classList.add("active-form");
+            modalTitle.textContent = "Реєстрація"; // Змінюємо заголовок
+        }
+    }
+
+    // Функція перемикання на форми входу (якщо потрібна)
+    function switchToLoginForm() {
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("phoneRegisterForm");
+        const modalTitle = document.querySelector(".modal-header h2");
+
+        if (loginForm && registerForm && modalTitle) {
+            registerForm.classList.remove("active-form");
+            loginForm.classList.add("active-form");
+            modalTitle.textContent = "Авторизація"; // Змінюємо заголовок назад
+        }
+    }
+
+    // Перемикання між окремими варіантами входу та реєстрації
+    document.addEventListener("DOMContentLoaded", function () {
+        const switchToEmail = document.getElementById("switchToEmail");
+        const switchToPhone = document.getElementById("switchToPhone");
+        const switchToEmailRegister = document.getElementById("switchToEmailRegister");
+        const switchToPhoneRegister = document.getElementById("switchToPhoneRegister");
+        const login-form = document.getElementById("login-form");
+        const emailForm = document.getElementById("emailForm");
+        const phoneRegisterForm = document.getElementById("phoneRegisterForm");
+        const emailRegisterForm = document.getElementById("emailRegisterForm");
+
+        // Перемикаємося між формами входу
+        switchToEmail.addEventListener("click", () => {
+            phoneForm.classList.remove("active-form");
+            emailForm.classList.add("active-form");
+        });
+
+        switchToPhone.addEventListener("click", () => {
+            emailForm.classList.remove("active-form");
+            login-form.classList.add("active-form");
+        });
+
+        // Перемикаємося між формами реєстрації
+        switchToEmailRegister.addEventListener("click", () => {
+            phoneRegisterForm.classList.remove("active-form");
+            emailRegisterForm.classList.add("active-form");
+        });
+
+        switchToPhoneRegister.addEventListener("click", () => {
+            emailRegisterForm.classList.remove("active-form");
+            phoneRegisterForm.classList.add("active-form");
+        });
+    });
+
+    //
+    document.getElementById("emailRegisterForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        let username = document.getElementById("emailRegister").value;
+        let password = document.getElementById("emailPassword").value;
+
+        let response = await fetch("/users/register/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+        });
+
+        let data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("access", data.tokens.access);
+            localStorage.setItem("refresh", data.tokens.refresh);
+            alert("Реєстрація успішна!");
+            closeModal();  // Закриваємо модальне вікно
+        } else {
+            alert(data.error);
+        }
+    });
+
+    // Авторизація через JWT + AJAX
+    document.getElementById("login-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        let username = document.getElementById("phone").value;
+        let password = document.getElementById("password").value;
+
+        let response = await fetch("/users/login/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+        });
+
+        let data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("access", data.tokens.access);
+            localStorage.setItem("refresh", data.tokens.refresh);
+            closeModal();  // Закриваємо модальне вікно після успішного входу
+        } else {
+            alert(data.error);
+        }
+    });
+
+    // Оновлення токенів, якщо вони протермінувалися
+    async function refreshAccessToken() {
+        let refresh = localStorage.getItem("refresh");
+
+        let response = await fetch("/users/refresh/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ refresh }),
+        });
+
+        let data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("access", data.access);
+        } else {
+            alert("Сесія закінчилась. Увійдіть заново.");
+            logout();
+        }
+    }
+
+    // Вихід без перезавантаження сторінки
+    async function logout() {
+        let refresh = localStorage.getItem("refresh");
+
+        let response = await fetch("/users/logout/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("access")}`,
+            },
+            body: JSON.stringify({ refresh }),
+        });
+
+        if (response.ok) {
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
+            alert("Вихід успішний!");
+        } else {
+            alert("Помилка виходу.");
+        }
+    }
+
+    // Автоматичне оновлення токену перед виконанням захищених запитів
+    async function fetchWithAuth(url, options = {}) {
+        let access = localStorage.getItem("access");
+
+        let response = await fetch(url, {
+            ...options,
+            headers: {
+                ...options.headers,
+                "Authorization": `Bearer ${access}`,
+            },
+        });
+
+        if (response.status === 401) {
+            await refreshAccessToken();
+            return fetchWithAuth(url, options);  // Повторний запит після оновлення токену
+        }
+
+        return response;
+    }
+</script>
+{% endblock %}

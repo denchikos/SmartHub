@@ -1,14 +1,15 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect, JsonResponse
-from django.template.loader import render_to_string
-from django.template.defaultfilters import slugify
+from django.http import HttpResponse
 from .models import Notebooks, NotebooksBrand, Laptop_images, Icons, Laptop, Comments, Laptop_processors
 from django.views.generic import DetailView
 from django.db.models import Count, Q
 from urllib.parse import unquote
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
-
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import UserSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 
 asorti = [{'id': 1, "title": 'Ноутбуки та компютери', 'url_name': 'computers',
            "images": 'Home_page/images/base_images/d1.jfif'},
@@ -40,20 +41,6 @@ data_computers = [
     {"id": 3, 'title': 'Монітори', 'url_name': 'computers'},
     {"id": 4, 'title': 'планшети', 'url_name': 'computers'},
 ]
-
-def login_view(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return JsonResponse({"success": True})  # Успішний вхід
-        else:
-            return JsonResponse({"success": False, "errors": form.errors})  # Помилки валідації
-
-    # Якщо GET-запит, повертаємо HTML із формою входу (наприклад, для модального вікна)
-    if request.method == "GET":
-        return render(request, "base.html", {"form": AuthenticationForm()})
 
 
 def Home_page(request):
@@ -95,8 +82,6 @@ def My_orders(request):
     return HttpResponse('ваші замовлення')
 
 
-def Profile(request):
-    return render(request, 'blance/Profile.html')
 
 
 def notebooks(request):
@@ -203,3 +188,25 @@ def reviews(request, comments_id):
     models_laptop = get_object_or_404(Laptop, id=comments_id)
     models = get_object_or_404(Comments, id=comments_id)
     return render(request, 'blance/reviews.html', {'models': models, 'models_laptop': models_laptop})
+
+
+@api_view(['POST'])
+def register_user(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_profile(request):
+    user = request.user
+    return Response({
+        'username': user.username,
+        'email': user.email,
+    })
