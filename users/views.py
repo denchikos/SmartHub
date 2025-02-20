@@ -1,80 +1,61 @@
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.http import JsonResponse
+from django.shortcuts import render
+from rest_framework import status, generics
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import status
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
+from .serializers import UserSerializer, RegisterSerializer
+from .models import CustomUser
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+from .forms import LoginUsersForm
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view, permission_classes
+
+User = get_user_model()
+
+class LoginUser(LoginView):
+    form_class = LoginUsersForm
+    template_name = 'users/login_modal.html'
+    extra_context = {'title': 'Авторизація'}
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
-def get_tokens_for_user(user):
-    """Генерація JWT-токенів для користувача"""
-    refresh = RefreshToken.for_user(user)
-    return {
-        'access': str(refresh.access_token),
-        'refresh': str(refresh),
-    }
+class LogoutUser(LogoutView):
+    pass
 
 
-class RegisterUserView(APIView):
-    """Реєстрація нового користувача"""
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        username = request.data.get("username")
-        email = request.data.get("email")
-        password = request.data.get("password")
-
-        if User.objects.filter(username=username).exists():
-            return Response({"error": "Користувач з таким логіном вже існує"}, status=400)
-
-        user = User.objects.create_user(username=username, email=email, password=password)
-        tokens = get_tokens_for_user(user)
-
-        return Response({"message": "Реєстрація успішна", "tokens": tokens}, status=201)
-
-
-class LoginUserView(APIView):
-    """Авторизація користувача"""
-    permission_classes = [AllowAny]
+class LoginView(APIView):
 
     def post(self, request):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        user = authenticate(username=username, password=password)
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(request, username=username, password=password)
 
-        if user is None:
-            return Response({"error": "Неправильний логін або пароль"}, status=400)
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        tokens = get_tokens_for_user(user)
-        return Response({"message": "Вхід успішний", "tokens": tokens}, status=200)
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
 
 
-class LogoutUserView(APIView):
-    """Вихід користувача"""
+class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        try:
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response({"message": "Вихід успішний"}, status=200)
-        except Exception:
-            return Response({"error": "Помилка виходу"}, status=400)
-
-
-class RefreshTokenView(APIView):
-    """Оновлення токенів"""
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        try:
-            refresh_token = request.data.get("refresh")
-            token = RefreshToken(refresh_token)
-            access_token = str(token.access_token)
-            return Response({"access": access_token}, status=200)
-        except Exception:
-            return Response({"error": "Невалідний refresh-токен"}, status=400)
+    def get(self, request):
+        return Response({"message": f"Привіт, {request.user.username}!"})

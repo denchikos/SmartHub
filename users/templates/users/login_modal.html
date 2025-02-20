@@ -8,7 +8,7 @@
         </div>
 
         <!-- Форма входу через телефон -->
-        <form id="login-form" method="POST" action="{% url 'users:login' %}" class="modal-form active-form">
+        <form id="phoneForm" method="POST" action="{% url 'users:login' %}" class="modal-form active-form">
             {% csrf_token %}
             {{ form.as_p }}
             <label for="phone">Телефон</label>
@@ -143,7 +143,7 @@
 
     // Функція перемикання на реєстраційні форми
     function switchToRegisterForm() {
-        const loginForm = document.getElementById("login-form");
+        const loginForm = document.getElementById("phoneForm");
         const registerForm = document.getElementById("phoneRegisterForm");
         const modalTitle = document.querySelector(".modal-header h2"); // Отримуємо заголовок
 
@@ -156,7 +156,7 @@
 
     // Функція перемикання на форми входу (якщо потрібна)
     function switchToLoginForm() {
-        const loginForm = document.getElementById("login-form");
+        const loginForm = document.getElementById("phoneForm");
         const registerForm = document.getElementById("phoneRegisterForm");
         const modalTitle = document.querySelector(".modal-header h2");
 
@@ -173,7 +173,7 @@
         const switchToPhone = document.getElementById("switchToPhone");
         const switchToEmailRegister = document.getElementById("switchToEmailRegister");
         const switchToPhoneRegister = document.getElementById("switchToPhoneRegister");
-        const login-form = document.getElementById("login-form");
+        const phoneForm = document.getElementById("phoneForm");
         const emailForm = document.getElementById("emailForm");
         const phoneRegisterForm = document.getElementById("phoneRegisterForm");
         const emailRegisterForm = document.getElementById("emailRegisterForm");
@@ -186,7 +186,7 @@
 
         switchToPhone.addEventListener("click", () => {
             emailForm.classList.remove("active-form");
-            login-form.classList.add("active-form");
+            phoneForm.classList.add("active-form");
         });
 
         // Перемикаємося між формами реєстрації
@@ -200,116 +200,68 @@
             phoneRegisterForm.classList.add("active-form");
         });
     });
+</script>
+<script>
+    // Вхід у систему
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
 
-    //
-    document.getElementById("emailRegisterForm").addEventListener("submit", async function (e) {
-        e.preventDefault();
+        let username = document.getElementById('loginUsername').value;
+        let password = document.getElementById('loginPassword').value;
 
-        let username = document.getElementById("emailRegister").value;
-        let password = document.getElementById("emailPassword").value;
-
-        let response = await fetch("/users/register/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
+        let response = await fetch('/api/token/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
         });
 
         let data = await response.json();
 
         if (response.ok) {
-            localStorage.setItem("access", data.tokens.access);
-            localStorage.setItem("refresh", data.tokens.refresh);
-            alert("Реєстрація успішна!");
-            closeModal();  // Закриваємо модальне вікно
+            localStorage.setItem('access', data.access);
+            localStorage.setItem('refresh', data.refresh);
+            alert('Вхід успішний!');
         } else {
-            alert(data.error);
+            alert('Помилка входу: ' + (data.detail || 'Неправильні дані'));
         }
     });
 
-    // Авторизація через JWT + AJAX
-    document.getElementById("login-form").addEventListener("submit", async function (e) {
-        e.preventDefault();
+    // Реєстрація користувача
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
 
-        let username = document.getElementById("phone").value;
-        let password = document.getElementById("password").value;
+        let username = document.getElementById('registerUsername').value;
+        let email = document.getElementById('registerEmail').value;
+        let password = document.getElementById('registerPassword').value;
 
-        let response = await fetch("/users/login/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
+        let response = await fetch('/api/register/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
         });
 
         let data = await response.json();
 
         if (response.ok) {
-            localStorage.setItem("access", data.tokens.access);
-            localStorage.setItem("refresh", data.tokens.refresh);
-            closeModal();  // Закриваємо модальне вікно після успішного входу
+            localStorage.setItem('access', data.access);
+            localStorage.setItem('refresh', data.refresh);
+            alert('Реєстрація успішна!');
         } else {
-            alert(data.error);
+            alert('Помилка реєстрації: ' + (data.error || 'Щось пішло не так'));
         }
     });
 
-    // Оновлення токенів, якщо вони протермінувалися
-    async function refreshAccessToken() {
-        let refresh = localStorage.getItem("refresh");
+    // Отримання інформації про користувача
+    async function getUserProfile() {
+        let token = localStorage.getItem('access');
 
-        let response = await fetch("/users/refresh/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ refresh }),
+        let response = await fetch('/api/profile/', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + token }
         });
 
         let data = await response.json();
-
-        if (response.ok) {
-            localStorage.setItem("access", data.access);
-        } else {
-            alert("Сесія закінчилась. Увійдіть заново.");
-            logout();
-        }
-    }
-
-    // Вихід без перезавантаження сторінки
-    async function logout() {
-        let refresh = localStorage.getItem("refresh");
-
-        let response = await fetch("/users/logout/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("access")}`,
-            },
-            body: JSON.stringify({ refresh }),
-        });
-
-        if (response.ok) {
-            localStorage.removeItem("access");
-            localStorage.removeItem("refresh");
-            alert("Вихід успішний!");
-        } else {
-            alert("Помилка виходу.");
-        }
-    }
-
-    // Автоматичне оновлення токену перед виконанням захищених запитів
-    async function fetchWithAuth(url, options = {}) {
-        let access = localStorage.getItem("access");
-
-        let response = await fetch(url, {
-            ...options,
-            headers: {
-                ...options.headers,
-                "Authorization": `Bearer ${access}`,
-            },
-        });
-
-        if (response.status === 401) {
-            await refreshAccessToken();
-            return fetchWithAuth(url, options);  // Повторний запит після оновлення токену
-        }
-
-        return response;
+        console.log(data);
     }
 </script>
 {% endblock %}
