@@ -1,61 +1,54 @@
-from django.http import JsonResponse
-from django.shortcuts import render
-from rest_framework import status, generics
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+# users/views.py
 from rest_framework.views import APIView
-from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.views import LoginView, LogoutView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import UserSerializer, RegisterSerializer
-from .models import CustomUser
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
-from .forms import LoginUsersForm
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.decorators import api_view, permission_classes
-
-User = get_user_model()
-
-class LoginUser(LoginView):
-    form_class = LoginUsersForm
-    template_name = 'users/login_modal.html'
-    extra_context = {'title': 'Авторизація'}
-
-    def get_success_url(self):
-        return reverse_lazy('home')
+from .serializers import PhoneRegisterSerializer, EmailRegisterSerializer, LoginSerializer
+from .models import User
 
 
-class LogoutUser(LogoutView):
-    pass
+class PhoneRegisterView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = PhoneRegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            phone = serializer.validated_data['phone']
+            password = serializer.validated_data['password']
+            user = User.objects.create_user(phone=phone, password=password)
+            refresh = RefreshToken.for_user(user)
+            return Response({'token': str(refresh.access_token)})
+        return Response(serializer.errors, status=400)
+
+
+class EmailRegisterView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = EmailRegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+            password = serializer.validated_data['password']
+            user = User.objects.create_user(email=email, password=password)
+            refresh = RefreshToken.for_user(user)
+            return Response({'token': str(refresh.access_token)})
+        return Response(serializer.errors, status=400)
 
 
 class LoginView(APIView):
+    permission_classes = [AllowAny]
 
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = None
+            if serializer.validated_data.get('phone'):
+                user = User.objects.filter(phone=serializer.validated_data['phone']).first()
+            elif serializer.validated_data.get('email'):
+                user = User.objects.filter(email=serializer.validated_data['email']).first()
 
-        if user is not None:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            })
-        else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    permission_classes = (AllowAny,)
-    serializer_class = RegisterSerializer
-
-
-class UserProfileView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        return Response({"message": f"Привіт, {request.user.username}!"})
+            if user and user.check_password(serializer.validated_data['password']):
+                refresh = RefreshToken.for_user(user)
+                return Response({'token': str(refresh.access_token)})
+            return Response({'error': 'Невірні дані для входу'}, status=400)
+        return Response(serializer.errors, status=400)
