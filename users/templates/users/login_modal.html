@@ -8,7 +8,7 @@
         </div>
 
         <!-- Форма входу через телефон -->
-        <form id="phoneForm" method="POST" action="{% url 'users:login' %}" class="modal-form active-form">
+        <form id="phoneForm" method="POST" action="#" class="modal-form active-form">
             {% csrf_token %}
             <label for="phone">Телефон</label>
             <input type="tel" name="phone" id="phone" placeholder="Введіть номер телефону" required>
@@ -44,7 +44,7 @@
         {% endif %}
 
         <!-- Форма входу через пошту -->
-        <form method="POST" action="{% url 'users:login' %}" id="emailForm" class="modal-form">
+        <form method="POST" action="#" id="emailForm" class="modal-form">
             {% csrf_token %}
             <label for="email">Ел. пошта</label>
             <input type="email" name="email" id="email" placeholder="Введіть пошту" required>
@@ -204,18 +204,19 @@
 
     document.getElementById('phoneRegisterForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Запобігаємо перезавантаженню сторінки
+        clearErrors();
 
-        const phone = document.getElementById('phoneRegister').value;
-        const password = document.getElementById('phonePassword').value;
+        const phone = document.getElementById('phoneRegister').value.trim();
+        const password = document.getElementById('phonePassword').value.trim();
 
         // Виконуємо AJAX запит для реєстрації
-        fetch('/api/register/phone/', {
+        fetch('/api/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken() // додати CSRF токен
             },
-            body: JSON.stringify({ phone, password })
+            body: JSON.stringify({ phone: phone, password: password })
         })
         .then(response => response.json())
         .then(data => {
@@ -225,27 +226,33 @@
             } else {
                 alert(data.error || 'Помилка реєстрації');
             }
+
+            if (data.error) {
+                showError(data.field, data.error);
+            } else {
+                alert(data.success);
+                closeModal(); // Закриваємо модальне вікно тільки якщо реєстрація успішна
+            }
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        .catch(error => console.error('Помилка:', error));
     });
 
     // Для форми реєстрації через пошту
     document.getElementById('emailRegisterForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Запобігаємо перезавантаженню сторінки
+        clearErrors();
 
-        const email = document.getElementById('emailRegister').value;
-        const password = document.getElementById('emailPassword').value;
+        const email = document.getElementById('emailRegister').value.trim();
+        const password = document.getElementById('emailPassword').value.trim();
 
         // Виконуємо AJAX запит для реєстрації
-        fetch('/api/register/email/', {
+        fetch('/api/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken() // додати CSRF токен
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email: email, password: password })
         })
         .then(response => response.json())
         .then(data => {
@@ -255,11 +262,34 @@
             } else {
                 alert(data.error || 'Помилка реєстрації');
             }
+
+            if (data.error) {
+                showError(data.field, data.error);
+            } else {
+                alert(data.success);
+                closeModal(); // Закриваємо модальне вікно тільки якщо реєстрація успішна
+            }
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        .catch(error => console.error('Помилка:', error));
     });
+
+    ////
+    function clearErrors() {
+        document.querySelectorAll('.error-message').forEach(el => el.remove());
+    }
+
+    // Функція для відображення помилки під відповідним полем
+    function showError(field, message) {
+        const inputField = document.getElementById(field + 'Register');
+        if (inputField) {
+            const errorElement = document.createElement('div');
+            errorElement.className = 'error-message';
+            errorElement.style.color = 'red';
+            errorElement.style.fontSize = '12px';
+            errorElement.textContent = message;
+            inputField.parentNode.insertBefore(errorElement, inputField.nextSibling);
+        }
+    }
 
     // Отримання JWT після входу
     document.getElementById('phoneForm').addEventListener('submit', function(event) {
@@ -317,5 +347,6 @@
             console.error('Error:', error);
         });
     });
+
 </script>
 {% endblock %}
