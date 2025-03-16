@@ -5,6 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.db import IntegrityError
 from django.http import JsonResponse
 import json
+import re
 from .serializers import PhoneRegisterSerializer, EmailRegisterSerializer, LoginSerializer
 from .models import User
 
@@ -19,8 +20,19 @@ class PhoneRegisterView(APIView):
             password = serializer.validated_data['password']
             user = User.objects.create_user(phone=phone, password=password)
             refresh = RefreshToken.for_user(user)
-            return Response({'token': str(refresh.access_token)})
+            return Response({'token': str(refresh.access_token), 'phone': user.phone})
         return Response(serializer.errors, status=400)
+
+
+
+"""Перевіряє, чи є рядок email-адресою"""
+def is_valid_email(email):
+    return re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
+
+
+"""Перевіряє, чи є рядок коректним номером телефону (мінімум 10 цифр)"""
+def is_valid_phone(phone):
+    return re.match(r"^\+?\d{10,15}$", phone)
 
 
 def register_user(request):
@@ -31,11 +43,17 @@ def register_user(request):
             phone = data.get("phone", "").strip()
             password = data.get("password", "").strip()
 
-            if User.objects.filter(email=email).exists():
+            if email and not is_valid_email(email):
+                return JsonResponse({"error": "Некоректний формат email", "field": "email"}, status=400)
+
+            if phone and not is_valid_phone(phone):
+                return JsonResponse({"error": "Некоректний номер телефону", "field": "phone"}, status=400)
+
+            if email and User.objects.filter(email=email).exists():
                 return JsonResponse({"error": "Користувач з такою електронною поштою вже існує", "field": "email"},
                                     status=400)
 
-            if User.objects.filter(phone=phone).exists():
+            if phone and User.objects.filter(phone=phone).exists():
                 return JsonResponse({"error": "Користувач з таким номером телефону вже існує", "field": "phone"},
                                     status=400)
 
@@ -61,7 +79,7 @@ class EmailRegisterView(APIView):
             password = serializer.validated_data['password']
             user = User.objects.create_user(email=email, password=password)
             refresh = RefreshToken.for_user(user)
-            return Response({'token': str(refresh.access_token)})
+            return Response({'token': str(refresh.access_token), 'email': user.email})
         return Response(serializer.errors, status=400)
 
 
@@ -77,8 +95,16 @@ class LoginView(APIView):
             elif serializer.validated_data.get('email'):
                 user = User.objects.filter(email=serializer.validated_data['email']).first()
 
-            if user and user.check_password(serializer.validated_data['password']):
-                refresh = RefreshToken.for_user(user)
-                return Response({'token': str(refresh.access_token)})
-            return Response({'error': 'Невірні дані для входу'}, status=400)
+            if not user:
+                return Response({'error': 'Користувача не знайдено'}, status=404)
+
+            if not user.check_password(serializer.validated_data['password']):
+                return Response({'error': 'Невірний пароль'}, status=400)
+
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'token': str(refresh.access_token),
+                'success': 'Ви успішно авторизувалися'
+            })
+
         return Response(serializer.errors, status=400)

@@ -2,6 +2,7 @@
 {% block register %}
 <div id="modal" class="modal">
     <div class="modal-content">
+
         <div class="modal-header">
             <h2>Авторизація</h2>
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -276,7 +277,9 @@
     ////
     function clearErrors() {
         document.querySelectorAll('.error-message').forEach(el => el.remove());
+        document.querySelectorAll('.success-message-login').forEach(el => el.remove());
     }
+
 
     // Функція для відображення помилки під відповідним полем
     function showError(field, message) {
@@ -294,31 +297,66 @@
     // Отримання JWT після входу
     document.getElementById('phoneForm').addEventListener('submit', function(event) {
         event.preventDefault();
+        clearErrors();
 
-        const phone = document.getElementById('phone').value;
-        const password = document.getElementById('password').value;
+        const phone = document.getElementById('phone').value.trim();
+        const password = document.getElementById('password').value.trim();
 
-        fetch('/api/login/phone/', {
+
+        fetch('/api/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken()
             },
-            body: JSON.stringify({ phone, password })
+            body: JSON.stringify({ phone: phone, password: password })
         })
         .then(response => response.json())
         .then(data => {
+            console.log("Отримані дані:", data);
             if (data.token) {
-                localStorage.setItem('jwt', data.token); // Зберігаємо токен у localStorage
-                closeModal();
+                localStorage.setItem('jwt', data.token);
+
+                // Відображаємо повідомлення про успішний вхід
+                showMessage(data.success || 'Ви успішно авторизувалися');
+
+                // Через 3 секунди закриваємо модальне вікно
+                setTimeout(() => {
+                    closeModal();
+                }, 3000);
             } else {
-                alert(data.error || 'Помилка авторизації');
+                showErrorMessage(data.error || 'Помилка входу: Неправильні дані');
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        .catch(error => console.error('Помилка:', error));
     });
+
+    // Функція для відображення успішного повідомлення
+    function showMessage(message) {
+        const successContainer = document.createElement('div');
+        successContainer.className = 'success-message';
+        successContainer.textContent = message;
+
+        // Додаємо повідомлення в модальне вікно
+        const modalContent = document.querySelector('.modal-content');
+        modalContent.insertBefore(successContainer, modalContent.firstChild);
+
+        // Автоматично ховаємо через 3 секунди
+        setTimeout(() => successContainer.remove(), 3000);
+    }
+
+    function showErrorMessage(message) {
+        const errorContainer = document.createElement('div');
+        errorContainer.className = 'error-message-login';
+        errorContainer.textContent = message;
+
+        // Додаємо повідомлення в модальне вікно
+        const modalContent = document.querySelector('.modal-content');
+        modalContent.insertBefore(errorContainer, modalContent.firstChild);
+
+        // Автоматично ховаємо через 3 секунди
+        setTimeout(() => errorContainer.remove(), 3000);
+    }
 
     document.getElementById('emailForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -326,7 +364,7 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        fetch('/api/login/email/', {
+        fetch('/api/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -347,6 +385,5 @@
             console.error('Error:', error);
         });
     });
-
 </script>
 {% endblock %}
