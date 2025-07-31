@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+{% load static %}
+{% load url_utils %}
+
+
+{% block notebooks %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приклад сторінки</title>
+    <style>
+        /* Основні стилі для блоків з зображенням */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .goods-tile_inner {
+            width: 252.8px;
+            height: 430.72px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* display: flex; justify-content: center; align-items: center; */
+        .goods-tile_inner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Медіа-запити для адаптивного дизайну */
+        @media (max-width: 600px) {
+            .goods-tile_inner {
+                width: 150px;
+                height: 200px;
+            }
+        }
+
+        .locations {
+            background: #fff;
+            color: #000;
+        }
+
+        svg {
+            vertical-align: middle;
+            fill: #0073db;
+        }
+
+        input {
+            background-color: #fff;
+            box-sizing: border-box;
+            padding-left: 12px;
+            padding-right: 12px
+        }
+
+        input,input[_size_small] {
+            height: 32px;
+        }
+
+        @media (min-width: 768px)
+            input, textarea {
+            font-size: 14px;
+        }
+
+        input,textarea {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border .2s ease-in-out
+        }
+
+        .bread {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        section1 ul1 div2 {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+    </style>
+</head>
+<div1 class="central-wrapper">
+    <main style="order: 2;">
+        <div class="layout">
+            <ul class="bread">
+                <li class="breadcrumbs__item breadcrumbs__item--home">
+                    <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="{% url 'home' %}">
+                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
+                            <use href="#icon-home"></use>
+                        </svg>
+                        <span class="breadcrumbs__item--home--title">На головну</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--last">
+                    <a class="breadcrumbs__link" href="{% url 'home' %}">
+                        <span>Ноутбуки та комп'ютери</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="{% url 'home' %}">
+                        <span>Ноутбуки</span>
+                    </a>
+                </li>
+            </ul>
+            <div>
+                <h1 class="catalog-heading">Ноутбуки</h1>
+            </div>
+        </div>
+        <ul>
+            <div2 class="catalog">
+                <div class="layout animation" style="top: 72px; position: sticky; z-index: 100">
+                    <div1 class="catalog-settings">
+                        <div1 class="catalog-selection">
+                            <p class="catalog-selection__label"> Найдено {{ notebooks_count }} товарів </p>
+                            <ul class="catalog-selection__list"></ul>
+                        </div1>
+                        <div class="catalog-settings__sorting" style="margin-right: 0px;">
+                            <select class="select-css" id="sort-select" onchange="redirectToPage()">
+                                <option value="" {% if not request.GET.sort %}selected{% endif %}>Сортування</option>
+                                <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected="selected"{% endif %}>Від дешевих до дорогих</option>
+                                <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected="selected"{% endif %}>Від дорогих до дешевих</option>
+                            </select>
+                        </div>
+                    </div1>
+                </div>
+                <div2 class="layout layout_with_sidebar">
+                    <section class="content_type_catalog" style="display: block; margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                        <ul class="catalog-grid" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                            {% for i in items %}
+                            <li class="catalog-grid__cell">
+                                <div2 class="goods-tile" data-title="small">
+                                    <div2 class="goods-tile__inner" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                                        <div2 class="goods-tile__content">
+                                            <a class="image-with-text goods-tile__picture" href="{% url 'product_detail' id=i.id %}" title="{{ i.name }}" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                                                <img  loading="lazy" src="{{ i.images }}" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; width: 200px; height: 150px; object-fit: cover; display: block; margin: 0 auto;">{{ i.name }}
+                                            </a>
+                                        </div2>
+                                    </div2>
+                                </div2>
+                                <div class="goods-tile__price price--red"> {{ i.price }} </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                    <aside class="sidebar1" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit;  vertical-align: baseline;">
+                        <div2 class="catalog--sticky" style="top: 145px; --topPosition: 145px; margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; height: 100%;">
+                            <div class="sidebar-block" data-filter-name="producer">
+                                <button type="button" class="sidebar-block__toggle">
+                                    <span class="sidebar-block__toggle-title">
+                                        Продавець
+                                        <span class="sidebar-block__toggle-quantit"> 2 </span>
+                                    </span>
+                                    <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                    </svg>
+                                </button>
+                                <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                    <div class="scrollbar__layout">
+                                        <div class="scrollbar__layouter">
+                                            <div class="scrollbar__inner" style="width: 251px;">
+                                                <div style="width: 233px;">
+                                                    <div1>
+                                                        <ul class="checkbox-filter">
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="SmartHub +" href="{% url 'home' %}">
+                                                                    SmartHub +&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (2934) </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox-filter__link" data-id="Інші продавці" href="{% url 'home' %}">
+                                                                    Інші продавці&nbsp;
+                                                                    <span class="sidebar-block__quantity"> (122188) </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="checkbox-filter"></ul>
+                                                    </div1>
+                                                </div>
+                                            </div>
+                                            <div class="scrollbar__holder" style="right: -8px;">
+                                                <div class="scrollbar__path">
+                                                    <div class="scrollbar__slider" style="height: 71px; transform: translateY(0px);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sidebar-block" data-filter-name="producer">
+                                <button type="button" class="sidebar-block__toggle">
+                                    <span class="sidebar-block__toggle-title">
+                                        Бренд
+                                        <span class="sidebar-block__toggle-quantity"> {{ NotebooksBrand_count }} </span>
+                                    </span>
+                                    <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                    </svg>
+                                </button>
+                                <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                    <div>
+                                        <div class="sidebar-search">
+                                            <form method="get">
+                                                <input type="search" name="search" value="{{ request.GET.search }}" class="sidebar-search__input" placeholder="Пошук">
+                                                <button type="submit" class="sidebar-search__button" style="display: none;"></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div style="height: 180px;">
+                                        <div class="scrollbar__layout">
+                                            <div class="scrollbar__inner" style="width: 251px;">
+                                                <div style="width: 233px;">
+                                                    <div>
+                                                        <ul class="checkbox-filter">
+                                                            {% for brand in brands_count %}
+                                                                    <!-- Якщо бренд вибрано, генеруємо URL для видалення його з фільтру -->
+                                                                    <li class="checkbox-filter__item" type="checkbox">
+                                                                        <a class="checkbox-filter__link" href="?{% url_replace request 'producer' brand.noteb_id__name %}">
+                                                                           {{ brand.noteb_id__name }} ({{ brand.count }})
+                                                                        </a>
+                                                                    </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="scrollbar__holder" style="right: 0px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-block" data-filter-name="price">
+                                        <button type="button" class="sidebar-block__toggle">
+                                            <span class="sidebar-block__toggle-title">
+                                                Цiна
+                                            </span>
+                                            <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                            </svg>
+                                        </button>
+                                        <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                            <div class="scrollbar__layout">
+                                                <div class="scrollbar__inner" style="width: 251px;">
+                                                    <div style="width: 233px;">
+                                                        <form method="get" class="slider-filter__form">
+                                                            <div class="slider-filter__inner">
+                                                                <input type="text" name="min" value="{{ request.GET.min }}" class="slider-filter__input" maxlength="20" placeholder="Мін">
+                                                                <span aria-hidden="true" class="slider-filter__divider"> — </span>
+                                                                <input type="text" name="max" value="{{ request.GET.max }}" class="slider-filter__input" maxlength="20" placeholder="Макс">
+                                                                <button type="submit" class="button button_color_gray button_size_small slider-filter__button"> Ok </button>
+                                                                {% for key, value in request.GET.items %}
+                                                                    {% if key != 'min' and key != 'max' %}
+                                                                        <input type="hidden" name="{{ key }}" value="{{ value }}">
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="scrollbar__holder" style="right: -8px;">
+                                                    <div class="scrollbar__path">
+                                                        <div class="scrollbar__slider" style="height: 20px; transform: translateY(0px);"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-block sidebar-block_state_collapsed" data-filter-name="processor">
+                                        <button type="button" class="sidebar-block__toggle">
+                                            <span class="sidebar-block__toggle-title">
+                                                Процесор
+                                                <span class="sidebar-block__toggle-quantity"> 11 </span>
+                                            </span>
+                                            <svg width="16" height="16" class="sidebar-block__toggle-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                            </svg>
+                                        </button>
+                                        <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                            <div class="scrollbar__layout">
+                                                <div class="scrollbar__inner" style="width: 251px;">
+                                                    <div style="width: 233px;">
+                                                        <!-- Фільтр по процесорам -->
+                                                        <ul class="checkbox-filter">
+                                                            {% for processor in processor_count %}
+                                                                <li>
+                                                                    <a class="checkbox-filter__link" href="?{% url_replace request 'processor' processor.processor_id__processor %}">
+                                                                        {{ processor.processor_id__processor }} ({{ processor.count }})
+                                                                    </a>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="scrollbar__holder" style="right: -8px;">
+                                                    <div class="scrollbar__path">
+                                                        <div class="scrollbar__slider" style="height: 643px; transform: translateY(0px);"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div2>
+                    </aside>
+                </div2>
+            </div2>
+        </ul>
+    </main>
+    <hr>
+<script>
+    function redirectToPage() {
+    const selectElement = document.getElementById('sort-select');
+    const selectedValue = selectElement.value;
+
+    const currentUrl = new URL(window.location.href); // Поточний URL
+    if (selectedValue) {
+        currentUrl.searchParams.set('sort', selectedValue); // Додаємо або оновлюємо параметр `sort`
+    } else {
+        currentUrl.searchParams.delete('sort'); // Видаляємо параметр `sort`, якщо нічого не обрано
+    }
+
+    window.location.href = currentUrl.toString(); // Перенаправлення на оновлений URL
+}
+</script>
+    <svg style="display: none;">
+        <symbol id="icon-home" width="24px" height="24px" viewBox="0 0 24 24">
+            <path d="M12 3L2 12h4v7h8v-7h4L12 3z" />
+        </symbol>
+        <symbol>
+            <path d="M3 9l9-7 9 7"></path>
+            <path d="M9 22V12h6v10"></path>
+            <path d="M9 22H5a2 2 0 0 1-2-2v-8"></path>
+            <path d="M15 22h4a2 2 0 0 0 2-2v-8"></path>
+        </symbol>
+        <symbol id="icon-view-less" width="24px" height="24px" viewBox="0 0 24 24">
+            <rect width="24" height="24" fill="#0098db"/>
+            <circle cx="6" cy="6" r="1.5" fill="white"/>
+            <circle cx="12" cy="6" r="1.5" fill="white"/>
+            <circle cx="18" cy="6" r="1.5" fill="white"/>
+            <circle cx="6" cy="12" r="1.5" fill="white"/>
+            <circle cx="12" cy="12" r="1.5" fill="white"/>
+            <circle cx="18" cy="12" r="1.5" fill="white"/>
+            <circle cx="6" cy="18" r="1.5" fill="white"/>
+            <circle cx="12" cy="18" r="1.5" fill="white"/>
+            <circle cx="18" cy="18" r="1.5" fill="white"/>
+        </symbol>
+        <symbol id="id_kestrel" fill='%23797878' viewBox='0 0 13 7'>
+            <path fill-rule='evenodd' clip-rule='evenodd' d='M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z'/>
+        </symbol>
+        <symbol id="icon-view-more" width="24px" height="24px" viewBox="0 0 24 24">
+            <rect width="24" height="24" fill="white"/>
+            <circle cx="6" cy="6" r="1.5" fill="#0098db"/>
+            <circle cx="12" cy="6" r="1.5" fill="#0098db"/>
+            <circle cx="18" cy="6" r="1.5" fill="#0098db"/>
+            <circle cx="6" cy="12" r="1.5" fill="#0098db"/>
+            <circle cx="12" cy="12" r="1.5" fill="#0098db"/>
+            <circle cx="18" cy="12" r="1.5" fill="#0098db"/>
+            <circle cx="6" cy="18" r="1.5" fill="#0098db"/>
+            <circle cx="12" cy="18" r="1.5" fill="#0098db"/>
+            <circle cx="18" cy="18" r="1.5" fill="#0098db"/>
+        </symbol>
+    </svg>
+{% endblock %}
+</div1>

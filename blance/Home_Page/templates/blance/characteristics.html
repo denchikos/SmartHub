@@ -1,0 +1,656 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block characteristics %}
+<head>
+    <style>
+        div1 {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+        }
+
+        .label span {
+            position: relative;
+            display: inline-block;
+            padding-right: 16px;
+            background-color: #fff;
+        }
+
+        .label1, .value1 {
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        h1 {
+            line-height: 1.25;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+
+        section1 {
+            display: block;
+        }
+
+        dl {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .sub-list li {
+            margin-bottom: 8px;
+        }
+
+        .sub-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .label, .value {
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .group + .group {
+            margin-top: 24px;
+        }
+
+        span, li, ul, img, p {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        figure {
+            display: block;
+        }
+
+        .header-layout {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+            height: 72px;
+        }
+
+        .tabs__list {
+            display: flex;
+            flex-direction: row;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+    </style>
+</head>
+<div class="wrapper central-wrapper">
+    <div class="central-wrapper">
+        <div class="layout">
+            <ul class="bread">
+                <li class="breadcrumbs__item breadcrumbs__item--home">
+                    <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="/">
+                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
+                            <use href="#icon-home"></use>
+                        </svg>
+                        <span class="breadcrumbs__item--home--title">На головну</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--last">
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки та комп'ютери</span>
+                        <span class="breadcrumbs__separator">/</span>
+                    </a>
+                    <span class="breadcrumbs__separator">/</span>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки</span>
+                    </a>
+                </li>
+                <li class="breadcrumbs__item breadcrumbs__item--text">
+                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
+                        <use href="#icon-chevron-down"></use>
+                    </svg>
+                    <span class="breadcrumbs__separator-last">/</span>
+                    <a class="breadcrumbs__link" href="/">
+                        <span>Ноутбуки {{ product.notebooksbrand_id.name }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="product-navbar" style="top: 72px; --topPosition: 72px;">
+            <div class="product-navbar__tabs--margin-small">
+                <div class="tabs">
+                    <div class="layout">
+                        <ul class="tabs__list">
+                            <li class="tabs__item">
+                                <a class="tabs__link"  href="{% url 'product_detail' models.id %}">Усе про товар</a>
+                            </li>
+                            <li class="tabs__item tabs__link--active">
+                                <a class="tabs__link" href="">Характеристики</a>
+                            </li>
+                            <li class="tabs__item">
+                                <a class="tabs__link" href="{% url 'reviews' models.id %}">Відгуки</a>
+                                <span class="tabs__link-text"> 1 </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout">
+            <div1 class="wrap" style="color: #221f1f;">
+                <div1 class="inner">
+                    <div1 class="title closed" style="max-height: 90px; overflow: hidden;">
+                        <h1 class="h2-1 bold" style>
+                            Характеристики Ноутбука {{ models.name }}
+                        </h1>
+                    </div1>
+                </div1>
+            </div1>
+            <div1 class="d-flex mt-4">
+                <main class="product-tabs__content">
+                    <section1 class="group" style="color: #000;">
+                        <dl>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Серія</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a style="cursor: pointer;">{{ models.series }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Екран</h3>
+                        <dl class="list ">
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Діагональ екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.screen_size }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Частота оновлення екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.screen_refresh_rate }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Тип екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.screen_type }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Роздільна здатність</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.screen_resolution }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Покриття екрану</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.screen_coating }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                            <div1 class="item">
+                                <dt class="label">
+                                    <span>Вбудована камера</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.built_in_camera }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div1>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Процесор</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Процесор</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.processor }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Операційна система</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.os }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Покоління процесора AMD</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>{{ models.processor_generation }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Оперативна пам'ять</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Обсяг оперативної пам'яті</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>{{ models.ram_size }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Тип оперативної пам'яті</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>{{ models.ram_type }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Можливість апгрейду</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>{{ models.ram_upgradeability }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Характеристики оперативної пам'яті</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>{{ models.ram_characteristics }}</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Накопичувачі даних</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Обсяг SSD</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>{{ models.ssd_size }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Кількість слотів M.2</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                            <a>{{ models.m2_slots }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Стандарт інтерфейсу SSD M.2</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>{{ models.ssd_interface }}</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Тип накопичувача</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <a>{{ models.storage_type }}</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Відеокарта</h3>
+                        <dl class="list">
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Виробник відеокарти</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                          <span>{{ models.gpu_manufacturer }}</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Дискретна відеокарта</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>{{ models.discrete_gpu }}</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Обсяг пам'яті відеокарти</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>{{ models.gpu_memory }}</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Тип відеокарти</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>{{ models.gpu_memory }}</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div class="item">
+                                <dt class="label">
+                                    <span>Інтегрована відеокарта</span>
+                                </dt>
+                                <dd class="value">
+                                    <ul class="sub-list">
+                                        <li>
+                                           <span>{{ models.integrated_gpu }}</span>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </div>
+                        </dl>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Корпус</h3>
+                        <div class="item">
+                            <dt class="label">
+                                 <span>Ємність акумулятора, Вт год</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>{{ models.battery_capacity }}</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Вага, кг</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>{{ models.weight }}</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Колір</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>{{ models.color }}</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Звукова система</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>
+                                            Програмне забезпечення DTS
+                                            <br>
+                                            Усунення шумів за допомогою ШІ
+                                            <br>
+                                            Сертифікація Hi-Res
+                                            <br>
+                                            Вбудований масив мікрофонів
+                                            <br>
+                                            2 динаміки
+                                        </span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Маніпулятори</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>{{ models.manipulators }}</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Характеристики батареї</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>{{ models.battery_characteristics }}</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Габарити (Ш х Г х В)</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>{{ models.dimensions }}</span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                    </section1>
+                    <section1 class="group" style="color: #000;">
+                        <h3 class="sub-heading">Підключення</h3>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Мережеві адаптери</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        Gigabit Ethernet
+                                        <br>
+                                        "Wi-Fi 6 802.11ax (Dual band) 2*2"
+                                        <br>
+                                        "Bluetooth 5.3"
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="item">
+                            <dt class="label">
+                                <span>Роз'єми та порти введення-виведення</span>
+                            </dt>
+                            <dd class="value">
+                                <ul class="sub-list">
+                                    <li>
+                                        <span>
+                                            {{ models.ports }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                    </section1>
+                </main>
+                <aside class="product-tabs__sidebar" style="display: block;">
+                    <div1 class="product-carriage">
+                        <div1 class="product-carriage__goods product-carriage_display-flex-md">
+                            <figure class="product-carriage__goods-picture">
+                                <img loading="lazy" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4 ГБ" src="{% static 'Home_page/images/Ноутбук ASUS TUF Gaming A15 (2023)/2389791.jpg' %}"></img>
+                            </figure>
+                            <div class="product-carriage__goods-title">
+                                Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black / 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ /
+                            </div>
+                        </div1>
+                        <div1 class="product-carriage__buy">
+                            <div1 class="product-carriage__buy-top">
+                                <div1 class="product-price__block">
+                                    <p class="product-price__small">
+                                       39&nbsp;499
+                                        <span class="currency">₴</span>
+                                    </p>
+                                    <p class="product-carriage__price product-carriage__price_color-red">
+                                        33&nbsp;999
+                                        <span class="currency">₴</span>
+                                    </p>
+                                </div1>
+                                <div1 class="product-carriage__buttons">
+                                    <div class="wishlist-wrapper">
+                                        <button type="button" class="wishlist-button js-wish-button" aria-label="Перемістити в список бажань">
+                                           <svg width="24" height="24" aria-hidden="true">
+                                                <use href="#heart"></use>
+                                           </svg>
+                                        </button>
+                                    </div>
+                                </div1>
+                                <div class="product-carriage__buy-button">
+                                    <div class="mode-slim toOrde">
+                                        <button type="button" class="buy-button button button--with-icon button--green button--medium buy-button--tile" aria-label="Купити">
+                                            <span class="buy-button__label"> Купити </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div1>
+                        </div1>
+                    </div1>
+                </aside>
+            </div1>
+        </div>
+    </div>
+</div>
+<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <symbol id="heart" viewBox="0 0 24 24">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+  </symbol>
+</svg>
+{% endblock %}
+
