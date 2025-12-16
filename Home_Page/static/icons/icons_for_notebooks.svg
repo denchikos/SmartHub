@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+    <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="M12 3L2 12h4v7h8v-7h4L12 3z" />
+    </symbol>
+
+    <symbol id="icon-home-alt" viewBox="0 0 24 24">
+        <path d="M3 9l9-7 9 7"></path>
+        <path d="M9 22V12h6v10"></path>
+        <path d="M9 22H5a2 2 0 0 1-2-2v-8"></path>
+        <path d="M15 22h4a2 2 0 0 0 2-2v-8"></path>
+    </symbol>
+
+    <symbol id="icon-view-less" viewBox="0 0 24 24">
+        <rect width="24" height="24" fill="#0098db"/>
+        <circle cx="6" cy="6" r="1.5" fill="white"/>
+        <circle cx="12" cy="6" r="1.5" fill="white"/>
+        <circle cx="18" cy="6" r="1.5" fill="white"/>
+        <circle cx="6" cy="12" r="1.5" fill="white"/>
+        <circle cx="12" cy="12" r="1.5" fill="white"/>
+        <circle cx="18" cy="12" r="1.5" fill="white"/>
+        <circle cx="6" cy="18" r="1.5" fill="white"/>
+        <circle cx="12" cy="18" r="1.5" fill="white"/>
+        <circle cx="18" cy="18" r="1.5" fill="white"/>
+    </symbol>
+
+    <symbol id="icon-kestrel" viewBox="0 0 13 7">
+        <path fill="#797878" fill-rule="evenodd" clip-rule="evenodd"
+            d="M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z"/>
+    </symbol>
+
+    <symbol id="icon-view-more" viewBox="0 0 24 24">
+        <rect width="24" height="24" fill="white"/>
+        <circle cx="6" cy="6" r="1.5" fill="#0098db"/>
+        <circle cx="12" cy="6" r="1.5" fill="#0098db"/>
+        <circle cx="18" cy="6" r="1.5" fill="#0098db"/>
+        <circle cx="6" cy="12" r="1.5" fill="#0098db"/>
+        <circle cx="12" cy="12" r="1.5" fill="#0098db"/>
+        <circle cx="18" cy="12" r="1.5" fill="#0098db"/>
+        <circle cx="6" cy="18" r="1.5" fill="#0098db"/>
+        <circle cx="12" cy="18" r="1.5" fill="#0098db"/>
+        <circle cx="18" cy="18" r="1.5" fill="#0098db"/>
+    </symbol>
+
+    <symbol id="icon-comparison" viewBox="0 0 24 24">
+        <defs>
+            <linearGradient id="cartGrad" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#00c853"/>
+                <stop offset="100%" stop-color="#2e7d32"/>
+            </linearGradient>
+        </defs>
+        <path d="M3 4h2l2.5 9.5a1 1 0 0 0 .95.7h8.1l2.1-6H7"
+            fill="none" stroke="url(#cartGrad)" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15 3.5L17 3"
+            fill="none" stroke="url(#cartGrad)" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+        <circle cx="10.5" cy="19" r="1.4" fill="url(#cartGrad)"/>
+        <circle cx="17.5" cy="19" r="1.4" fill="url(#cartGrad)"/>
+    </symbol>
+
+    <symbol id="icon-comparison-1" viewBox="0 0 24 24">
+        <path d="M7 7h13l-2.5 7.5H9L7 7Z" fill="#00b44b"/>
+        <path d="M7 7L6 4H3" stroke="#00b44b" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="10" cy="18" r="1.4" fill="#00b44b"/>
+        <circle cx="16" cy="18" r="1.4" fill="#00b44b"/>
+        <path d="M11.2 10.5l1.8 1.8 3.5-3.5"
+            fill="none" stroke="#ffffff" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <symbol id="icon-scales" viewBox="0 0 24 24">
+        <path d="M12 4v6" stroke="#5d87ff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M5 10h14" stroke="#5d87ff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M6 10l-2 6h4l-2-6z" fill="none" stroke="#5d87ff" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M18 10l2 6h-4l2-6z" fill="none" stroke="#5d87ff" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>
+
+    <symbol id="Trash" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#19A1D7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16"/>
+        <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
+        <path d="M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2L18 6"/>
+        <path d="M10 11v6M14 11v6"/>
+    </symbol>
+</svg>

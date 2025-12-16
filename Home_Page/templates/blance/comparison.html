@@ -1,0 +1,926 @@
+{% extends "base.html" %}
+{% load static %}
+{% load get_field %}
+
+{% block comparison %}
+<object type="image/svg+xml" data="{% static 'icons/icons_for_notebooks.svg' %}" style="display:none;"></object>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Порівняннь</title>
+    <style>
+        .d-block {
+            display: block;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .route-change-animation {
+            position: relative;
+        }
+
+        .pt-4 {
+            padding-top: 16px;
+        }
+
+        .layout {
+            box-sizing: border-box;
+            display: block;
+            margin: 0 auto;
+            max-width: 1600px;
+            padding-left: 8px;
+            padding-right: 8px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .layout {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+
+        .h1, h1 {
+            font-size: 20px;
+        }
+
+        .h1, .h2, .h3, .h4, .h5, .h6, .hl, .hxl {
+            line-height: 1.25;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+
+        section, span {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .item {
+            display: block;
+        }
+
+        .reset-link, .reset-link:hover, .reset-link:active {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+
+        .top-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .sub-lg {
+            font-size: 15px;
+        }
+
+        .ul {
+            position: relative;
+            display: flex;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .ul:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 24px;
+            background: linear-gradient(90deg, #fff0, #fff);
+            z-index: 1;
+        }
+
+        .ul-i {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+        }
+
+        .image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .similar-products {
+            padding: 30px 10px 75px;
+            background-color: #f8f8f8;
+        }
+
+        .similar-products h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 16px;
+            padding-bottom: 10px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px;
+            width: calc(20% - 16px);
+            box-shadow: 0 0 0 1px #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .product-info {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .product-info {
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 10px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            color: #e53935;
+            font-weight: 700;
+            margin: 6px 0;
+        }
+
+        .product-card button {
+            background-color: #32cd32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .black-link, .black-link:visited {
+            color: #221f1f;
+        }
+
+        a {
+            color: #3e77aa;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .pb-2 {
+            padding-bottom: 8px;
+        }
+
+        .pt-2 {
+            padding-top: 8px;
+        }
+
+        input[type=checkbox]+label {
+            cursor: pointer;
+            display: inline-block;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .black-link, .black-link:visited {
+            color: #221f1f;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .button--with-icon, .button_with_icon {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .button--link, .button_type_link {
+            background: none;
+            border: none;
+            color: #3e77aa;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .button--medium, .button_size_medium {
+            font-size: 16px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .button {
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: inline-block;
+            font-family: Rozetka, BlinkMacSystemFont, -apple-system, Arial, Segoe UI, Roboto, Helvetica, sans-serif;
+            font-weight: 500;
+            margin: 0;
+            outline: none;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: center;
+            transition-duration: .2s;
+            transition-property: color, background-color, border-color;
+            transition-timing-function: ease-in-out;
+        }
+
+        .ms-4 {
+            margin-left: 16px;
+        }
+
+        .scroller {
+            position: relative;
+        }
+
+        .product-scroller {
+            z-index: 3;
+            line-height: 0;
+            pointer-events: auto;
+            background-color: #fff;
+        }
+
+        .hide .btn-shadow {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .btn-shadow {
+            display: none;
+        }
+
+        .hide .btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .left .btn {
+            left: 0;
+        }
+
+        .btn {
+            display: none;
+        }
+
+        .border-black-10 {
+            border-color: #e9e9e9;
+        }
+
+        .border-1 {
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .product-table {
+            scrollbar-width: none;
+        }
+
+        .product-table, .char-table {
+            overflow-x: auto;
+            overflow-y: hidden;
+            will-change: scroll-position;
+            overscroll-behavior-x: none;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table, tbody, tr, td, th {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        tr, td {
+            border: 1px solid #e9e9e9;
+            border-collapse: collapse;
+        }
+
+        td {
+            width: calc(100% / 2);
+            min-width: 160px;
+            word-break: break-word;
+        }
+
+        .top-block {
+            position: relative;
+        }
+
+        .image1 {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 8px;
+            width: 72px;
+            flex-shrink: 0;
+        }
+
+        .tile-image-host {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding-bottom: 100%;
+        }
+
+        a {
+            color: #3e77aa;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .title {
+            --line-clamp: 2;
+            font-size: 12px;
+        }
+
+        a {
+            color: #3e77aa;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-end {
+            align-items: flex-end;
+        }
+
+        .old-price {
+            position: relative;
+            display: inline-block;
+            line-height: 1;
+            text-decoration: line-through;
+            color: #797878;
+        }
+
+        .mb-1 {
+            margin-bottom: 4px;
+        }
+
+        .text-base {
+            font-size: 14px;
+        }
+
+        .ms-1 {
+            margin-left: 4px;
+        }
+
+        .price {
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .color-red {
+            color: #f84147;
+        }
+
+        .text-2xl {
+            font-size: 20px;
+        }
+
+        .product-table, .char-table {
+            width: var(--scrollBarWidth);
+            overflow-x: auto;
+            overflow-y: hidden;
+            will-change: scroll-position;
+            overscroll-behavior-x: none;
+        }
+
+        .table-head {
+            position: relative;
+            padding: 12px 0;
+            text-align: left;
+            font-weight: 700;
+            line-height: 1;
+            background-color: #f5f5f5;
+        }
+
+        .table-head-inner {
+            position: sticky;
+            left: 0;
+            display: block;
+            padding: 0 8px;
+            max-width: calc(var(--scrollBarWidth, auto) - 2px);
+            text-align: center;
+        }
+
+        td[td1] {
+            width: calc(100% / var(--cells-count));
+            min-width: 160px;
+            word-break: break-word;
+        }
+
+        tr[tr1], td[td1] {
+            border: 1px solid #e9e9e9;
+            border-collapse: collapse;
+        }
+
+        .indent {
+            margin-bottom: -1px;
+        }
+
+        input[type=checkbox][_size_medium]+label1 {
+            font-size: 14px;
+            padding-bottom: 8px;
+            padding-left: 40px;
+            padding-top: 8px;
+        }
+
+        input[type=checkbox][_size_medium]+label1:before {
+            content: "";
+            height: 24px;
+            top: 15px;
+            width: 24px;
+        }
+
+        input[type=checkbox]+label1:before {
+            background-color: #fff;
+            border: 1px solid #d2d2d2;
+            border-radius: 4px;
+            box-sizing: border-box;
+            content: "";
+            display: block;
+            height: 16px;
+            left: 0;
+            position: absolute;
+            top: 2px;
+            transition: background-color .2s ease-in-out, border .2s ease-in-out;
+            width: 16px;
+        }
+
+        [_text] {
+            --ratio: calc(19 / 14);
+            display: -webkit-box;
+            -webkit-line-clamp: var(2, 2);
+            -webkit-box-orient: vertical;
+            height: calc(var(2, 2) * var(--ratio) * 1em);
+            line-height: var(--ratio);
+            overflow: hidden;
+            word-break: break-word;
+        }
+
+        .buy-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .comparison-table td {
+            width: calc(100% / var(--cells-count));
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .product-scroller[sm1] {
+            z-index: 3;
+            line-height: 0;
+            pointer-events: auto;
+            background-color: #fff;
+        }
+
+        .hide .btn-shadow .btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .btn-shadow {
+            display: none;
+        }
+
+        .right .btn {
+            right: 0;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .btn-svg {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .product-table.small-tile {
+            box-shadow: 0 4px 4px #00000026;
+        }
+
+        .sticky-block {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .sticky-block-inner {
+            position: sticky;
+            background-color: #fff;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: opacity .2s ease, transform .2s ease;
+            pointer-events: auto;
+        }
+
+        .sticky-block-inner.show {
+            position: sticky;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<div class="min-h-screen order-1">
+    <div1 class="d-block relative">
+        <div class="route-change-animation">
+            <div class="layout pt-4">
+                <div>
+                    <h1 class="h1 mb-4">Списки порівнянь</h1>
+                    <section>
+                        <div class="item">
+                            <a class="reset-link" href="https://rozetka.com.ua/ua/comparison/c80004/ids=530177384/">
+                                <div style="display: block; padding: 16px; border: 1px solid #e9e9e9; border-radius: 8px;">
+                                    <span class="top mb-3">
+                                        <span class="top-left">
+                                            <span class="font-bold sub-lg">Ноутбуки</span>
+                                            <span class="text-base">
+                                                Кількість товарів: 1
+                                            </span>
+                                        </span>
+                                        <div class="cart-header__remove">
+                                            <div style="position: relative; display: block; width: 40px; height: 40px;">
+                                                <button type="button" class="button button--white button--small menu-toggle-btn" aria-expanded="false" aria-haspopup="true">
+                                                    <span class="button button--medium button--with-icon button--link">
+                                                        <svg width="24" height="24" aria-hidden="true" pointer-events="none">
+                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{% static 'icons/icons_for_notebooks.svg' %}#Trash"></use>
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    {% if products %}
+                                        <ul class="ul">
+                                            {% for i in products %}
+                                            <li class="ul-i">
+                                                <img class="image" alt="" loading="lazy" fetchpriority="auto" decoding="auto" src="{{ i.images }}" sizes="auto, 100vw" style="opacity: 1; position: absolute; width: 100%; height: 100%; inset: 0px;">
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <p>Кошик порожній</p>
+                                    {% endif %}
+                                </div>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+                <div id="comparison-wrapper" style="display: block; position: relative;">
+                    <div class="indent" id="comparison-original" style="top: 56px; --topPosition: 56px;">
+                        <div class="pt-2 pb-2" style="display: flex; flex-grow: 1; align-items: center; justify-content: space-between;">
+                            <div>
+                                <input type="checkbox" _size_medium style="height: 0;">
+                                <label1 class="black-link">
+                                    <span class="text-xl" style="box-sizing: border-box;"> Тільки відмінності </span>
+                                </label1>
+                            </div>
+                            <div class="d-flex">
+                                <a class="button button--medium button--with-icon button--link" href="https://rozetka.com.ua/ua/notebooks/c80004/">
+                                    <svg width="24" height="24">
+                                        <use href="/h-df24d5e2/assets/sprite/sprite.svg#icon-plus"></use>
+                                    </svg>
+                                    <span class="mobile-hide"> Додати ще модель </span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="product-scroller scroller">
+                            <div sm1 role="button" class="left hide">
+                                <div class="btn-shadow"></div>
+                                <div class="btn border-1 border-black-10">
+                                    <svg width="24" height="24" class="btn-svg">
+                                        <use rziconname="icon-angle-left" href="/h-a95f525f/assets/sprite/sprite.svg#icon-angle-left" rzIconName="icon-angle-left"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="product-table" style="--scrollBarWidth: {{ scroll_width }}px;">
+                                <table class="table comparison-table">
+                                    <tbody>
+                                    <tr style="--cells-count: {{ compare_len }};">
+                                        {% for i in products %}
+                                        <td>
+                                            <div>
+                                                <div style="position: relative; display: block; padding: 8px 12px;">
+                                                    <div class="top-block mb-2">
+                                                        <div class="image1">
+                                                            <a class="tile-image-host" href="{% url 'product_detail' id=i.id %}">
+                                                                <img class="tile-image" loading="lazy" fetchpriority="auto" decoding="auto" src="{{ i.images }}" sizes="auto, 100vw" style="position: absolute; width: 100%; height: 100%; inset: 0px; object-fit: scale-down;">
+                                                            </a>
+                                                        </div>
+                                                        <div>
+                                                            <a _text class="title black-link d-block mb-2" href="{% url 'product_detail' id=i.id %}">{{ i.name }}</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-between items-end">
+                                                        <div style="display: block;">
+                                                            <div class="price text-2xl">
+                                                                {{ i.price }}
+                                                                <span class="ms-1">₴</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="goods-tile__price price--red">
+                                                            <button type="button" class="buy-button buy-btn" data-product-id="{{ i.id }}">
+                                                                <svg class="icon-comparison add-to-cart" width="24" height="24">
+                                                                    <use href="{% static 'icons/icons_for_notebooks.svg' %}#icon-comparison"></use>
+                                                                </svg>
+                                                            </button>
+                                                            <button data-product-id="{{ i.id }}"
+                                                                    class="buy-button in-cart-btn" onclick="openBasketModal()" style="display:none;">
+                                                                <svg width="24" height="24">
+                                                                    <use href="{% static 'icons/icons_for_notebooks.svg' %}#icon-comparison-1"></use>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div role="button" class="right hide">
+                                <div class="btn-shadow"></div>
+                                <div class="btn border-1 border-black-10">
+                                    <svg width="24" height="24" class="btn-svg">
+                                        <use rziconname="icon-angle-left" href="/h-a95f525f/assets/sprite/sprite.svg#icon-angle-left" rzIconName="icon-angle-left"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sticky-block" style="top: 275px;">
+                        <div class="sticky-block-inner" id="comparison-sticky" style="top: 64px;">
+                            <div class="product-scroller scroller">
+                                <div sm1 role="button" class="left hide">
+                                    <div class="btn-shadow"></div>
+                                    <div class="btn border-1 border-black-10">
+                                        <svg width="24" height="24" class="btn-svg">
+                                            <use rziconname="icon-angle-left" href="/h-a95f525f/assets/sprite/sprite.svg#icon-angle-left" rzIconName="icon-angle-left"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="product-table small-tile" style="--scrollBarWidth: {{ scroll_width }}px;">
+                                    <table class="table comparison-table">
+                                        <tbody>
+                                        <tr style="--cells-count: {{ compare_len }};">
+                                            {% for i in products %}
+                                            <td>
+                                                <div>
+                                                    <div style="position: relative; display: block; padding: 8px 12px;">
+                                                        <div class="top-block mb-2">
+                                                            <div class="image1">
+                                                                <a class="tile-image-host" href="{% url 'product_detail' id=i.id %}">
+                                                                    <img class="tile-image" loading="lazy" fetchpriority="auto" decoding="auto" src="{{ i.images }}" sizes="auto, 100vw" style="position: absolute; width: 100%; height: 100%; inset: 0px; object-fit: scale-down;">
+                                                                </a>
+                                                            </div>
+                                                            <div>
+                                                                <a _text class="title black-link d-block mb-2" href="{% url 'product_detail' id=i.id %}">{{ i.name }}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-between items-end">
+                                                            <div style="display: block;">
+                                                                <div class="price text-2xl">
+                                                                    {{ i.price }}
+                                                                    <span class="ms-1">₴</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="goods-tile__price price--red">
+                                                                <button type="button" class="buy-button buy-btn" data-product-id="{{ i.id }}">
+                                                                    <svg class="icon-comparison add-to-cart" width="24" height="24">
+                                                                        <use href="{% static 'icons/icons_for_notebooks.svg' %}#icon-comparison"></use>
+                                                                    </svg>
+                                                                </button>
+                                                                <button data-product-id="{{ i.id }}"
+                                                                        class="buy-button in-cart-btn" onclick="openBasketModal()" style="display:none;">
+                                                                    <svg width="24" height="24">
+                                                                        <use href="{% static 'icons/icons_for_notebooks.svg' %}#icon-comparison-1"></use>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            {% endfor %}
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div role="button" class="right hide">
+                                    <div class="btn-shadow"></div>
+                                    <div class="btn border-1 border-black-10">
+                                        <svg width="24" height="24" class="btn-svg">
+                                            <use rziconname="icon-angle-left" href="/h-a95f525f/assets/sprite/sprite.svg#icon-angle-left" rzIconName="icon-angle-left"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scroller text-base">
+                        <div class="char-table" style="--scrollBarWidth: {{ scroll_width }}px;">
+                            <table class="table">
+                                <tbody>
+                                    {% for key, value in characteristic.items %}
+                                        <tr>
+                                            <th colspan="{{ compare_len }}">
+                                                <div class="table-head text-base">
+                                                    <span class="table-head-inner"> {{ key }} </span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr style="--cells-count: {{ compare_len }};">
+                                            {% for p in products_Laptop %}
+                                                <td td1>
+                                                    <div class="d-block" style="position: relative; display: flex; align-items: center; justify-content: center; padding: 12px 16px; word-break: break-word; --toggleMaxHeight: 100px;">
+                                                        <div class="closed" style="max-height: var(--toggleMaxHeight, 0); overflow: hidden;">
+                                                            <div>{{ p|get_field:value }}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="similar-products">
+                    <h2>Інші товари</h2>
+                    <div class="product-list">
+                        {% for laptop, image in similar_products_with_images %}
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="{{ image.image_path }}" alt="{{ laptop.name }}">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">{{ laptop.name }}</div>
+                                <div class="product-price">{{ laptop.price }} грн</div>
+                            </div>
+                            <button class="product-button">
+                                <a href="{% url 'product_detail' laptop.id %}">Детальніше</a>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div1>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const originalBlock = document.getElementById("comparison-original");
+        const stickyBlock = document.getElementById("comparison-sticky");
+
+        if (!originalBlock || !stickyBlock) {
+            console.warn("Sticky comparison blocks not found.");
+            return;
+        }
+
+        function updateSticky() {
+            const rect = originalBlock.getBoundingClientRect();
+
+            if (rect.bottom <= 0) {
+                stickyBlock.classList.add("show");
+            } else {
+                stickyBlock.classList.remove("show");
+            }
+        }
+
+        window.addEventListener("scroll", updateSticky);
+
+        updateSticky();
+    });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // список порівнянь
+    const listBlock = document.querySelector(".item");
+
+    // блок з іншими товарами
+    const similarProductsBlock = document.querySelector(".similar-products");
+
+    // ВСЯ таблиця порівнянь
+    const comparisonBlock = document.getElementById("comparison-wrapper");
+
+    if (!listBlock || !comparisonBlock) {
+        console.warn("Не знайдено потрібних елементів");
+        return;
+    }
+
+    // --- початковий стан ---
+    // показуємо тільки список + інші товари
+    comparisonBlock.style.display = "none";
+
+    // --- клік на список ---
+    listBlock.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        // ховаємо список
+        listBlock.closest("div").style.display = "none";
+
+        // ховаємо блок інших товарів
+        if (similarProductsBlock) {
+            similarProductsBlock.style.display = "show";
+        }
+
+        // показуємо таблицю
+        comparisonBlock.style.display = "block";
+    });
+});
+</script>
+{% endblock %}

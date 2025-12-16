@@ -1,7 +1,5 @@
 # users/serializers.py
 from rest_framework import serializers
-from .models import User
-
 
 class PhoneRegisterSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=15)

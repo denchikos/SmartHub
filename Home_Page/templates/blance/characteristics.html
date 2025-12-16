@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block characteristics %}
+<link rel="stylesheet" href="{% static 'Home_page/css/style.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <head>
     <style>
         div1 {
@@ -91,6 +93,80 @@
             border-bottom: 1px solid #e9e9e9;
         }
 
+        .sticky-spec-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f9f9f9;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            z-index: 1000;
+            font-size: 14px;
+            box-shadow: -4px -4px 14px rgba(0, 0, 0, 0.06);
+            justify-content: start;
+            gap: 12px;
+        }
+
+        .spec-bar-img {
+            width: 50px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .spec-bar-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-grow: 1;
+            flex-wrap: wrap;
+        }
+
+        .spec-bar-text {
+            color: #333;
+            line-height: 1.4;
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .spec-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        .spec-price {
+            color: #e53935;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        input {
+            padding-top: 2px;
+        }
+
+        input {
+            background-color: #fff;
+            box-sizing: border-box;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .buy-button {
+            background-color: #667eea;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+
     </style>
 </head>
 <div class="wrapper central-wrapper">
@@ -99,16 +175,14 @@
             <ul class="bread">
                 <li class="breadcrumbs__item breadcrumbs__item--home">
                     <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="/">
-                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
-                            <use href="#icon-home"></use>
-                        </svg>
+                        <i class="bi bi-house-door-fill breadcrumbs__icon-home"></i>
                         <span class="breadcrumbs__item--home--title">На головну</span>
                     </a>
                     <span class="breadcrumbs__separator">/</span>
                 </li>
                 <li class="breadcrumbs__item breadcrumbs__item--last">
                     <a class="breadcrumbs__link" href="/">
-                        <span>Ноутбуки та комп'ютери</span>
+                        <span style="font-weight: 700;">Ноутбуки та комп'ютери</span>
                         <span class="breadcrumbs__separator">/</span>
                     </a>
                     <span class="breadcrumbs__separator">/</span>
@@ -118,17 +192,14 @@
                         <use href="#icon-chevron-down"></use>
                     </svg>
                     <span class="breadcrumbs__separator-last">/</span>
-                    <a class="breadcrumbs__link" href="/">
-                        <span>Ноутбуки</span>
+                    <a class="breadcrumbs__link" href="{% url 'notebooks' %}">
+                        <span style="font-weight: 700;">Ноутбуки</span>
                     </a>
                 </li>
                 <li class="breadcrumbs__item breadcrumbs__item--text">
-                    <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
-                        <use href="#icon-chevron-down"></use>
-                    </svg>
                     <span class="breadcrumbs__separator-last">/</span>
-                    <a class="breadcrumbs__link" href="/">
-                        <span>Ноутбуки {{ product.notebooksbrand_id.name }}</span>
+                    <a class="breadcrumbs__link" href="{% url 'notebooks' %}">
+                        <span style="font-weight: 700;">Ноутбуки {{ product.noteb_id.name }}</span>
                     </a>
                 </li>
             </ul>
@@ -602,46 +673,50 @@
                     </section1>
                 </main>
                 <aside class="product-tabs__sidebar" style="display: block;">
-                    <div1 class="product-carriage">
-                        <div1 class="product-carriage__goods product-carriage_display-flex-md">
-                            <figure class="product-carriage__goods-picture">
-                                <img loading="lazy" alt="Ноутбук ASUS TUF Gaming A15 FA506NC-HN026 (90NR0JF7-M004N0) Graphite Black / 15.6 IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 1 ТБ / NVIDIA GeForce RTX 3050, 4 ГБ" src="{% static 'Home_page/images/Ноутбук ASUS TUF Gaming A15 (2023)/2389791.jpg' %}"></img>
-                            </figure>
-                            <div class="product-carriage__goods-title">
-                                Ноутбук ASUS TUF Gaming A15 FA506NC-HN068 (90NR0JF7-M00830) Graphite Black / 15.6" IPS Full HD 144 Гц / AMD Ryzen 5 7535HS / RAM 16 ГБ / SSD 512 ГБ / NVIDIA GeForce RTX 3050, 4 ГБ /
+                    {% if models_laptop %}
+                    <div class="sticky-spec-bar">
+                        <img src="{{ main_image.image_path }}" alt="{{ product.name }}" class="spec-bar-img">
+
+                        <div class="spec-bar-info">
+                            <div class="spec-bar-text">
+                                <strong>
+                                    {{ product.name }}
+                                    {{ models_laptop.model }} / {{ models_laptop.color }} /
+                                    {{ models_laptop.screen_size }}" {{ models_laptop.display_resolution }} {{ models_laptop.display_hz }} Гц /
+                                    {{ models_laptop.cpu }} RAM {{ models_laptop.ram }} ГБ / SSD {{ models_laptop.ssd }} ГБ
+                                </strong>
                             </div>
-                        </div1>
-                        <div1 class="product-carriage__buy">
-                            <div1 class="product-carriage__buy-top">
-                                <div1 class="product-price__block">
-                                    <p class="product-price__small">
-                                       39&nbsp;499
-                                        <span class="currency">₴</span>
-                                    </p>
-                                    <p class="product-carriage__price product-carriage__price_color-red">
-                                        33&nbsp;999
-                                        <span class="currency">₴</span>
-                                    </p>
-                                </div1>
-                                <div1 class="product-carriage__buttons">
-                                    <div class="wishlist-wrapper">
-                                        <button type="button" class="wishlist-button js-wish-button" aria-label="Перемістити в список бажань">
-                                           <svg width="24" height="24" aria-hidden="true">
-                                                <use href="#heart"></use>
-                                           </svg>
-                                        </button>
-                                    </div>
-                                </div1>
-                                <div class="product-carriage__buy-button">
-                                    <div class="mode-slim toOrde">
-                                        <button type="button" class="buy-button button button--with-icon button--green button--medium buy-button--tile" aria-label="Купити">
-                                            <span class="buy-button__label"> Купити </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div1>
-                        </div1>
-                    </div1>
+                            <div class="spec-bar-actions">
+                                <div class="spec-price">{{ product.price }} ₴</div>
+                                    {% with request.session.compare as compare_list %}
+                                    <form method="GET" action="{% url 'comparison' %}" id="compare-form-{{ product.id }}" class="compare-form" data-product-id="{{ product.id }}">
+                                        {% csrf_token %}
+                                        {% if compare_list and product.id|stringformat:"s" in compare_list %}
+                                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                                            <button type="button" class="compare-btn add-btn" style="display:none;">
+                                                <img loading="lazy" src="/static/Home_page/images/base_images/icon_scales.jpg">
+                                            </button>
+                                            <button type="button" class="compare-btn added-btn">
+                                                <img loading="lazy" src="/static/Home_page/images/base_images/icon_scales_1.jpg"
+                                                style="width: 24px; height: 24; object-fit: cover">
+                                            </button>
+                                        {% else %}
+                                            <button type="button" class="compare-btn add-btn">
+                                                <img loading="lazy" src="/static/Home_page/images/base_images/icon_scales.jpg">
+                                            </button>
+                                            <button type="button" class="compare-btn added-btn" style="display:none;">
+                                                <img loading="lazy" src="/static/Home_page/images/base_images/icon_scales_1.jpg"
+                                                width="24" height="24">
+                                            </button>
+                                        {% endif %}
+                                    </form>
+                                    {% endwith %}
+                                <button id="buy-btn" class="buy-button" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" data-product-price="{{ product.price }}">Купити</button>
+                                <button id="in-cart-btn" class="buy-button in-cart-btn" onclick="openBasketModal()" style="display:none;">В кошику</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                 </aside>
             </div1>
         </div>

@@ -1,0 +1,2437 @@
+{% block checkout %}
+{% load ustom_tags %}
+<head>
+    <meta charset="UTF-8">
+    <title>Оформлення замовлення</title>
+    <style>
+        .section-title {
+            font-size: 1.25rem;
+            margin-top: 2rem;
+            font-weight: 600;
+        }
+        .delivery-option {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .delivery-option input {
+            margin-right: 0.5rem;
+        }
+
+        .form__row input:not([type=checkbox]):not([type=radio]), .form__row textarea {
+            width: 100%;
+        }
+
+        .header-location__footer {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+
+        .button {
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: inline-block;
+            font-family: BlinkMacSystemFont, -apple-system, Arial, Segoe UI, Roboto, Helvetica, sans-serif;
+            margin: 0;
+            outline: none;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: center;
+            transition-duration: .2s;
+            transition-property: color, background-color, border-color;
+            transition-timing-function: ease-in-out;
+        }
+
+        .button:disabled, .button:disabled:hover {
+            background-color: #eee;
+            color: #a6a5a5;
+            cursor: default;
+        }
+
+        button.button, input.button {
+            line-height: normal;
+        }
+
+        .button--green, .button_color_green {
+            background-color: #00a046;
+            color: #fff;
+        }
+
+        .button--medium, .button_size_medium {
+            font-size: 16px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .content-section {
+            background-color: #fff;
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+
+        .h1 {
+            font-size: 20px;
+        }
+
+        .block-outline:not(.hide) {
+            padding: 12px 16px;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+        }
+
+        .block-content {
+            cursor: pointer;
+            text-align: left;
+            background-color: #fff;
+        }
+
+        .block-grid>:last-of-type {
+            padding-top: 2px;
+        }
+
+        .block-grid>:nth-child(2) {
+            display: grid;
+            min-width: 0;
+            flex-grow: 1;
+            padding-top: 2px;
+        }
+
+        .button--link, .button_type_link {
+            background: none;
+            border: none;
+            color: #3e77aa;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .block-content .block-title {
+            display: block;
+            font-size: 15px;
+            line-height: 18px;
+            word-break: break-word;
+        }
+
+        .block-content .block-text {
+            display: block;
+            padding-top: 4px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .color-black-60 {
+            color: #797878;
+        }
+
+        .text-base {
+            font-size: 14px;
+        }
+
+        .block-grid>:last-of-type {
+            padding-top: 2px;
+        }
+
+        span {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .checkout-box {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #d2d2d2;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .checkout-header {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .edit-link {
+            float: right;
+            font-size: 14px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .total-box {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .green-btn {
+            background-color: #00a046;
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .toggle-form__animation.open {
+            opacity: 1;
+        }
+
+        .toggle-form__animation {
+            transition: opacity .3s ease-out;
+        }
+
+        .block-grid {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 0 16px;
+        }
+
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+
+        .h3 {
+            font-size: 16px;
+        }
+
+        .checkout-fieldset {
+            min-inline-size: 0;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .checkout-layout {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .central-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .checkout-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .checkout-form__content {
+            width: 100%;
+        }
+
+        .checkout-fieldset {
+            min-inline-size: 0;
+
+        }
+
+        fieldset {
+            border: none;
+            margin: 0;
+            padding: 0;
+            min-inline-size: initial;
+            border-image: none;
+        }
+
+        .h3 {
+            line-height: 1.25;
+            font-weight: 600;
+            word-wrap: break-word;
+        }
+
+        .checkout-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: space-between;
+            background-color: #f5f5f5;
+        }
+
+        legend {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+
+        .checkout-order {
+            margin-bottom: 24px;
+        }
+
+        .mb-6 {
+            margin-bottom: 24px;
+        }
+
+        .checkout__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .checkout-order__merchandises.block-outline {
+            padding-top: 8px;
+            padding-bottom: 16px;
+        }
+
+
+        .d-block {
+            display: block;
+        }
+
+        .checkout-order__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .mb-1 {
+            margin-bottom: 4px;
+        }
+
+        .checkout-order__total {
+            font-size: 14px;
+            line-height: 17px;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .simplified-view .merchandise-border:last-of-type {
+            border: none;
+        }
+
+        .checkout-product {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .checkout-product__link {
+            color: #221f1f;
+        }
+
+        a {
+            display: inherit;
+            gap: inherit;
+            align-items: inherit;
+            height: inherit;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover, a:active, a:visited {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .checkout-product__picture {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+        .checkout-product__picture img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 100%;
+        }
+
+        .merchandise-premium-item:empty {
+            display: none;
+        }
+
+        .merchandise-premium-item {
+            margin-bottom: 16px;
+        }
+
+        .edit-button-wrap {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .checkout-product__description {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-grow: 1;
+            font-size: 14px;
+            line-height: 17px;
+            gap: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-product__description {
+                flex-wrap: nowrap;
+            }
+        }
+
+        .checkout-product__label {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-product__label {
+                width: calc(100% - 296px);
+            }
+        }
+
+        .checkout-product__message {
+            color: #00a046;
+        }
+
+        .mt-2 {
+            margin-top: 8px;
+        }
+
+        .checkout-product__quantity {
+            font-size: 14px;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-product__quantity {
+                display: flex;
+                justify-content: center;
+                width: 170px;
+            }
+        }
+
+        .checkout-product__nowrap {
+            white-space: nowrap;
+        }
+
+        .checkout-product__price {
+            font-size: 14px;
+            line-height: 17px;
+        }
+
+        .currency {
+            margin-left: 4px;
+        }
+
+        .checkout-product__multiply {
+            color: #797878;
+        }
+
+        .checkout-product__nowrap {
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-product__cost {
+                width: 120px;
+                text-align: right;
+            }
+        }
+
+        .checkout-product__menu:empty {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-product__menu {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        .checkout-variant {
+            margin-bottom: 8px;
+        }
+
+        .checkout-variant__inner--selected {
+            border: 1px solid #00a046;
+            border-color: #00a046;
+        }
+
+        .checkout-variant__inner {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .checkout-variant__content {
+            padding-left: 32px;
+            padding-bottom: 12px;
+        }
+
+        .radio-button-small[type=radio] {
+            appearance: none;
+            border: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        .radio-button-small[type=radio]+label:before {
+            top: 11px;
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            border: 1px solid #d2d2d2;
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 5px #fff;
+            box-sizing: border-box;
+            content: "";
+            display: block;
+            left: 0;
+            position: absolute;
+            transition: border .2s ease-in-out, background-color .2s ease-in-out;
+        }
+
+        .radio-button-small[type=radio]+label {
+            position: relative;
+            display: inline-block;
+            padding: 8px 0 8px 32px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .radio-button-small[type=radio]:focus+label:before, .radio-button-small[type=radio]:checked+label:before {
+            border: 1px solid #00a046 !important;
+            box-shadow: inset 0 0 0 3px #fff, 0 0 0 2px #6fc4e5 !important;
+            background-color: #00a046;
+        }
+
+        .delivery__label-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0 16px;
+        }
+
+        .checkout-variant__title {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .checkout-variant__label {
+            width: 100%;
+            box-sizing: border-box;
+            line-height: 24px;
+        }
+
+        .delivery__time {
+            display: block;
+            font-size: 12px;
+            line-height: 15px;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        .currency {
+            margin-left: 4px;
+        }
+
+        .delivery-pickups__select-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .delivery-pickups__select-wrap {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .autocomplete {
+            position: relative;
+        }
+
+        .d-grid {
+            display: grid;
+        }
+
+        .select-css--medium, .select-css_size_medium {
+            height: 40px;
+        }
+
+        .select-css {
+            align-items: center;
+            appearance: none;
+            background-color: #fff;
+            background-position: right 12px center;
+            background-repeat: no-repeat, repeat;
+            background-size: 14px 9px;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            box-sizing: border-box;
+            color: #221f1f;
+            cursor: pointer;
+            display: inline-flex;
+            font-size: 14px;
+            height: 32px;
+            margin: 0;
+            max-width: 100%;
+            overflow: hidden;
+            padding-left: 12px;
+            padding-right: 40px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .select-css-0 {
+            align-items: center;
+            appearance: none;
+            background-color: #fff;
+            background-position: right 12px center;
+            background-repeat: no-repeat, repeat;
+            background-size: 14px 9px;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            box-sizing: border-box;
+            color: #221f1f;
+            cursor: pointer;
+            display: inline-flex;
+            font-size: 14px;
+            height: 40px;
+            margin: 0;
+            max-width: 100%;
+            overflow: hidden;
+            padding-left: 12px;
+            padding-right: 40px;
+            text-align: left;
+            width: 100%;
+        }
+
+
+        .text-inline {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .button--with-icon, .button_with_icon {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .button--navy, .button_color_navy {
+            background-color: #3e77aa;
+            color: #fff;
+        }
+
+        .button--medium, .button_size_medium {
+            font-size: 16px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .delivery-pickups__select-on-map {
+            min-width: 70px;
+        }
+
+        .delivery-pickups__info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .delivery-pickups__info {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        .mt-3 {
+            margin-top: 12px;
+        }
+
+        .delivery-pickups__schedule {
+            display: flex;
+            max-width: 185px;
+            flex-wrap: wrap;
+            font-size: 12px;
+        }
+
+        .delivery-pickups__schedule-day:last-of-type, .delivery-pickups__schedule-time:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .delivery-pickups__schedule-day, .delivery-pickups__schedule-time {
+            width: 50%;
+            margin-bottom: 4px;
+        }
+
+        .delivery-pickups__schedule-day:last-of-type, .delivery-pickups__schedule-time:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .empty-none:empty {
+            display: none !important;
+        }
+
+        .pb-4 {
+            padding-bottom: 16px;
+        }
+
+        .h4, .h5, .h6 {
+            font-size: 20px;
+        }
+
+        .h1, .h2, .h3, .h4, .h5, .h6, .hl, .hxl, .hxxl {
+            line-height: 1.25;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+
+        .block-grid>:last-of-type {
+            padding-top: 2px;
+        }
+
+        .delivery-preview-details {
+            flex-grow: 1;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .delivery-title-wrap {
+            display: flex;
+            justify-content: space-between;
+            gap: 0 8px;
+        }
+
+        .delivery-title {
+            position: relative;
+            line-height: 22px;
+        }
+
+        .delivery-title-label {
+            position: relative;
+            margin-right: 8px;
+            min-height: 24px;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        .toggle-form__text {
+            font-size: 14px;
+            line-height: 17px;
+        }
+
+        .delivery-preview {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .checkout-variant__body {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-variant__body {
+                flex-direction: row;
+            }
+        }
+
+        .checkout-variant__pay {
+            flex-shrink: 0;
+            width: 40px;
+            height: 24px;
+        }
+
+        .additional-fields-empty:empty {
+            display: block;
+            margin-bottom: -12px;
+        }
+
+        .form__row {
+            position: relative;
+        }
+
+        .select-css-1 {
+            align-items: center;
+            appearance: none;
+            background-color: #fff;
+            background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg fill='%23797878' viewBox='0 0 13 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z'/%3E%3C/svg%3E);
+            background-position: right 12px center;
+            background-repeat: no-repeat, repeat;
+            background-size: 14px 9px;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            box-sizing: border-box;
+            color: #221f1f;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 0;
+            max-width: 100%;
+            overflow: hidden;
+            padding-left: 12px;
+            padding-right: 40px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .form__row--flex, .form__row_type_flex {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form__row+.form__row {
+            margin-top: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .form__row--flex, .form__row_type_flex {
+                flex-direction: row;
+            }
+        }
+
+        .form__row--flex .form__row, .form__row_type_flex .form__row {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .form__row--flex .form__row, .form__row_type_flex .form__row {
+                flex: 1;
+                width: auto;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .inner__form__row {
+                max-width: calc(50% - 8px);
+            }
+        }
+
+        .form__label {
+            line-height: 14px;
+        }
+
+        .form__caption, .form__label {
+            color: #797878;
+            font-size: 12px;
+        }
+
+        .form__label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        input, textarea {
+            appearance: none;
+            background-color: #fff;
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border .2s ease-in-out;
+        }
+
+        input {
+            padding-top: 2px;
+        }
+
+        input {
+            background-color: #fff;
+            box-sizing: border-box;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .form__row--flex>.form__row+.form__row, .form__row_type_flex>.form__row+.form__row {
+                margin-left: 16px;
+                margin-top: 0;
+            }
+        }
+
+        aside {
+            display: block;
+        }
+
+        .checkout-form__sidebar {
+            width: 100%;
+        }
+
+        .checkout-sidebar {
+            margin-top: 32px;
+        }
+
+        .checkout-total {
+            padding: 16px;
+        }
+
+        .checkout-total__row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .checkout-total__label {
+            margin-right: 15px;
+            font-size: 14px;
+            color: #797878;
+        }
+
+        .checkout-total__value {
+            text-align: right;
+            font-size: var(--common-font-size);
+        }
+
+        .checkout-total__row+.checkout-total__row {
+            margin-top: 12px;
+        }
+
+        .checkout-total__value {
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .checkout-total__row_type_bordered {
+            border-top: 1px solid var(--global-black-10);
+            border-bottom: 1px solid var(--global-black-10);
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+
+        .checkout-total__value_size_large {
+            font-size: 24px;
+        }
+
+        .checkout-total__buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-total__buttons {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .checkout-total__submit {
+            width: 100%;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .checkout-total__submit {
+                flex: 1;
+            }
+        }
+
+        .button-1 {
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: inline-block;
+            font-family: BlinkMacSystemFont, -apple-system, Arial, Segoe UI, Roboto, Helvetica, sans-serif;
+            margin: 0;
+            outline: none;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: center;
+            transition-duration: .2s;
+            transition-property: color, background-color, border-color;
+            transition-timing-function: ease-in-out;
+        }
+
+        .button--large, .button_size_large {
+            font-size: 18px;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        aside {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+
+        .toggle-form__animation {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-form__animation.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .toggle-form__animation {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+        }
+
+        .toggle-form__animation.open {
+            max-height: 1000px;
+            opacity: 1;
+            overflow: visible;
+        }
+
+        .form__label {
+            line-height: 14px;
+        }
+
+        .form__label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .form__caption, .form__label {
+            color: #797878;
+            font-size: 12px;
+        }
+
+        .toggle-section {
+            display: none;
+        }
+
+        .toggle-section.open {
+            display: block;
+        }
+
+        .d-none {
+          display: none !important;
+        }
+
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+            color: #000 !important;
+        }
+
+        .modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @keyframes _medium_show {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .medium-animation {
+                padding: 0 16px;
+            }
+        }
+
+        .medium .modal-layout {
+            max-width: 640px;
+        }
+
+        .modal-layout {
+            position: relative;
+        }
+
+
+
+        [_modal_content] {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow: hidden;
+            margin: 0 auto;
+            padding-bottom: 16px;
+            max-height: calc(100% - 4px);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        @media (min-width: 768px) {
+            medium-1 {
+                max-height: calc(100% - 32px);
+                box-shadow: 0 8px 40px #00000052;
+            }
+        }
+
+        .border {
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .padding {
+            padding: 16px;
+        }
+
+        .text-inline {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .h2 {
+            font-size: 18px;
+        }
+
+        .ms-auto {
+            margin-left: auto;
+        }
+
+        .text-base {
+            font-size: 14px;
+        }
+
+        .content {
+            font-size: 14px;
+            line-height: 1.2142857143;
+            padding: 16px 16px 0;
+            overflow: auto;
+        }
+
+        .header-location__intro {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #a6a5a5;
+        }
+
+        .header-location__popular {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .header-location__popular-item {
+            width: 50%;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .header-location__popular-item {
+                width: 33.3333333333%;
+            }
+        }
+
+        .header-location__popular-link {
+            position: relative;
+            display: inline-block;
+            padding-left: 12px;
+            padding-right: 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-size: 18px;
+            line-height: 40px;
+            box-sizing: border-box;
+        }
+
+        .header-location__search {
+            margin-bottom: 24px;
+        }
+
+        .form__label {
+            line-height: 14px;
+        }
+
+        .form__caption, .form__label {
+            color: #797878;
+            font-size: 12px;
+        }
+
+        .form__label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .autocomplete {
+            position: relative;
+        }
+
+        .form__row input:not([type=checkbox]):not([type=radio]), .form__row textarea {
+            width: 100%;
+        }
+
+        .header-location__search-example {
+            margin-top: 24px;
+            font-size: 14px;
+            color: #a6a5a5;
+        }
+
+        .header-location__footer--align-right {
+            justify-content: flex-end;
+        }
+
+        @media (min-width: 768px) {
+            .header-location__footer {
+                flex-direction: row;
+                justify-content: end;
+            }
+        }
+
+        .header-location__footer {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+
+        .button:disabled, .button:disabled:hover {
+            background-color: #eee;
+            color: #a6a5a5;
+            cursor: default;
+        }
+
+        .btn {
+            width: 60px;
+            font-size: 14px;
+            line-height: 0;
+            aspect-ratio: 1 / 1;
+            background-color: transparent;
+        }
+
+        .btn:not(:hover) {
+            color: #797878;
+        }
+
+        .button--icon, .button_type_icon {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-shrink: 0;
+            justify-content: center;
+            padding: 0;
+            width: 40px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .button--icon svg, .button_type_icon svg {
+            fill: #3e77aa;
+        }
+
+        .button svg {
+            transition-duration: .2s;
+            transition-property: fill;
+            transition-timing-function: ease-in-out;
+        }
+
+        .button:disabled, .button:disabled:hover {
+            background-color: #eee;
+            color: #a6a5a5;
+            cursor: default;
+        }
+
+        .modal-container {
+          display: none;
+        }
+
+        .modal-container.show {
+          display: block;
+        }
+
+
+        ul1, div, fieldset, dl, dd, li {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .checkout-product__title {
+            word-break: break-all;
+        }
+
+        .toggle-form {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+        }
+
+        .toggle-form.open {
+            max-height: 1000px; /* достатньо для розгортання блоку */
+            opacity: 1;
+        }
+
+
+        .toggle-section {
+            transition: opacity 0.4s ease, max-height 0.4s ease;
+            overflow: hidden;
+        }
+
+        .shown {
+            opacity: 1;
+            max-height: 1000px;
+            display: block;
+        }
+
+        .hidden {
+            opacity: 0;
+            max-height: 0;
+            display: none;
+        }
+
+        .city-option {
+            border: 1px solid #d2d2d2;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .city-option.active {
+            border: 2px solid #00a046;
+        }
+
+        .selected-city {
+            font-weight: bold;
+            box-shadow: 0 0 6px rgba(0, 160, 70, 0.4);
+        }
+
+        #city-suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            z-index: 999;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        .suggestion-item {
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+
+
+        .autocomplete-container {
+            position: relative;
+        }
+
+        .suggestions-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-height: 220px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .suggestion-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f8ff;
+        }
+
+        .input-clearable {
+            position: relative;
+        }
+
+        .input-clearable input {
+            padding-right: 30px;
+        }
+
+        .input-clearable .clear-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
+            font-size: 16px;
+        }
+
+        .input-clearable .clear-icon:hover {
+            color: #000;
+        }
+
+        @media (max-width: 576px) {
+            .form-control {
+                font-size: 16px;
+            }
+
+            .suggestions-list {
+                font-size: 14px;
+                max-height: 180px;
+            }
+
+            .suggestion-item {
+                padding: 10px 14px;
+            }
+
+            .clear-icon {
+                font-size: 20px;
+            }
+        }
+
+        #selected-address-display {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: calc(100% - 80px); /* Вираховує місце для "Змінити" */
+        }
+
+
+        .edit-product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        .edit-product-title {
+            flex: 1;
+            font-size: 15px;
+        }
+        .edit-product-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .edit-product-actions input {
+            width: 50px;
+            text-align: center;
+        }
+
+        .merchandise-border {
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .checkout-fullwidth-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            background-color: #00a046;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .checkout-fullwidth-btn:hover {
+            background-color: #009144;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .order-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .order-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .order-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .order-card-left img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #f7f7f7;
+        }
+
+        .order-card-right {
+            flex: 1;
+            margin-left: 16px;
+        }
+
+        .order-card-title {
+            font-weight: 500;
+            font-size: 15px;
+            color: #222;
+            margin-bottom: 4px;
+        }
+
+        .order-card-meta {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .order-card-price {
+            color: #00a046;
+            font-weight: 600;
+        }
+
+        .order-card-total {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .edit-button-wrap {
+            margin-top: 12px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="checkout-wrapper">
+<section class="checkout-layout">
+    <div class="central-wrapper">
+        <h1 class="h1 mb-4">Оформлення замовлення</h1>
+        <form novalidate class="ng-untouched ng-valid ng-dirty">
+            <div class="checkout-form">
+                <main class="checkout-form__content">
+                    <div class="content-section mb-4" >
+                        <div class="button block-outline block-content block-grid checkout-header" style="display: flex; flex-wrap: wrap; width: 100%; justify-content: space-between; gap: 0 16px;">
+                            <div id="selected-address-display">Виберіть ваше місто або насений пункт та пукт видачі</div>
+                            <div style="font-size: 14px; color: #3e77aa; flex-grow: 0;" onclick="openModal()"> Змінити </div>
+                        </div>
+
+                        <input type="hidden" name="selected_city" id="hidden-city-input">
+                        <input type="hidden" name="selected_warehouse" id="hidden-warehouse-input">
+                    </div>
+                    <div class="content-section checkout-order">
+                        <div class="check-order">
+                            <fieldset class="checkout-block mb-6">
+                                <div class="checkout__header"></div>
+                                <div class="checkout-order__merchandises block-outline d-block">
+                                    <h3 class="section-title" style="margin-top: 1rem;">Замовлення</h3>
+
+                                    <ul1 class="order-items" style="list-style: none; padding: 0;">
+                                        {% for product in products %}
+                                        <li class="js-index-0 cart-list__item order-card" data-product-id="{{ item.id }}">
+                                            <div class="order-card-left">
+                                                <a data-test="filter-link">
+                                                    {% with img=images|get_item:product.id %}
+                                                        {% if img %}
+                                                            <img src="{{ img }}" alt="{{ product.name }}" style="width:80px;height:80px;object-fit:contain;">
+                                                        {% endif %}
+                                                    {% endwith %}
+                                                </a>
+                                            </div>
+
+                                            <div class="checkout-product__description">
+                                                <div class="checkout-product__label">
+                                                    <span class="checkout-product__title">{{ product.name }}</span>
+                                                </div>
+
+                                                <div class="checkout-product__quantity">
+                                                    <span class="checkout-product__price">{{ product.price }} <span class="currency">₴</span></span>
+                                                    &nbsp;<span class="checkout-product__multiply">x</span>
+                                                    <span class="checkout-product__option js-product-quantity"> 1 </span>од.
+                                                </div>
+
+                                                <div class="checkout-product__cost checkout-product__nowrap js-product-amount">
+                                                    <b><span class="checkout-product__digit">{{ product.price }} <span class="currency">₴</span></span></b>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul1>
+
+                                    <div class="edit-button-wrap">
+                                        <button type="button" class="block-button button button--link text-base" onclick="openEditModal()">
+                                            Редагувати товари
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="block-outline">
+                                <fieldset class="checkout-block checkout-fieldset">
+                                    <legend class="h4 mb-2">Оплата</legend>
+                                    <div class="nip-theme d-block mb-2 empty-none"></div>
+                                    <ul1 style="list-style: none;">
+                                        <div class="validation_type_error"></div>
+                                        <li class="checkout-variant">
+                                            <div class="checkout-variant__inner checkout-variant__inner">
+                                                <div class="checkout-variant__radio">
+                                                    <div class="checkout-variant__body">
+                                                        <input type="radio" name="payment_method" value="cod" class="radio-button-small" id="pay1">
+                                                        <label class="checkout-variant__label" for="pay1">
+                                                            <span class="checkout-variant__body checkout-variant__body--with-pay">
+                                                                <span class="break-all checkout-variant__title">
+                                                                    Оплата під час отримання товару
+                                                                </span>
+                                                                <span aria-hidden="true" class="checkout-variant__pay"></span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="checkout-variant__content">
+                                                    <div class="additional-fields-empty"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <div class="validation_type_error"></div>
+                                        <li class="checkout-variant">
+                                            <div class="checkout-variant__inner">
+                                                <div class="checkout-variant__radio">
+                                                    <input type="radio" name="payment_method" value="cod" class="radio-button-small" id="pay2">
+                                                    <label class="checkout-variant__label" for="pay2">
+                                                        Оплатити зараз
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="checkout-variant">
+                                            <div class="checkout-variant__inner">
+                                                <div class="checkout-variant__radio">
+                                                    <div class="checkout-variant__body">
+                                                        <input type="radio" name="payment_method" value="cod" class="radio-button-small" id="pay3">
+                                                        <label class="checkout-variant__label" for="pay3">
+                                                            <span>
+                                                                <span class="checkout-variant__body checkout-variant__body--with-pay">
+                                                                    <span>
+                                                                        <span class="break-all checkout-variant__title">
+                                                                            Безготівковими для юридичних осіб
+                                                                            <span class="checkout-variant__option color-black-60"> Оплата для юридичних осіб через розрахунковий рахунок </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span aria-hidden="true" class="checkout-variant__pay"></span>
+                                                                </span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="checkout-variant">
+                                            <div class="checkout-variant__inner">
+                                                <div class="checkout-variant__radio">
+                                                    <div class="checkout-variant__body">
+                                                        <input type="radio" name="payment_method" value="cod" class="radio-button-small" id="pay4">
+                                                        <label class="checkout-variant__label" for="pay4">
+                                                            <span>
+                                                                <span class="checkout-variant__body checkout-variant__body--with-pay">
+                                                                    <span>
+                                                                        <span class="break-all checkout-variant__title">
+                                                                            Безготівковий для фізичних осіб
+                                                                            <span class="checkout-variant__option color-black-60"> Оплата для фізичних осіб через розрахунковий рахунок </span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span aria-hidden="true" class="checkout-variant__pay"></span>
+                                                                </span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul1>
+                                </fieldset>
+                                <div class="d-block mt-2">
+                                    <fieldset class="checkout-fieldset mb-2">
+                                        <legend class="h4 mb-3"> Отримувач </legend>
+                                        <div class="toggle-form__animation toggle-section" style="toggle-switch; display: block; padding: 0 2px;">
+                                            <div class="form__row form__row_type_flex">
+                                                <div class="form__row js-phone">
+                                                    <label class="form__label"> Мобільний телефон </label>
+                                                    <input name="phone" type="tel" formcontrolname="phone" class="ng-pristine ng-valid ng-touched" style="height: 40px; appearance: none; border: 1px solid #d2d2d2; border-radius: 8px; outline: none; transition: border .2s ease-in-out;">
+                                                </div>
+                                                <div class="form__row js-email">
+                                                    <label class="form__label"> Електронна пошта </label>
+                                                    <input name="email" type="text" class="ng-pristine ng-valid ng-touched" style="height: 40px; appearance: none; border: 1px solid #d2d2d2; border-radius: 8px; outline: none; transition: border .2s ease-in-out;">
+                                                </div>
+                                            </div>
+                                            <div class="form__row form__row_type_flex">
+                                                <div class="form__row js-surname">
+                                                    <label class="form__label"> Прізвище </label>
+                                                    <input name="last_name" type="text" formcontrolname="surname" class="ng-pristine ng-valid ng-touched" style="height: 40px; appearance: none; border: 1px solid #d2d2d2; border-radius: 8px; outline: none; transition: border .2s ease-in-out;">
+                                                </div>
+                                                <div class="form__row js-name">
+                                                    <label class="form__label"> Ім'я </label>
+                                                    <input name="first_name" type="text" formcontrolname="name" class="ng-pristine ng-valid ng-touched" style="height: 40px; appearance: none; border: 1px solid #d2d2d2; border-radius: 8px; outline: none; transition: border .2s ease-in-out;">
+                                                </div>
+                                            </div>
+                                            <div class="form__row mb-4">
+                                                <button type="button" class="button button--navy button--medium toggle-collapse"> Згорнути </button>
+                                            </div>
+                                        </div>
+                                        <div class="toggle-form__animation contact-summary toggle-section open" style="display: block;">
+                                            <button type="button" class="button block-grid block-outline block-content checkout-header toggle-switch  toggle-edit">
+                                                Ваші дані <span style="font-size: 14px; color: #3e77aa;">Змінити</span>
+                                            </button>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="form__row form__footer mt-4 empty-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <aside class="checkout-form__sidebar">
+                <div class="checkout-sidebar">
+                    <div class="content-section checkout-total">
+                        <h4 class="h3 mb-4">Разом</h4>
+                        <dl class="checkout-total__row js-goods-info">
+                            <dt class="js-goods-info"> {{ products_with_data|length }} товар{{ products_with_data|length|pluralize:"и,ів" }}</dt>
+                            <dd class="checkout-total__value">
+                                {% if product %}
+                                    {{ product.price }}
+                                {% endif %}
+                                <span class=" currency">₴</span>
+                            </dd>
+                        </dl>
+                        <dl class="checkout-total__row js-delivery-info">
+                            <dt class="checkout-total__label">Вартість доставки</dt>
+                            <dd class="checkout-total__value">
+                                <span class="nowrap">
+                                    80
+                                    <span class=" currency">₴</span>
+                                </span>
+                            </dd>
+                        </dl>
+                        <dl class="checkout-total__row checkout-total__row_type_bordered js-total">
+                            <dt class="checkout-total__label">До сплати</dt>
+                            <dd class="checkout-total__value checkout-total__value_size_large">
+                                {% if product %}
+                                    {{ product.price }}
+                                {% endif %}
+                                <span class=" currency">₴</span>
+                            </dd>
+                        </dl>
+                        <div class="checkout-total__buttons">
+                            <input id="confirm-order-btn" type="submit" tabindex="29" class="button-1 button--green button--large checkout-total__submit ng-untouched ng-pristine ng-valid" value="Замовлення підтверджую">
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </form>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-layout" _modal_content style="background-color: #fff; max-width: 640px; box-shadow: 0 8px 40px #00000052;">
+            <div data-testid="modal-header" class="header border empty-none">
+                <h2 class="h2 padding text-inline">Виберіть своє місто</h2>
+                <div data-testid="modal-close-btn" class="text-base ms-auto d-block">
+                    <button type="button" class="btn button button--icon" id="modal-close-btn">
+                        <svg class="icon">
+                            <use href="/assets/sprite/sprite.748a0cff.svg#icon-cross"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div data-testid="modal-content" class="content padding">
+                <div>
+                    <p class="header-location__intro">
+                        Доставляємо замовлення по всій Україні!
+                    </p>
+                    <ul1 class="header-location__popular" style="list-style: none;">
+                        <li class="header-location__popular-item">
+                            <a class="header-location__popular-link" style="color: #3e77aa; cursor: pointer; text-decoration: none;"> Київ </a>
+                        </li>
+                        <li class="header-location__popular-item">
+                               <a class="header-location__popular-link" style="color: #3e77aa; cursor: pointer; text-decoration: none;"> Харків </a>
+                        </li>
+                        <li class="header-location__popular-item">
+                            <a class="header-location__popular-link" style="color: #3e77aa; cursor: pointer; text-decoration: none;"> Одеса </a>
+                        </li>
+                        <li class="header-location__popular-item">
+                            <a class="header-location__popular-link" style="color: #3e77aa; cursor: pointer; text-decoration: none;"> Дніпро </a>
+                        </li>
+                        <li class="header-location__popular-item">
+                            <a class="header-location__popular-link" style="color: #3e77aa; cursor: pointer; text-decoration: none;"> Запоріжжя </a>
+                        </li>
+                        <li class="header-location__popular-item">
+                            <a class="header-location__popular-link" style="color: #3e77aa; cursor: pointer; text-decoration: none;"> Львів </a>
+                        </li>
+                    </ul1>
+                    <div class="header-location__search">
+                        <fieldset class="form__row">
+                            <label class="form__label">Вкажіть населений пункт України</label>
+                            <div class="autocomplete-container input-clearable">
+                                <input type="text" name="city" id="selected-city" placeholder="Введіть місто" autocomplete="off" class="form-control">
+                                <div id="city-suggestions" class="suggestions-list"></div>
+                            </div>
+
+                            <label class="form__label mt-2">Оберіть відділення Нової Пошти</label>
+                            <div class="autocomplete-container input-clearable">
+                                <input type="text" name="warehouse" id="selected-warehouse" placeholder="Введіть або оберіть відділення" autocomplete="off" class="form-control">
+                                <div id="warehouse-suggestions" class="suggestions-list"></div>
+                            </div>
+                        </fieldset>
+                        <p class="header-location__search-example">
+                            Наприклад,
+                            <a class="link-dotted" style="color: #3e77aa; cursor: pointer; text-decoration: none;"> Котюжини </a>
+                        </p>
+                    </div>
+                    <fieldset>
+                        <div class="header-location__footer header-location__footer--align-right">
+                            <button id="apply-address-btn" class="button button_size_medium button_color_green"> Застосувати </button>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="edit-modal" class="modal">
+        <div class="modal-layout" style="background-color: #fff; max-width: 720px; box-shadow: 0 8px 40px #00000052;">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid #ddd;">
+                <h2 style="margin: 0; font-size: 20px;">Ваш кошик</h2>
+                <button type="button" id="edit-modal-close-btn" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 16px; max-height: 70vh; overflow-y: auto;">
+                <div class="cart-item" style="display: flex; gap: 16px; align-items: center;">
+                    {% if product %}
+                        <img src="{{ product.images }}" style="width: 80px; height: 80px; object-fit: contain;">
+                    {% endif %}
+                    <div style="flex-grow: 1;">
+                        <div style="font-weight: bold; margin-bottom: 4px;">
+                            {% if models_laptop %}
+                                {{ models_laptop.name }} / {{ models_laptop.screen_size }} {{ models_laptop.screen_type }} {{ models_laptop.screen_resolution }} {{ models_laptop.screen_refresh_rate }} / {{ models_laptop.processor }} / RAM {{ models_laptop.ram_size }} / SSD {{ models_laptop.ssd_size }} / {{ models_laptop.gpu_manufacturer }} {{ models_laptop.gpu_memory }}
+                            {% endif %}
+                        </div>
+                        <div style="font-size: 14px; color: #888;">Продавець: SmartHub</div>
+                        <div style="display: flex; align-items: center; margin-top: 8px;">
+                            <button class="qty-minus" style="padding: 4px 10px; font-size: 18px;">-</button>
+                            <span class="qty-value" style="margin: 0 10px;">1</span>
+                            <button class="qty-plus" style="padding: 4px 10px; font-size: 18px;">+</button>
+                            {% if product %}
+                                <span style="margin-left: auto; font-weight: bold;">{{ product.price }} ₴</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 16px; border-top: 1px solid #ddd; background: #fff;">
+                {% if product %}
+                    <div style="font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 12px;">{{ product.price }} ₴</div>
+                {% endif %}
+                <button class="button checkout-fullwidth-btn" style="background-color: #00a046; color: white; width: 100%; padding: 14px 0; font-size: 16px; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: background 0.2s;">
+                    Оформити замовлення
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="orderSummaryModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Підтвердження замовлення</h2>
+            <pre id="orderSummary"></pre>
+            <button id="confirmOrderBtn">Підтвердити</button>
+            <button id="closeModalBtn">Закрити</button>
+        </div>
+    </div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButtons = document.querySelectorAll('.checkout-header, .toggle-switch');
+        const collapseButtons = document.querySelectorAll('.button--navy');
+
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const fieldset = button.closest('fieldset');
+                if (!fieldset) return;
+
+                const toggleForm = fieldset.querySelector('.toggle-form__animation.toggle-section');
+                const summaryBlock = fieldset.querySelector('.checkout-header');
+
+                // Показуємо форму, ховаємо підсумок
+                toggleForm.style.maxHeight = '500px';
+                toggleForm.style.opacity = '1';
+                toggleForm.style.display = 'block';
+
+                if (summaryBlock) {
+                    summaryBlock.style.display = 'none';
+                }
+            });
+        });
+
+        collapseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const fieldset = button.closest('fieldset');
+                if (!fieldset) return;
+
+                const toggleForm = fieldset.querySelector('.toggle-form__animation.toggle-section');
+                const summaryBlock = fieldset.querySelector('.checkout-header');
+
+                const phone = fieldset.querySelector('.js-phone input').value.trim();
+                const lastName = fieldset.querySelector('.js-surname input').value.trim();
+                const firstName = fieldset.querySelector('.js-name input').value.trim();
+
+                if (summaryBlock) {
+                    summaryBlock.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div style="display: flex; flex-direction: column; line-height: 1.4;">
+                                <span>${lastName} ${firstName}</span>
+                                <span style="color: #666; font-size: 14px;">${phone}</span>
+                            </div>
+                            <span style="color: #3e77aa; cursor: pointer; display: flex; align-items: center; height: 100%;">Змінити</span>
+                        </div>
+                    `;
+                }
+
+
+                toggleForm.style.maxHeight = '0';
+                toggleForm.style.opacity = '0';
+                toggleForm.style.display = 'none';
+
+                if (summaryBlock) {
+                    summaryBlock.style.display = 'block';
+                }
+            });
+        });
+    });
+</script>
+<script>
+    function openModal() {
+            const modal = document.getElementById("modal");
+            modal.classList.add("show"); // Відкриваємо модальне вікно
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("modal");
+            modal.classList.remove("show"); // Закриваємо модальне вікно
+        }
+
+        // Закриття при кліку поза модальним вікном
+        window.onclick = function (event) {
+            const modal = document.getElementById("modal");
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+    // Закриття при натисканні на кнопку-хрестик
+    document.getElementById("modal-close-btn").addEventListener("click", closeModal);
+
+
+    // Закриття при натисканні на ESC
+    window.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cityLinks = document.querySelectorAll(".header-location__popular-link");
+        const targetInput = document.querySelector("#selected-city"); // Встав сюди правильний селектор твого input
+
+        cityLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                // Зняти попереднє виділення
+                cityLinks.forEach(l => {
+                    l.classList.remove("selected-city");
+                    l.style.border = "none";
+                    l.style.backgroundColor = "";
+                });
+
+                // Застосувати стилі до вибраного
+                link.classList.add("selected-city");
+                link.style.border = "2px solid #00A046";
+                link.style.borderRadius = "8px";
+                link.style.padding = "6px 10px";
+                link.style.backgroundColor = "#f0fff4";
+                // Встановити назву міста в input
+                if (targetInput) {
+                    targetInput.value = link.textContent.trim();
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const preview = document.getElementById('deliveryPreviewBlock');
+        const full = document.getElementById('deliveryFullBlock');
+        const expandBtn = document.getElementById('changeBtn');
+        const collapseBtn = document.getElementById('collapseBtn');
+
+        expandBtn.addEventListener('click', () => {
+            preview.classList.remove('shown');
+            preview.classList.add('hidden');
+
+            full.classList.remove('hidden');
+            full.classList.add('shown');
+            full.style.display = 'block';
+        });
+
+        collapseBtn.addEventListener('click', () => {
+            full.classList.remove('shown');
+            full.classList.add('hidden');
+
+            preview.classList.remove('hidden');
+            preview.classList.add('shown');
+            preview.style.display = 'block';
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cityInput = document.getElementById("selected-city");
+        const citySuggestions = document.getElementById("city-suggestions");
+
+        const warehouseInput = document.getElementById("selected-warehouse");
+        const warehouseSuggestions = document.getElementById("warehouse-suggestions");
+
+        let cityRef = null;
+
+        cityInput.addEventListener("input", function () {
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                citySuggestions.innerHTML = '';
+                return;
+            }
+
+            fetch(`/search-settlement/?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    citySuggestions.innerHTML = '';
+                    data.forEach(item => {
+                        const suggestion = document.createElement("div");
+                        suggestion.textContent = item.name;
+                        suggestion.classList.add("suggestion-item");
+
+                        suggestion.addEventListener("click", function () {
+                            cityInput.value = item.name;
+                            cityRef = item.ref;
+                            citySuggestions.innerHTML = '';
+                            warehouseInput.value = '';
+                            warehouseSuggestions.innerHTML = '';
+                        });
+
+                        citySuggestions.appendChild(suggestion);
+                    });
+                });
+        });
+
+        warehouseInput.addEventListener("input", function () {
+            showWarehousesFiltered(this.value.trim());
+        });
+
+        warehouseInput.addEventListener("focus", function () {
+            if (cityRef) {
+                showWarehousesFiltered('');
+            }
+        });
+
+        function showWarehousesFiltered(query) {
+            warehouseSuggestions.innerHTML = '';
+
+            if (!cityRef) return;
+
+            fetch(`/get-warehouses/?city_ref=${cityRef}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(wh => {
+                        if (query === '' || wh.name.toLowerCase().includes(query.toLowerCase())) {
+                            const item = document.createElement("div");
+                            item.innerHTML = highlightMatch(wh.name, query);
+                            item.classList.add("suggestion-item");
+
+                            item.addEventListener("click", function () {
+                                warehouseInput.value = wh.name;
+                                warehouseSuggestions.innerHTML = '';
+
+                                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            });
+
+                            warehouseSuggestions.appendChild(item);
+                        }
+                    });
+                });
+        }
+
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<strong style="color:#0d6efd;">$1</strong>');
+        }
+    });
+</script>
+<script>
+    document.addEventListener("click", function (event) {
+        const cityBox = document.getElementById("city-suggestions");
+        const warehouseBox = document.getElementById("warehouse-suggestions");
+
+        const clickedInsideCity = document.getElementById("selected-city").contains(event.target) || cityBox.contains(event.target);
+        const clickedInsideWh = document.getElementById("selected-warehouse").contains(event.target) || warehouseBox.contains(event.target);
+
+        if (!clickedInsideCity) {
+            cityBox.innerHTML = '';
+        }
+
+        if (!clickedInsideWh) {
+            warehouseBox.innerHTML = '';
+        }
+    });
+</script>
+<script>
+    document.getElementById("apply-address-btn").addEventListener("click", function () {
+        const city = document.getElementById("selected-city").value;
+        const warehouse = document.getElementById("selected-warehouse").value;
+
+        if (!city || !warehouse) {
+            alert("Будь ласка, оберіть місто та відділення.");
+            return;
+        }
+
+        const fullAddress = `${city}, ${warehouse}`;
+        document.getElementById("selected-address-display").textContent = fullAddress;
+
+        document.getElementById("hidden-city-input").value = city;
+        document.getElementById("hidden-warehouse-input").value = warehouse;
+
+        closeModal();
+    });
+</script>
+<script>
+    (function(){
+        function parsePrice(text){
+            if(!text) return 0;
+            return Number(String(text).replace(/[^\d-]/g, "")) || 0;
+        }
+
+        function formatUAH(n){
+            return n.toLocaleString('uk-UA') + ' ₴';
+        }
+
+        function updateCheckoutTotals(){
+            const items = document.querySelectorAll('.checkout-order__merchandises .js-index-0');
+            let sum = 0;
+            let count = 0;
+
+            items.forEach(li => {
+                const priceEl = li.querySelector('.checkout-product__digit');
+                const qtyEl = li.querySelector('.js-product-quantity');
+                const unitText = li.querySelector('.checkout-product__price')?.textContent || '';
+                const unit = parseInt(unitText.replace(/[^\d]/g,'')) || 0;
+                const qty = qtyEl ? (parseInt(qtyEl.textContent.replace(/\D/g,'')) || 1) : 1;
+                const itemTotal = unit * qty;
+
+                if(priceEl) priceEl.textContent = (itemTotal).toLocaleString('uk-UA') + ' ₴';
+                sum += itemTotal;
+                count += qty;
+            });
+
+            const goodsInfoValue = document.querySelector('.js-goods-info dd');
+            if(goodsInfoValue) goodsInfoValue.innerHTML = `${sum.toLocaleString('uk-UA')} <span class="currency">₴</span>`;
+
+            const goodsInfoLabel = document.querySelector('.js-goods-info dt');
+            if(goodsInfoLabel){
+                goodsInfoLabel.textContent = `${count} товар${count===1 ? '' : (count<5 ? 'и' : 'ів')} на суму`;
+            }
+
+            const totalValue = document.querySelector('.js-total dd');
+            const delivery = parseInt(document.querySelector('.js-delivery-info dd')?.textContent.replace(/[^\d]/g,'') || 0);
+            if(totalValue) totalValue.innerHTML = `${(sum + delivery).toLocaleString('uk-UA')} <span class="currency">₴</span>`;
+        }
+
+
+        window.openEditModal = function openEditModal(){
+            const modal = document.getElementById('edit-modal');
+            if(!modal) return console.warn('edit-modal not found');
+
+            const modalBody = modal.querySelector('.modal-body');
+            if(!modalBody) return console.warn('modal body not found');
+
+            modalBody.innerHTML = '';
+
+            const checkoutItems = Array.from(document.querySelectorAll('.checkout-order__merchandises .js-index-0'));
+            if(checkoutItems.length === 0){
+                modalBody.innerHTML = '<p>Немає товарів для редагування</p>';
+                modal.classList.add('show');
+                return;
+            }
+
+            checkoutItems.forEach((li, idx) => {
+                const title = li.querySelector('.checkout-product__title')?.textContent?.trim() || '';
+                const img = li.querySelector('.order-card-left img')?.getAttribute('src') || '';
+                const unitText = li.querySelector('.checkout-product__price')?.textContent || '';
+                const unitPrice = parsePrice(unitText);
+                const qtyText = li.querySelector('.js-product-quantity')?.textContent || '1';
+                const qty = parseInt(qtyText.replace(/\D/g,'')) || 1;
+
+                const itemHtml = `
+                    <div class="cart-item" data-index="${idx}" style="display:flex;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid #eee;">
+                        <img src="${img}" style="width:80px;height:80px;object-fit:contain;">
+                        <div style="flex:1;">
+                            <div style="font-weight:bold;margin-bottom:4px;">${title}</div>
+                            <div style="font-size:14px;color:#888;">Продавець: SmartHub</div>
+                            <div style="display:flex;align-items:center;margin-top:8px;">
+                                <button type="button" class="qty-minus" style="padding:4px 10px;">-</button>
+                                <span class="qty-value" style="margin:0 10px;">${qty}</span>
+                                <button type="button" class="qty-plus" style="padding:4px 10px;">+</button>
+                                <span class="item-price" style="margin-left:auto;font-weight:bold;">${formatUAH(unitPrice * qty)}</span>
+                                <input type="hidden" class="unit-price" value="${unitPrice}">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                modalBody.insertAdjacentHTML('beforeend', itemHtml);
+            });
+
+            modal.classList.add('show');
+
+            if(!modal.dataset.delegateInit){
+                modalBody.addEventListener('click', function(e){
+                    const plus = e.target.closest('.qty-plus');
+                    const minus = e.target.closest('.qty-minus');
+                    if(plus || minus){
+                        const item = (plus || minus).closest('.cart-item');
+                        const v = item.querySelector('.qty-value');
+                        let n = parseInt(v.textContent) || 1;
+                        if(plus) n++;
+                        if(minus && n>1) n--;
+                        v.textContent = n;
+                        const unit = parseInt(item.querySelector('.unit-price').value) || 0;
+                        item.querySelector('.item-price').textContent = formatUAH(unit * n);
+                    }
+                });
+                modal.dataset.delegateInit = '1';
+            }
+
+            const confirmBtn = modal.querySelector('.modal-footer .button');
+            if(confirmBtn){
+                confirmBtn.onclick = function(){
+                    const itemsInModal = modal.querySelectorAll('.cart-item');
+                    itemsInModal.forEach(mi => {
+                        const idx = parseInt(mi.dataset.index);
+                        const qty = parseInt(mi.querySelector('.qty-value').textContent) || 1;
+                        const unit = parseInt(mi.querySelector('.unit-price').value) || 0;
+                        const checkoutLi = checkoutItems[idx];
+                        if(!checkoutLi) return;
+
+                        const qtyNode = checkoutLi.querySelector('.js-product-quantity');
+                        if(qtyNode) qtyNode.textContent = ` ${qty} `;
+
+                        const digitNode = checkoutLi.querySelector('.checkout-product__digit');
+                        if(digitNode) digitNode.textContent = formatUAH(unit * qty);
+                    });
+
+                    updateCheckoutTotals();
+                    modal.classList.remove('show');
+                };
+            }
+
+            const closeBtn = modal.querySelector('#edit-modal-close-btn');
+            if(closeBtn){
+              closeBtn.onclick = () => modal.classList.remove('show');
+            }
+        };
+    })();
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const confirmOrderBtn = document.querySelector("#edit-modal .button");
+    const modal = document.getElementById("edit-modal");
+    const qtyValueEl = modal.querySelector(".qty-value");
+    const itemPriceEl = modal.querySelector(".cart-item span[style*='margin-left']");
+
+    const mainQtyEl = document.querySelector(".js-product-quantity");
+    const mainAmountEl = document.querySelector(".js-product-amount .checkout-product__digit");
+
+    if (confirmOrderBtn) {
+        confirmOrderBtn.addEventListener("click", function () {
+            const qty = parseInt(qtyValueEl.textContent.trim());
+            const total = parseFloat(itemPriceEl.textContent);
+
+            if (mainQtyEl) {
+                mainQtyEl.textContent = ` ${qty} `;
+            }
+
+            if (mainAmountEl) {
+                mainAmountEl.textContent = `${total} ₴`;
+            }
+
+            modal.classList.remove("show");
+        });
+    }
+});
+</script>
+<script>
+    document.querySelectorAll('.radio-button-small').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.querySelectorAll('.checkout-variant__inner').forEach(inner => {
+                inner.classList.remove('checkout-variant__inner--selected');
+            });
+            this.closest('.checkout-variant__inner').classList.add('checkout-variant__inner--selected');
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const collapseBtn = document.querySelector(".toggle-collapse");
+        const editBtn = document.querySelector(".toggle-edit");
+
+        const expandedBlock = document.querySelector(".checkout-fieldset .toggle-section:nth-of-type(1)");
+        const collapsedBlock = document.querySelector(".checkout-fieldset .contact-summary");
+
+        collapseBtn.addEventListener("click", function () {
+            const phone = document.querySelector(".js-phone input").value.trim();
+            const surname = document.querySelector(".js-surname input").value.trim();
+            const name = document.querySelector(".js-name input").value.trim();
+
+            editBtn.innerHTML = `${surname} ${name}`;
+
+            editBtn.setAttribute("data-phone", phone);
+
+            expandedBlock.style.display = "none";
+            collapsedBlock.style.display = "block";
+        });
+
+        editBtn.addEventListener("click", function () {
+            expandedBlock.style.display = "block";
+            collapsedBlock.style.display = "none";
+        });
+    });
+</script>
+<script>
+    const orderSummaryModal = document.getElementById("orderSummaryModal");
+    const orderSummaryEl = document.getElementById("orderSummary");
+    const confirmOrderBtn = document.getElementById("confirmOrderBtn");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+        const orderData = {
+            city: document.querySelector("#citySelect")?.value || null,
+            warehouse: document.querySelector("#warehouseSelect")?.value || null,
+            items: window.cartItems || [], // твої товари з JS
+            paymentMethod: document.querySelector('input[name="payment"]:checked')?.value || null,
+            customer: {
+                phone: document.querySelector("#phoneInput")?.value || "",
+                email: document.querySelector("#emailInput")?.value || "",
+                surname: document.querySelector("#surnameInput")?.value || "",
+                name: document.querySelector("#nameInput")?.value || ""
+            }
+        };
+
+        orderSummaryEl.textContent = JSON.stringify(orderData, null, 4);
+        orderSummaryModal.style.display = "flex";
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+        orderSummaryModal.style.display = "none";
+    });
+
+    confirmOrderBtn.addEventListener("click", () => {
+        const orderData = JSON.parse(orderSummaryEl.textContent);
+
+        fetch("/api/orders", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(orderData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert("Замовлення успішно оформлено!");
+            orderSummaryModal.style.display = "none";
+        })
+        .catch(err => {
+            alert("Сталася помилка при оформленні");
+            console.error(err);
+        });
+    });
+</script>
+</body>
+</html>
+{% endblock %}
+
+

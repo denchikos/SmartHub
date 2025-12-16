@@ -1,18 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
 {% load url_utils %}
-
+{% block body_class %}body-home{% endblock %}
 
 {% block notebooks %}
+<object type="image/svg+xml" data="{% static 'icons/icons_for_notebooks.svg' %}" style="display:none;"></object>
+<link rel="stylesheet" href="{% static 'Home_page/css/style.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Приклад сторінки</title>
     <style>
-        /* Основні стилі для блоків з зображенням */
         ul {
             list-style-type: none;
             padding-left: 0;
+        }
+
+        body.body-home {
+            background: #f6f7fb;
+            color: #111;
+            padding-top: 40px;
         }
 
         li {
@@ -25,14 +33,13 @@
             overflow: hidden;
             box-sizing: border-box;
         }
-/* display: flex; justify-content: center; align-items: center; */
+
         .goods-tile_inner img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        /* Медіа-запити для адаптивного дизайну */
         @media (max-width: 600px) {
             .goods-tile_inner {
                 width: 150px;
@@ -43,11 +50,6 @@
         .locations {
             background: #fff;
             color: #000;
-        }
-
-        svg {
-            vertical-align: middle;
-            fill: #0073db;
         }
 
         input {
@@ -96,6 +98,145 @@
             vertical-align: baseline;
         }
 
+        .mode-small .buy-button {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+            margin: 0 0 0 auto;
+            padding: 0;
+            border: none;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .goods-tile__price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #111;
+            margin-top: 6px;
+        }
+
+        .price-currency {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .buy-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            color: white;
+        }
+
+        .buy-button:hover {
+            background: #f5f5f5;
+            box-shadow: 0 0 4px rgba(0,0,0,0.15);
+        }
+
+        .buy-button svg {
+            width: 22px;
+            height: 22px;
+            vertical-align: middle;
+        }
+
+        .add-to-cart {
+            cursor: pointer;
+            transition: fill 0.3s ease;
+            fill: #0098db;
+        }
+
+        .add-to-cart.in-cart {
+            fill: #00b44b;
+            transform: scale(1.1);
+        }
+
+        .buy-button svg {
+            transition: transform 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+            cursor: pointer;
+        }
+
+        .in-cart-btn svg {
+            fill: #667eea;
+            transform: scale(1.1);
+        }
+
+        .buy-button.added svg {
+            animation: pulse 0.4s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                fill: #00b44b;
+            }
+            50% {
+                transform: scale(1.3);
+                fill: #00ff6e;
+            }
+            100% {
+                transform: scale(1);
+                fill: #00b44b;
+            }
+        }
+
+        .sidebar1 {
+            position: sticky;
+            top: 90px;
+        }
+
+        .catalog-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-radius: 14px 14px 0 0;
+            box-shadow: -4px -4px 14px rgba(0, 0, 0, 0.06);
+            background: white;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .catalog-grid__cell:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+        }
+
+        .goods-tile__picture img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+        }
+
+        .goods-tile__picture {
+            font-weight: 600;
+            color: #111827;
+            text-decoration: none;
+        }
+
+        .goods-tile__price {
+            margin-top: auto;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
     </style>
 </head>
 <div1 class="central-wrapper">
@@ -104,26 +245,24 @@
             <ul class="bread">
                 <li class="breadcrumbs__item breadcrumbs__item--home">
                     <a class="breadcrumbs__link" title="Інтернет-магазин SmartHub" href="{% url 'home' %}">
-                        <svg aria-hidden="true" class="breadcrumbs__icon-home">
-                            <use href="#icon-home"></use>
-                        </svg>
+                        <i class="bi bi-house-door-fill breadcrumbs__icon-home"></i>
                         <span class="breadcrumbs__item--home--title">На головну</span>
                     </a>
                     <span class="breadcrumbs__separator">/</span>
                 </li>
                 <li class="breadcrumbs__item breadcrumbs__item--last">
-                    <a class="breadcrumbs__link" href="{% url 'home' %}">
-                        <span>Ноутбуки та комп'ютери</span>
+                    <a class="breadcrumbs__link" href="{% url 'notebooks' %}">
+                        <span style="font-weight: 700;">Ноутбуки та комп'ютери</span>
                     </a>
                     <span class="breadcrumbs__separator">/</span>
                 </li>
                 <li class="breadcrumbs__item breadcrumbs__item--text">
                     <svg aria-hidden="true" class="breadcrumbs__icon-chevron breadcrumbs__icon-chevron--text">
-                        <use href="#icon-chevron-down"></use>
+                        <use href="{% static 'icons/icons_for_notebooks.svg' %}#icon-chevron-down"></use>
                     </svg>
                     <span class="breadcrumbs__separator-last">/</span>
-                    <a class="breadcrumbs__link" href="{% url 'home' %}">
-                        <span>Ноутбуки</span>
+                    <a class="breadcrumbs__link" href="{% url 'notebooks' %}">
+                        <span style="font-weight: 700;">Ноутбуки</span>
                     </a>
                 </li>
             </ul>
@@ -133,8 +272,8 @@
         </div>
         <ul>
             <div2 class="catalog">
-                <div class="layout animation" style="top: 72px; position: sticky; z-index: 100">
-                    <div1 class="catalog-settings">
+                <div class="layout animation">
+                    <div1 class="catalog-header">
                         <div1 class="catalog-selection">
                             <p class="catalog-selection__label"> Найдено {{ notebooks_count }} товарів </p>
                             <ul class="catalog-selection__list"></ul>
@@ -143,40 +282,53 @@
                             <select class="select-css" id="sort-select" onchange="redirectToPage()">
                                 <option value="" {% if not request.GET.sort %}selected{% endif %}>Сортування</option>
                                 <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected="selected"{% endif %}>Від дешевих до дорогих</option>
-                                <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected="selected"{% endif %}>Від дорогих до дешевих</option>
+                                <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected="selected"{% endif %}>Від дорогих до дешевих</option>
                             </select>
                         </div>
                     </div1>
                 </div>
                 <div2 class="layout layout_with_sidebar">
                     <section class="content_type_catalog" style="display: block; margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
-                        <ul class="catalog-grid" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                        <ul class="catalog-grid catalog-grid__cell1" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
                             {% for i in items %}
                             <li class="catalog-grid__cell">
                                 <div2 class="goods-tile" data-title="small">
                                     <div2 class="goods-tile__inner" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
                                         <div2 class="goods-tile__content">
-                                            <a class="image-with-text goods-tile__picture" href="{% url 'product_detail' id=i.id %}" title="{{ i.name }}" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;">
+                                            <a class="image-with-text goods-tile__picture" href="{% url 'product_detail' id=i.id %}" title="{{ i.name }}" style="margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline;">
                                                 <img  loading="lazy" src="{{ i.images }}" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; width: 200px; height: 150px; object-fit: cover; display: block; margin: 0 auto;">{{ i.name }}
                                             </a>
                                         </div2>
                                     </div2>
                                 </div2>
-                                <div class="goods-tile__price price--red"> {{ i.price }} </div>
+                                <div class="goods-tile__price price--red">
+                                    <span class="price-value">{{ i.price }}</span>
+                                    <button type="button" class="buy-button buy-btn" data-product-id="{{ i.id }}">
+                                        <svg class="icon-comparison add-to-cart" width="24" height="24">
+                                            <use href="{% static 'icons/icons_for_notebooks.svg' %}#icon-comparison"></use>
+                                        </svg>
+                                    </button>
+                                    <button data-product-id="{{ i.id }}"
+                                            class="buy-button in-cart-btn" onclick="openBasketModal()" style="display:none;">
+                                        <svg width="24" height="24">
+                                            <use href="{% static 'icons/icons_for_notebooks.svg' %}#icon-comparison-1"></use>
+                                        </svg>
+                                    </button>
+                                </div>
                             </li>
                             {% endfor %}
                         </ul>
                     </section>
-                    <aside class="sidebar1" style="margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit;  vertical-align: baseline;">
-                        <div2 class="catalog--sticky" style="top: 145px; --topPosition: 145px; margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; height: 100%;">
-                            <div class="sidebar-block" data-filter-name="producer">
+                    <aside class="sidebar1"  style="margin: 0; border: 0; font-size: 100%; font: inherit;  vertical-align: baseline;">
+                        <div2 class="catalog--sticky" style="--topPosition: 145px; margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; height: 100%;">
+                            <div class="sidebar-block" data-filter-name="producer" style="border-radius: 0px 0px 14px 14px;">
                                 <button type="button" class="sidebar-block__toggle">
                                     <span class="sidebar-block__toggle-title">
                                         Продавець
-                                        <span class="sidebar-block__toggle-quantit"> 2 </span>
+                                        <span class="sidebar-block__toggle-quantity"> 2 </span>
                                     </span>
                                     <svg width="16" height="16" class="sidebar-block__toggle-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{% static 'icons/icons_for_notebooks.svg' %}#icon-angle-left"></use>
                                     </svg>
                                 </button>
                                 <div class="sidebar-block__inner" style="overflow-x: hidden;">
@@ -188,14 +340,12 @@
                                                         <ul class="checkbox-filter">
                                                             <li>
                                                                 <a class="checkbox-filter__link" data-id="SmartHub +" href="{% url 'home' %}">
-                                                                    SmartHub +&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (2934) </span>
+                                                                    SmartHub +&nbsp
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a class="checkbox-filter__link" data-id="Інші продавці" href="{% url 'home' %}">
                                                                     Інші продавці&nbsp;
-                                                                    <span class="sidebar-block__quantity"> (122188) </span>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -219,7 +369,7 @@
                                         <span class="sidebar-block__toggle-quantity"> {{ NotebooksBrand_count }} </span>
                                     </span>
                                     <svg width="16" height="16" class="sidebar-block__toggle-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{% static 'icons/icons_for_notebooks.svg' %}#icon-angle-left"></use>
                                     </svg>
                                 </button>
                                 <div class="sidebar-block__inner" style="overflow-x: hidden;">
@@ -231,14 +381,13 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div style="height: 180px;">
+                                    <div class="sidebar-block">
                                         <div class="scrollbar__layout">
                                             <div class="scrollbar__inner" style="width: 251px;">
                                                 <div style="width: 233px;">
                                                     <div>
                                                         <ul class="checkbox-filter">
                                                             {% for brand in brands_count %}
-                                                                    <!-- Якщо бренд вибрано, генеруємо URL для видалення його з фільтру -->
                                                                     <li class="checkbox-filter__item" type="checkbox">
                                                                         <a class="checkbox-filter__link" href="?{% url_replace request 'producer' brand.noteb_id__name %}">
                                                                            {{ brand.noteb_id__name }} ({{ brand.count }})
@@ -259,10 +408,10 @@
                                                 Цiна
                                             </span>
                                             <svg width="16" height="16" class="sidebar-block__toggle-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{% static 'icons/icons_for_notebooks.svg' %}#icon-angle-left"></use>
                                             </svg>
                                         </button>
-                                        <div class="sidebar-block__inner" style="overflow-x: hidden;">
+                                        <div class="sidebar-block__inner" style="overflow-x: hidden; margin-bottom: 20px;">
                                             <div class="scrollbar__layout">
                                                 <div class="scrollbar__inner" style="width: 251px;">
                                                     <div style="width: 233px;">
@@ -296,14 +445,13 @@
                                                 <span class="sidebar-block__toggle-quantity"> 11 </span>
                                             </span>
                                             <svg width="16" height="16" class="sidebar-block__toggle-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-left"></use>
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{% static 'icons/icons_for_notebooks.svg' %}#icon-angle-left"></use>
                                             </svg>
                                         </button>
                                         <div class="sidebar-block__inner" style="overflow-x: hidden;">
                                             <div class="scrollbar__layout">
                                                 <div class="scrollbar__inner" style="width: 251px;">
                                                     <div style="width: 233px;">
-                                                        <!-- Фільтр по процесорам -->
                                                         <ul class="checkbox-filter">
                                                             {% for processor in processor_count %}
                                                                 <li>
@@ -334,56 +482,73 @@
     <hr>
 <script>
     function redirectToPage() {
-    const selectElement = document.getElementById('sort-select');
-    const selectedValue = selectElement.value;
+        const selectElement = document.getElementById('sort-select');
+        const selectedValue = selectElement.value;
 
-    const currentUrl = new URL(window.location.href); // Поточний URL
-    if (selectedValue) {
-        currentUrl.searchParams.set('sort', selectedValue); // Додаємо або оновлюємо параметр `sort`
-    } else {
-        currentUrl.searchParams.delete('sort'); // Видаляємо параметр `sort`, якщо нічого не обрано
+        const currentUrl = new URL(window.location.href);
+        if (selectedValue) {
+            currentUrl.searchParams.set('sort', selectedValue);
+        } else {
+            currentUrl.searchParams.delete('sort');
+        }
+
+        window.location.href = currentUrl.toString();
     }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buyBtns = document.querySelectorAll(".buy-btn");
+    const inCartBtns = document.querySelectorAll(".in-cart-btn");
 
-    window.location.href = currentUrl.toString(); // Перенаправлення на оновлений URL
+    updateButtons();
+
+    buyBtns.forEach((buyBtn, index) => {
+        const inCartBtn = inCartBtns[index];
+        const productId = buyBtn.dataset.productId;
+
+        buyBtn.addEventListener("click", function () {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            if (!cart.includes(productId)) {
+                cart.push(productId);
+                localStorage.setItem("cart", JSON.stringify(cart));
+            }
+
+            toggleButtons(inCartBtn, buyBtn);
+        });
+    });
+
+    window.addEventListener("cartUpdated", updateButtons);
+    window.addEventListener("storage", updateButtons);
+
+    function updateButtons() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        buyBtns.forEach((buyBtn, index) => {
+            const inCartBtn = inCartBtns[index];
+            const productId = buyBtn.dataset.productId;
+
+            if (cart.includes(productId)) {
+                toggleButtons(inCartBtn, buyBtn);
+            } else {
+                toggleButtons(buyBtn, inCartBtn);
+            }
+        });
+    }
+});
+
+function toggleButtons(showBtn, hideBtn) {
+    hideBtn.style.display = "none";
+    showBtn.style.display = "inline-block";
 }
 </script>
-    <svg style="display: none;">
-        <symbol id="icon-home" width="24px" height="24px" viewBox="0 0 24 24">
-            <path d="M12 3L2 12h4v7h8v-7h4L12 3z" />
-        </symbol>
-        <symbol>
-            <path d="M3 9l9-7 9 7"></path>
-            <path d="M9 22V12h6v10"></path>
-            <path d="M9 22H5a2 2 0 0 1-2-2v-8"></path>
-            <path d="M15 22h4a2 2 0 0 0 2-2v-8"></path>
-        </symbol>
-        <symbol id="icon-view-less" width="24px" height="24px" viewBox="0 0 24 24">
-            <rect width="24" height="24" fill="#0098db"/>
-            <circle cx="6" cy="6" r="1.5" fill="white"/>
-            <circle cx="12" cy="6" r="1.5" fill="white"/>
-            <circle cx="18" cy="6" r="1.5" fill="white"/>
-            <circle cx="6" cy="12" r="1.5" fill="white"/>
-            <circle cx="12" cy="12" r="1.5" fill="white"/>
-            <circle cx="18" cy="12" r="1.5" fill="white"/>
-            <circle cx="6" cy="18" r="1.5" fill="white"/>
-            <circle cx="12" cy="18" r="1.5" fill="white"/>
-            <circle cx="18" cy="18" r="1.5" fill="white"/>
-        </symbol>
-        <symbol id="id_kestrel" fill='%23797878' viewBox='0 0 13 7'>
-            <path fill-rule='evenodd' clip-rule='evenodd' d='M6.5 7a.956.956 0 0 1-.657-.256l-5.57-5.25a.839.839 0 0 1 0-1.237.968.968 0 0 1 1.312 0L6.5 4.888 11.415.257a.968.968 0 0 1 1.313 0 .839.839 0 0 1 0 1.237l-5.572 5.25A.956.956 0 0 1 6.5 7Z'/>
-        </symbol>
-        <symbol id="icon-view-more" width="24px" height="24px" viewBox="0 0 24 24">
-            <rect width="24" height="24" fill="white"/>
-            <circle cx="6" cy="6" r="1.5" fill="#0098db"/>
-            <circle cx="12" cy="6" r="1.5" fill="#0098db"/>
-            <circle cx="18" cy="6" r="1.5" fill="#0098db"/>
-            <circle cx="6" cy="12" r="1.5" fill="#0098db"/>
-            <circle cx="12" cy="12" r="1.5" fill="#0098db"/>
-            <circle cx="18" cy="12" r="1.5" fill="#0098db"/>
-            <circle cx="6" cy="18" r="1.5" fill="#0098db"/>
-            <circle cx="12" cy="18" r="1.5" fill="#0098db"/>
-            <circle cx="18" cy="18" r="1.5" fill="#0098db"/>
-        </symbol>
-    </svg>
+    <script>
+document.querySelectorAll('.checkbox-filter__link').forEach(link => {
+    link.addEventListener('click', function () {
+        this.classList.toggle('active');
+    });
+});
+</script>
+
 {% endblock %}
 </div1>

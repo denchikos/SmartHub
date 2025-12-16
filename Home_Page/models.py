@@ -1,6 +1,4 @@
 from django.db import models
-from django.urls import reverse
-
 
 
 class PublishedManager(models.Manager):
@@ -37,6 +35,7 @@ class Notebooks(models.Model):
     Notebooks_brand = models.ManyToManyField('NotebooksBrand', blank=True)
     noteb_id = models.ForeignKey('NotebooksBrand', related_name='notebooksbrand_id', on_delete=models.CASCADE)
     processor_id = models.ForeignKey('Laptop_processors', on_delete=models.CASCADE)
+
 
 class NotebooksBrand(models.Model):
     name = models.CharField(max_length=20)
@@ -113,6 +112,7 @@ class Laptop(models.Model):
 
 class Laptop_processors(models.Model):
     processor = models.CharField(max_length=100, verbose_name="Процесор")
+
 
 class Comments(models.Model):
     laptops_id = models.ForeignKey(Laptop, related_name='images_id', on_delete=models.CASCADE)

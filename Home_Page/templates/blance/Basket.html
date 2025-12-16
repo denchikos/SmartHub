@@ -1,0 +1,1303 @@
+{% load static %}
+
+{% block basket %}
+<link rel="stylesheet" href="{% static 'Home_page/css/style.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul1, div, fieldset, dl, dd, li {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        span {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+            color: #000 !important;
+        }
+
+        .modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-layout {
+            position: relative;
+        }
+
+        modal-1 {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2px;
+            background-color: #00000080;
+            z-index: 102;
+            animation: modal-1 .2s;
+        }
+
+        @keyframes modal-1 {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .large .modal-layout {
+            max-width: 960px;
+        }
+
+        .modal-layout {
+            position: relative;
+        }
+
+        .modal-2 {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow: hidden;
+            margin: 0 auto;
+            padding-bottom: 16px;
+            max-height: calc(100% - 4px);
+            border-radius: 8px;
+            background-color: #fff;
+            animation: modal-2 .2s;
+        }
+
+        @media (min-width: 768px) {
+            .modal-2 {
+                max-height: calc(100% - 32px);
+                box-shadow: 0 8px 40px #00000052;
+            }
+        }
+
+        @keyframes modal-2 {
+            0% { transform: scale3d(.3, .3, .3); }
+            100% { transform: scale(1); }
+        }
+
+        .text-inline {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .h2 {
+            font-size: 18px;
+        }
+
+        .h1, .h2, .h3, .h4, .h5, .h6 {
+            line-height: 1.25;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+
+        .ms-auto {
+            margin-left: auto;
+        }
+
+        .btn:not(:hover) {
+            color: #797878;
+        }
+
+        .modal-btn {
+            width: 60px;
+            font-size: inherit;
+            line-height: 0;
+            aspect-ratio: 1 / 1;
+            background-color: transparent;
+        }
+
+        .button--icon, .button_type_icon {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-shrink: 0;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .button, .button:hover {
+            text-decoration: none;
+        }
+
+        .button {
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: BlinkMacSystemFont, -apple-system, Arial, Segoe UI, Roboto, Helvetica, sans-serif;
+            font-weight: 500;
+            margin: 0;
+            outline: none;
+            position: relative;
+            text-align: center;
+            transition-duration: .2s;
+            transition-property: color, background-color, border-color;
+            transition-timing-function: ease-in-out;
+        }
+
+        .button1 {
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            display: inline-block;
+            font-family: BlinkMacSystemFont, -apple-system, Arial, Segoe UI, Roboto, Helvetica, sans-serif;
+            font-weight: 500;
+            margin: 0;
+            outline: none;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: center;
+            transition-duration: .2s;
+            transition-property: color, background-color, border-color;
+            transition-timing-function: ease-in-out;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .button--icon svg, .button_type_icon svg {
+            fill: #3e77aa;
+        }
+
+        .button svg {
+            transition-duration: .2s;
+            transition-property: fill;
+            transition-timing-function: ease-in-out;
+        }
+
+        .basket-modal-content {
+            font-size: 14px;
+            line-height: 1.2142857143;
+            overflow: auto;
+        }
+
+        .padding {
+            padding: 16px;
+        }
+
+        .cart-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .cart-header__select-all {
+            display: flex;
+            margin-right: auto;
+            font-size: 14px;
+            padding-left: 16px;
+        }
+
+        .cart-header__select-all__checkbox__holder {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        input[type=checkbox] {
+            appearance: none;
+            border: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        input[_size_medium] {
+            height: 40px;
+        }
+
+        input {
+            padding-top: 2px;
+        }
+
+        input {
+            background-color: #fff;
+            box-sizing: border-box;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .cart-header__select-all__checkbox__holder__label {
+            margin-bottom: 8px;
+            font-size: 16px;
+            padding: 0;
+        }
+
+        input[type=checkbox][_size_medium]:checked+label:before {
+            background-size: 12px 12px;
+        }
+
+        .cart-header__select-all__checkbox + label:before {
+            width: 16px;
+            height: 16px;
+            top: -6px;
+        }
+
+        input[type=checkbox][_size_medium]+label:before {
+            content: "";
+            height: 24px;
+            top: 5px;
+            width: 24px;
+        }
+
+        input[type=checkbox]:checked+label:before {
+            background-color: #00a046;
+            background-image: url(data:image/svg+xml;utf8,<svg width='14' height='12' viewBox='0 0 14 12' xmlns='http://www.w3.org/2000/svg'><path d='M4.10351 8.89548L1.45582 6.09578L0 7.6352L4.13584 12L14 1.56934L12.5159 0L4.10351 8.89548Z' fill='rgb(255, 255, 255)' /></svg>);
+            background-position: 50%;
+            background-repeat: no-repeat;
+            background-size: 10px 8px;
+            border-color: #00a046;
+        }
+
+
+        .button--link, .button_type_link {
+            background: none;
+            border: none;
+            color: #3e77aa;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .button--medium, .button_size_medium {
+            font-size: 16px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .cart-header__remove {
+            position: relative;
+        }
+
+        .menu-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+        }
+
+        .button--white, .button_color_white {
+            background-color: hsla(0, 0%, 100%, .9);
+            color: #221f1f;
+        }
+
+        .button--small, .button_size_small {
+            font-size: 14px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .button--with-icon svg, .button_with_icon svg {
+            fill: currentColor;
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+
+        .cart-header__wishlist svg {
+            fill: #ffa900;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        .cart-list__item:first-child {
+            margin-top: 0;
+        }
+
+        .cart-list__item {
+            margin-top: 16px;
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .cart-product {
+            display: flex;
+            gap: 8px;
+            flex-direction: column;
+        }
+
+        .cart-product__body {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cart-product__checkbox {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 20px;
+        }
+
+        .cart-product__checkbox__checkbox + label {
+            padding: 0;
+        }
+
+        input[type=checkbox][_size_medium]+label {
+            font-size: 14px;
+            padding-bottom: 8px;
+            padding-top: 8px;
+        }
+
+        .cart-product__checkbox__label {
+            margin-bottom: 8px;
+            font-size: 8px;
+            padding: 0;
+        }
+
+        input[type=checkbox][_size_medium]:checked+label:before {
+            background-size: 12px 12px;
+        }
+
+        .cart-product__checkbox__checkbox + label:before {
+            width: 16px;
+            height: 16px;
+            top: -6px;
+        }
+
+        input[type=checkbox][_size_medium] + label::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d2d2d2;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-right: 8px;
+            background-color: #fff;
+            position: relative;
+            top: 2px;
+        }
+
+        input[type=checkbox][_size_medium]:checked + label::before {
+            background-color: #00a046;
+            background-image: url("data:image/svg+xml;utf8,<svg width='14' height='12' viewBox='0 0 14 12' xmlns='http://www.w3.org/2000/svg'><path d='M4.10351 8.89548L1.45582 6.09578L0 7.6352L4.13584 12L14 1.56934L12.5159 0L4.10351 8.89548Z' fill='white'/></svg>");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12px 10px;
+            border-color: #00a046;
+        }
+
+
+        .cart-product__picture {
+            display: flex;
+            flex-direction: row;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-product__label {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .promo-label--red, .promo-label_type_action {
+            background-color: #f84147;
+        }
+
+        .promo-label--small, .promo-label_size_small {
+            font-size: 8px;
+            height: 16px;
+            line-height: 16px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .promo-label {
+            border-radius: 50px;
+            color: #fff;
+            display: inline-block;
+            font-family: BlinkMacSystemFont, -apple-system, Arial, Segoe UI, Roboto, Helvetica, sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        span {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        a1:hover, a1:active, a1:visited {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        a1 {
+            display: inherit;
+            gap: inherit;
+            align-items: inherit;
+            height: inherit;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a1 {
+            color: #3e77aa;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cart-product__picture img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+        }
+
+        .cart-product__main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            word-break: break-word;
+            gap: 4px;
+            flex-basis: 0;
+        }
+
+        .cart-product__title {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            color: #221f1f;
+        }
+
+        .cart-product__seller__title {
+            font-size: 14px;
+        }
+
+        .desktop {
+            display: block;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        .cart-counter__button:disabled {
+            background-color: transparent;
+        }
+
+        .cart-counter__button {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            padding: 0;
+        }
+
+        .button:disabled, .button:disabled:hover {
+            background-color: #eee;
+            color: #a6a5a5;
+            cursor: default;
+        }
+
+        .cart-counter__button:disabled svg {
+            fill: #d2d2d2;
+        }
+
+        .cart-counter__button svg {
+            fill: #3e77aa;
+        }
+
+        .button svg {
+            transition-duration: .2s;
+            transition-property: fill;
+            transition-timing-function: ease-in-out;
+        }
+
+        .cart-counter__input {
+            width: 56px;
+            margin-left: 4px;
+            margin-right: 4px;
+            text-align: center;
+        }
+
+        .cart-product__desktop-item {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .cart-product__desktop-item {
+                display: block;
+            }
+        }
+
+        .cart-counter {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .cart-counter__button:disabled {
+            background-color: transparent;
+        }
+
+        .button:disabled, .button:disabled:hover {
+            background-color: #eee;
+            color: #a6a5a5;
+            cursor: default;
+        }
+
+        .cart-counter__button:disabled svg {
+            fill: #d2d2d2;
+        }
+
+        .cart-product__coast {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            white-space: nowrap;
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .cart-product__price {
+            font-size: 20px;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        .currency {
+            margin-left: 4px;
+        }
+
+        .cart-product__price--red {
+            color: #f84147;
+        }
+
+        .cart-product__actions {
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+        }
+
+        .menu-toggle-btn .icon-black {
+            fill: #797878;
+        }
+
+        .button svg {
+            transition-duration: .2s;
+            transition-property: fill;
+            transition-timing-function: ease-in-out;
+        }
+
+        .cart-footer {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background-color: #fff;
+        }
+
+        @media (min-width: 768px) {
+            .cart-footer {
+                bottom: -24px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .cart-footer__continue {
+                display: block;
+            }
+        }
+
+        .cart-footer__continue {
+            display: inline-block;
+        }
+
+        .cart-receipt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 16px;
+            background-color: rgba(0, 160, 70, .1);
+            border: 1px solid #00a046;
+            border-radius: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .cart-receipt {
+                flex-direction: row;
+                width: auto;
+                margin-left: auto;
+                padding: 24px;
+            }
+        }
+
+        .cart-receipt__sum {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .cart-receipt__sum {
+                width: auto;
+                margin-right: 24px;
+                margin-bottom: 0;
+            }
+        }
+
+        .cart-receipt__sum-label {
+            font-size: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .cart-receipt__sum-label {
+                display: none;
+            }
+        }
+
+        .cart-receipt__sum-price {
+            margin-left: auto;
+            font-size: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .cart-receipt__sum-price {
+                margin-left: 0;
+                font-size: 24px;
+            }
+        }
+
+        .button--green:active, .button--green:visited, .button_color_green:active, .button_color_green:visited {
+            color: #fff;
+        }
+
+        .button--green, .button_color_green {
+            background-color: #00a046;
+            color: #fff;
+        }
+
+        .button--large, .button_size_large {
+            font-size: 18px;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        #basket-modal {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2px;
+            visibility: hidden;
+            opacity: 0;
+            background-color: #00000080;
+            z-index: 102;
+            transition: visibility 0.3s, opacity 0.3s;
+        }
+
+        #basket-modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (min-width: 768px) {
+            #basket-modal {
+                padding: 0 16px;
+            }
+        }
+
+        .cart-header__select-all__checkbox, .cart-product__checkbox__checkbox {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+
+        .cart-header__select-all__checkbox + label,
+        .cart-product__checkbox__checkbox + label {
+            position: relative;
+            display: inline-block;
+            padding-left: 28px;
+            line-height: 24px;
+            cursor: pointer;
+        }
+
+
+        .cart-header__select-all__checkbox + label::before,
+        .cart-product__checkbox__checkbox + label::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0;
+            width: 24px; height: 24px;
+            box-sizing: border-box;
+            border: 1px solid #d2d2d2;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+
+        .cart-header__select-all__checkbox:checked + label::before,
+        .cart-product__checkbox__checkbox:checked + label::before {
+          background-color: #00a046;
+          border-color: #00a046;
+          background-image: url("data:image/svg+xml;utf8,<svg width='14' height='12' viewBox='0 0 14 12' xmlns='http://www.w3.org/2000/svg'><path d='M4.10351 8.89548L1.45582 6.09578L0 7.6352L4.13584 12L14 1.56934L12.5159 0L4.10351 8.89548Z' fill='white'/></svg>");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 12px 10px;
+        }
+
+
+        .cart-header__select-all__checkbox:focus + label::before,
+        .cart-product__checkbox__checkbox:focus + label::before {
+          outline: 2px solid #3e77aa;
+          outline-offset: 2px;
+        }
+
+        input[_size_medium]:not([type="checkbox"]) { height: 40px; }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .cart-dummy {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .cart-counter {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .cart-counter__btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f8f8f8;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-counter__input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            outline: none;
+        }
+
+        .cart-dummy__illustration {
+            width: 100%;
+            max-width: 240px;
+            margin-bottom: 48px;
+        }
+
+        .cart-dummy__heading {
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .cart-dummy__heading {
+                font-size: 24px;
+            }
+        }
+
+        .cart-dummy__caption {
+            font-size: 14px;
+            color: #797878;
+        }
+    </style>
+</head>
+<body>
+<div id="basket-modal" class="large modal-1">
+    <div class="modal-layout modal-2">
+        <div data-testid="modal-header" class="modal-header border empty-none">
+            <h2 class="h2 border padding text-inline" style="color: #221f1f;">Кошик</h2>
+            <div data-testid="modal-close-btn" class="text-base ms-auto d-block">
+                <button type="button" id="basket-close-btn" class="modal-btn button button--icon" style="line-height: 0;">
+                    <svg class="icon"><use href="#Close"></use></svg>
+                </button>
+            </div>
+        </div>
+        <div data-testid="modal-content" class="basket-modal-content padding" style="padding: 16px 16px 0;">
+            <div style="font-size: 14px; line-height: 1.2142857143; overflow: auto;">
+                <div class="cart cart-se">
+                    <div class="cart-header">
+                        <div class="cart-header__select-all">
+                            <div class="cart-header__select-all__checkbox__holder">
+                                <input type="checkbox" _size_medium class="cart-header__select-all__checkbox" id="selectAll" style="outline: none; transition: border .2s ease-in-out;">
+                                <label class="cart-header__select-all__checkbox__holder__label" for="selectAll" style="font-size: 14px; padding: 0px; margin-bottom: 8px; cursor: pointer; display: inline-block; position: relative;"></label>
+                            </div>
+                            <span id="selected-count-text" style="color: #221f1f; display: flex; justify-content: center; flex-direction: column;">Вибрано 0 з 0</span>
+                        </div>
+                        <div class="cart-header__remove">
+                            <div style="position: relative; display: block; width: 40px; height: 40px;">
+                                <button type="button" class="button button--white button--small menu-toggle-btn" aria-expanded="false" aria-haspopup="true">
+                                    <span class="button button--medium button--with-icon button--link">
+                                        <svg width="24" height="24" aria-hidden="true" pointer-events="none">
+                                            <use IconName="icon-trash" pointer-events="none" href="#Trash"></use>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="cart-list">
+                        <li id="cart-item-template" class="cart-list__item" data-id="{{ item.id }}" style="display:none;">
+                            <div style="--cart-picture-size: 64px;">
+                                <div class="cart-product">
+                                    <div class="cart-product__body">
+                                        <div class="cart-product__checkbox">
+                                            <input type="checkbox" _size_medium class="cart-product__checkbox__checkbox" id="item-1">
+                                            <label class="cart-product__checkbox__label" for="item-1" style="font-size: 14px; padding-left: 0"></label>
+                                        </div>
+                                        <div class="cart-product__picture">
+                                            <div style="--cart-picture-size: 64px;">
+                                                <div style="--cart-picture-size: 64px;">
+                                                    <img alt="" src="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="cart-product__main">
+                                            <div class="product-link" data-testid="title" style="word-break: break-word;">
+                                                <span class="cart-product__title"></span>
+                                            </div>
+                                            <div class="cart-product__seller">
+                                                <span class="cart-product__seller__title" style="color: #221f1f;">Продавець: SmartHub</span>
+                                            </div>
+                                            <div class="desktop d-none"></div>
+                                        </div>
+                                        <div class="cart-product__desktop-item">
+                                            <div class="cart-counter">
+                                                <button class="cart-counter__btn minus">−</button>
+                                                <input type="number" class="cart-counter__input" value="1" min="1">
+                                                <button class="cart-counter__btn plus">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="cart-product__coast cart-product__desktop-item">
+                                            <p data-testid="cost" class="cart-product__price cart-product__price--red">
+                                                502
+                                                <span class="currency">₴</span>
+                                            </p>
+                                        </div>
+                                        <div class="cart-product__actions" style="position: relative; display: block; width: 40px; height: 40px;">
+                                            <button type="button" class="button button--white button--small menu-toggle-btn" id="cartProductActions0" aria-expanded="false" aria-controls="cartProductActions0" aria-haspopup="true">
+                                                <svg width="24" height="24" aria-hidden="true" pointer-events="none" class="icon-black">
+                                                    <use IconName="icon-trash" pointer-events="none" href="#Trash"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="cart-footer" style="color: #444;">
+                        <button data-testid="continue-shopping-link" class="button1 button_size_medium button_color_gray cart-footer__continue" onclick="closeBasketModal()" style="visibility: visible;"> Продовжити покупки </button>
+                        <div class="cart-receipt">
+                            <div data-testid="cart-receipt-sum" class="cart-receipt__sum">
+                                <p class="cart-receipt__sum-label">Разом</p>
+                                <div class="cart-receipt__sum-price">
+                                    <span>
+                                        0
+                                        <span class="cart-receipt__sum-currency currency">₴</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <button id="checkout-btn" class="button button--green button_size_large cart-receipt__submit">
+                                    <span data-testid="cart-receipt-submit-order"> Оформити замовлення </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="cart cart-se">
+                    <div data-testid="empty-cart" class="cart-dummy">
+                        <img loading="lazy" alt class="cart-dummy__illustration" src="https://xl-static.rozetka.com.ua/h-e7ae7f48/assets/img/design/modal-cart-dummy.svg">
+                        <h4 class="cart-dummy__heading">Кошик порожній</h4>
+                        <p class="cart-dummy__caption">Але це ніколи не пізно виправити :)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function openBasketModal() {
+    const modal = document.getElementById("basket-modal");
+    modal.classList.add("show");
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const listContainer = modal.querySelector(".cart-list");
+    const template = document.getElementById("cart-item-template");
+
+    // якщо пусто — очищаємо список і показуємо блок "кошик порожній"
+    if (cart.length === 0) {
+        listContainer.querySelectorAll("li:not(#cart-item-template)").forEach(el => el.remove());
+        updateTotalSum(modal);
+        toggleEmptyCart(modal);
+        return;
+    }
+
+    fetch(`/get-cart-items/?ids=${cart.join(",")}`)
+        .then(res => res.json())
+        .then(data => {
+            listContainer.querySelectorAll("li:not(#cart-item-template)").forEach(el => el.remove());
+
+            data.items.forEach((item, index) => {
+                const clone = template.cloneNode(true);
+                clone.id = "";
+                clone.style.display = "block";
+
+                const checkbox = clone.querySelector("input[type=checkbox]");
+                const label = clone.querySelector("label");
+                const uniqueId = "cart-checkbox-" + item.id + "-" + index;
+                checkbox.id = uniqueId;
+                label.setAttribute("for", uniqueId);
+
+                clone.querySelector("img").src = item.image || "";
+                clone.querySelector("img").alt = item.name || "";
+                clone.querySelector(".cart-product__title").textContent = item.name || "";
+                const priceNum = Number(String(item.price).replace(/[^\d.-]/g, "")) || 0;
+                clone.querySelector(".cart-product__price").textContent = priceNum + " ₴";
+                clone.dataset.basePrice = priceNum;
+                clone.dataset.id = item.id;
+
+                listContainer.appendChild(clone);
+            });
+
+            // ініціалізація логіки
+            initSelectAllLogic(modal);
+            initRemoveButtons(modal);
+            initRemoveAll(modal);
+            updateTotalSum(modal);
+            toggleEmptyCart(modal);
+        })
+        .catch(err => {
+            console.error("get-cart-items error:", err);
+        });
+}
+
+
+function toggleEmptyCart(modal) {
+    const hasItems = modal.querySelectorAll(".cart-list__item:not(#cart-item-template)").length > 0;
+    const emptyBlock = modal.querySelector("[data-testid='empty-cart']");
+    const cartWithItems = modal.querySelector(".cart-list").closest(".cart");
+
+    if (hasItems) {
+        if (cartWithItems) cartWithItems.style.display = "block";
+        if (emptyBlock) emptyBlock.parentElement.style.display = "none";
+    } else {
+        if (cartWithItems) cartWithItems.style.display = "none";
+        if (emptyBlock) emptyBlock.parentElement.style.display = "block";
+    }
+}
+
+
+function initSelectAllLogic(modal) {
+    if (modal.dataset.selectAllInit === "1") {}
+
+    const selectAllCheckbox = modal.querySelector("#selectAll");
+    const countText = modal.querySelector("#selected-count-text");
+    if (!selectAllCheckbox || !countText) return;
+
+    function getItemCheckboxes() {
+        return Array.from(modal.querySelectorAll(".cart-list > li"))
+            .filter(li => li.id !== "cart-item-template")
+            .map(li => li.querySelector(".cart-product__checkbox__checkbox"))
+            .filter(Boolean);
+    }
+
+    function updateSelectedCount() {
+        const itemCheckboxes = getItemCheckboxes();
+        const total = itemCheckboxes.length;
+        const checked = itemCheckboxes.filter(cb => cb.checked).length;
+
+        countText.textContent = `Вибрано ${checked} з ${total}`;
+        selectAllCheckbox.checked = (checked === total && total > 0);
+        selectAllCheckbox.indeterminate = (checked > 0 && checked < total);
+    }
+
+    if (modal.dataset.selectAllInit === "1") {
+        updateSelectedCount();
+        return;
+    }
+
+    selectAllCheckbox.addEventListener("change", function () {
+        const itemCheckboxes = getItemCheckboxes();
+        itemCheckboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
+        updateSelectedCount();
+    });
+
+    modal.addEventListener("change", function (e) {
+        if (e.target && e.target.classList && e.target.classList.contains("cart-product__checkbox__checkbox")) {
+            updateSelectedCount();
+        }
+    });
+
+    modal.dataset.selectAllInit = "1";
+
+    updateSelectedCount();
+}
+
+function initRemoveButtons(modal) {
+    const listContainer = modal.querySelector(".cart-list");
+    if (!listContainer) return;
+    if (listContainer.dataset.removeInit === "1") return; // already initialized
+
+    listContainer.addEventListener("click", function (e) {
+        const removeBtn = e.target.closest("button.menu-toggle-btn");
+        if (!removeBtn) return;
+        const hasTrash = removeBtn.querySelector && (removeBtn.querySelector('use[href="#Trash"]') || removeBtn.querySelector('use[href="#Trash"]'));
+        if (!hasTrash) return;
+
+        const cartItem = removeBtn.closest("li.cart-list__item");
+        if (!cartItem) return;
+
+        const checkbox = cartItem.querySelector("input[type=checkbox]");
+        if (checkbox && checkbox.id) {
+            const parts = checkbox.id.split("-");
+            const productId = parts.length >= 3 ? parts.slice(2, -0).join("-").replace(/-\d+$/, (m)=>m) : null;
+            const itemId = checkbox.id.split("-")[2];
+            if (itemId) {
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                const updatedCart = cart.filter(id => String(id) !== String(itemId));
+                localStorage.setItem("cart", JSON.stringify(updatedCart));
+                window.dispatchEvent(new Event("cartUpdated"));
+            }
+        }
+
+        cartItem.remove();
+
+        initSelectAllLogic(modal);
+        updateTotalSum(modal);
+        toggleEmptyCart(modal);
+    });
+
+    listContainer.dataset.removeInit = "1";
+}
+
+function initRemoveAll(modal) {
+    if (modal.dataset.removeAllInit === "1") return; // один раз
+
+    const removeAllBtn = modal.querySelector(".cart-header__remove .menu-toggle-btn");
+    if (!removeAllBtn) return;
+
+    removeAllBtn.addEventListener("click", function () {
+        localStorage.setItem("cart", JSON.stringify([]));
+        window.dispatchEvent(new Event("cartUpdated"));
+
+        const listContainer = modal.querySelector(".cart-list");
+        listContainer.querySelectorAll("li:not(#cart-item-template)").forEach(el => el.remove());
+
+        const selectAll = modal.querySelector("#selectAll");
+        if (selectAll) {
+          selectAll.checked = false;
+          selectAll.indeterminate = false;
+        }
+        initSelectAllLogic(modal);
+
+        updateTotalSum(modal);
+    });
+
+    modal.dataset.removeAllInit = "1";
+    toggleEmptyCart(modal);
+}
+
+
+function updateTotalSum(modal) {
+    let sum = 0;
+    modal.querySelectorAll(".cart-list__item").forEach(item => {
+        const basePrice = parseInt(item.dataset.basePrice) || 0;
+        const qtyInput = item.querySelector(".cart-counter__input");
+        const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+        sum += basePrice * qty;
+    });
+
+    const totalContainer = modal.querySelector(".cart-receipt__sum-price > span");
+    if (totalContainer) {
+        const currencyEl = totalContainer.querySelector(".cart-receipt__sum-currency, .currency");
+        if (currencyEl) {
+            totalContainer.innerHTML = `${sum.toLocaleString("uk-UA")} ${currencyEl.outerHTML}`;
+        } else {
+            totalContainer.textContent = sum.toLocaleString("uk-UA") + " ₴";
+        }
+    }
+
+    toggleEmptyCart(modal);
+}
+
+document.getElementById("checkout-btn").addEventListener("click", function () {
+    const itemElements = document.querySelectorAll(".cart-list__item");
+    const ids = Array.from(itemElements).map(el => el.dataset.id);
+
+    if (ids.length === 0) {
+        alert("Кошик порожній!");
+        return;
+    }
+
+    window.location.href = `/checkout/?ids=${ids.join(",")}`;
+});
+
+
+function closeBasketModal() {
+    document.getElementById("basket-modal").classList.remove("show");
+}
+
+window.addEventListener("click", function (event) {
+    const modal = document.getElementById("basket-modal");
+    if (event.target === modal) {
+        closeBasketModal();
+    }
+});
+
+window.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        closeBasketModal();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const closeBtn = document.getElementById("basket-close-btn");
+    if (closeBtn) closeBtn.addEventListener("click", closeBasketModal);
+});
+
+document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("cart-counter__btn")) {
+        const counter = e.target.closest(".cart-counter");
+        const input = counter.querySelector(".cart-counter__input");
+        let value = parseInt(input.value) || 1;
+
+        if (e.target.classList.contains("minus")) {
+            if (value > 1) value--;
+        }
+        if (e.target.classList.contains("plus")) {
+            value++;
+        }
+
+        input.value = value;
+
+        const cartItem = e.target.closest(".cart-list__item");
+        if (cartItem) {
+            const priceEl = cartItem.querySelector(".cart-product__price");
+            const basePrice = parseInt(cartItem.dataset.basePrice);
+            const newPrice = basePrice * value;
+            priceEl.textContent = newPrice.toLocaleString("uk-UA") + " ₴";
+        }
+
+        updateTotalSum(document.getElementById("basket-modal"));
+    }
+});
+</script>
+<svg style="display: none;">
+    <symbol id="Close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+    </symbol>
+    <symbol id="Heart" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F6A200" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.8 4.6c-1.7-1.7-4.5-1.7-6.2 0L12 7.2l-2.6-2.6c-1.7-1.7-4.5-1.7-6.2 0-1.7 1.7-1.7 4.5 0 6.2L12 21.4l8.8-8.6c1.7-1.7 1.7-4.5 0-6.2z"/>
+    </symbol>
+    <symbol id="Trash" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#19A1D7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16"/>
+        <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
+        <path d="M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2L18 6"/>
+        <path d="M10 11v6M14 11v6"/>
+    </symbol>
+    <symbol id="Minus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A7CC0" stroke-width="2.2" stroke-linecap="round">
+        <line x1="6" y1="12" x2="18" y2="12"/>
+    </symbol>
+    <symbol id="Plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A7CC0" stroke-width="2.2" stroke-linecap="round">
+        <line x1="12" y1="6" x2="12" y2="18"/>
+        <line x1="6" y1="12" x2="18" y2="12"/>
+    </symbol>
+    <symbol id="Dots-Vertical" width="24" height="24" viewBox="0 0 24 24" fill="#444">
+        <circle cx="12" cy="5" r="2"/>
+        <circle cx="12" cy="12" r="2"/>
+        <circle cx="12" cy="19" r="2"/>
+    </symbol>
+</svg>
+{% endblock %}

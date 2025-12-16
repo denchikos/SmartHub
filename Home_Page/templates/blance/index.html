@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% load static %}
-
+{% block body_class %}body-home{% endblock %}
 {% block content %}
 <style>
     /* Base Styles */
+    .body-home {
+        padding-top: 0;
+    }
+
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #1b1b1b;
-        color: white;
+        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #0F172A;
+        color: #F1F5F9;
+        line-height: 1.6;
+        overflow-x: hidden;
+        position: relative;
+        transition: background 0.3s ease, color 0.3s ease;
     }
 
     .search input {
@@ -76,27 +83,6 @@
         border-radius: 10px;
     }
 
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        padding: 40px;
-        background-color: #2a2a2a;
-    }
-
-    .product-card {
-        background-color: #333;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        transition: transform 0.3s;
-    }
-
-    .product-card img {
-        width: 100px;
-        height: 100px
-    }
-
     .product-card h3 {
         font-size: 20px;
         margin-bottom: 10px;
@@ -126,55 +112,139 @@
         background-color: #111;
         color: #888;
     }
+
+    *, :after, :before {
+        box-sizing: border-box;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0px;
+        padding: 0px;
+    }
+
 </style>
-<body>
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Рекомендації</h1>
-            <p>Відкрийте для себе найкращі технології для ваших потреб.</p>
-            <button id="exploreButton">Дослідіть продукти ⬇️</button>
+<link rel="stylesheet" href="{% static 'Home_page/css/home.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<div id="rotating-gradient"></div>
+<canvas id="particles-canvas"></canvas>
+<section class="hero-section">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1 class="hero-name">
+                SmartHub
+            </h1>
+            <div class="hero-title-wrapper">
+                <span class="hero-title-static">Це</span>
+                <div class="hero-title-animated">
+                    <span>Швидка робота</span>
+                    <span>Якісна техніка</span>
+                    <span>Зручність користування</span>
+                    <span>Сучасний дизайн</span>
+                </div>
+            </div>
+            <p class="hero-description" style="font-weight: 500;">
+                 Онлайн-магазин техніки, створений як pet-проєкт.
+                Він поєднує продуману архітектуру, сучасний бекенд на Django та зручний користувацький інтерфейс.
+            </p>
+            <div class="hero-buttons">
+                <a id="exploreButton" class="btn btn-primary" style="color: white; scroll-behavior: smooth;">
+                    <span>View My Work</span>
+                    <i class="bi bi-arrow-down"></i>
+                </a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/denchikos" target="_blank" class="social-link" title="GitHub">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/denis-artemenko-9bb84123a" target="_blank" class="social-link" title="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="https://t.me/LEVELINKED" target="_blank" class="social-link" title="Telegram">
+                    <i class="bi bi-telegram"></i>
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=artemenkodenis303@gmail.com" class="social-link" title="Email">
+                    <i class="bi bi-envelope"></i>
+                </a>
+            </div>
         </div>
-        <img src="{% static 'Home_page/images/base_images/macbook_Grean.jpg' %}" alt="Laptops and gadgets">
-    </section>
 
-    <section class="product-grid" id="productSection">
-        <div class="product-card">
-            <img src="{% static 'Home_page/images/base_images/macbook_gray.jpg' %}" alt="Laptop">
-            <h3>Ноутбуки</h3>
-            <p>Високопродуктивні ноутбуки для щоденних завдань.</p>
-            <a href="{% url 'notebooks' %}">
-                <button>Explore</button>
-            </a>
-        </div>
-        <div class="product-card">
-            <img src="{% static 'Home_page/images/base_images/pc_gaming.jpg' %}" alt="Laptop">
-            <h3>Системні Блоки</h3>
-            <p>Потужні робочі блоки.</p>
-            <button>Explore</button>
-        </div>
-        <div class="product-card">
-            <img src="{% static 'Home_page/images/base_images/Iphone.jpg' %}" alt="Smartphone">
-            <h3>Смартфони</h3>
-            <p>Всі зручності в руках.</p>
-            <button>Explore</button>
-        </div>
-        <div class="product-card">
-            <img src="{% static 'Home_page/images/base_images/gaming.jpg' %}" alt="Accessories">
-            <h3>Ігрові Аксесуари</h3>
-            <p>Зробіть свій ігровий досвід яскравішим.</p>
-            <button>Explore</button>
-        </div>
-    </section>
+        <!-- Анімована фігурна ілюстрація -->
+        <div class="hero-visual" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1; unicode-bidi: isolate;">
+            <div class="floating-card" style="translate: none; rotate: none; scale: none;">
+                <div class="floating-code">
+                    <pre>
+                        <code>
+<span class="code-keyword" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">class</span> <span class="code-class">Developer</span>:
+    <span class="code-keyword" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">def</span> <span class="code-function" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">__init__</span>(<span class="code-param" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">self</span>):
+        <span class="code-param" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">self</span>.name =<span class="code-string" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">"Denys"</span>
+        <span class="code-param" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">self</span>.role =<span class="code-string" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">"Backend"</span>
+        <span class="code-param" style="margin: 0px; padding: 0px; font-size: 0.9rem; line-height: 1.6;">self</span>.languages = [
+            <span class="code-string">"Python"</span>
+        ]
 
-    <footer>
-        <p>&copy; 2024 SmartHub. All Rights Reserved.</p>
-    </footer>
-</body>
-</html>
+    <span class="code-keyword">def</span> <span class="code-function">build_awesome</span>(<span class="code-param">self</span>):
+        <span class="code-keyword">return</span> <span class="code-string">"✨ Magic"</span>
+                        </code>
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="product-grid reveal" id="productSection" style="background-color: transparent;">
+
+    <div class="product-card">
+        <img src="{% static 'Home_page/images/base_images/macbook_gray.jpg' %}" alt="Laptop">
+        <h3>Ноутбуки</h3>
+        <p>Високопродуктивні ноутбуки для щоденних завдань.</p>
+        <a href="{% url 'notebooks' %}">
+            <button>Переглянути</button>
+        </a>
+    </div>
+
+    <div class="product-card">
+        <img src="{% static 'Home_page/images/base_images/pc_gaming.jpg' %}" alt="Laptop">
+        <h3>Системні Блоки</h3>
+        <p>Потужні робочі станції для професійних задач.</p>
+        <button>Переглянути</button>
+    </div>
+
+    <div class="product-card">
+        <img src="{% static 'Home_page/images/base_images/Iphone.jpg' %}" alt="Smartphone">
+        <h3>Смартфони</h3>
+        <p>Сучасні можливості у ваших руках.</p>
+        <button>Переглянути</button>
+    </div>
+
+    <div class="product-card">
+        <img src="{% static 'Home_page/images/base_images/gaming.jpg' %}" alt="Accessories">
+        <h3>Ігрові Аксесуари</h3>
+        <p>Прокачай свій геймінг.</p>
+        <button>Переглянути</button>
+    </div>
+</section>
 <script>
-  document.getElementById('exploreButton').addEventListener('click', function() {
-    const section = document.getElementById('productSection');
-    section.scrollIntoView({ behavior: 'smooth' });
+  const btn = document.getElementById('exploreButton');
+  const section = document.getElementById('productSection');
+
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const y = section.getBoundingClientRect().top + window.pageYOffset;
+
+    window.scrollTo({
+      top: y,
+      behavior: 'smooth'
+    });
   });
 </script>
+
+
+
+<script src="{% static 'Home_page/js/home.js' %}"></script>
+<script src="{% static 'Home_page/js/particles.js' %}"></script>
 {% endblock %}
